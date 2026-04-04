@@ -1,19 +1,10 @@
 ---
 name: Amendment Proposal
-about: Propose a change to the PAI-CD normative corpus.
-title: "[AMENDMENT]"
-labels: amendment
-assignees: ''
-type: Task
-
----
-
----
-name: Amendment Proposal
 about: Propose a change to the PAI-CD normative corpus
 title: '[AMENDMENT] '
 labels: amendment
 assignees: ''
+type: Task
 ---
 
 ## Summary

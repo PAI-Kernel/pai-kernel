@@ -1,19 +1,10 @@
 ---
 name: Specification Gap
-about: Report an ambiguity or implementation gap in PAI-CD.
-title: "[GAP]"
-labels: specification-gap
-assignees: ''
-type: Task
-
----
-
----
-name: Specification Gap
 about: Report an ambiguity, implementation gap, or underspecification in PAI-CD
 title: '[GAP] '
 labels: specification-gap
 assignees: ''
+type: Task
 ---
 
 ## Summary
