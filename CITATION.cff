@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use PAI-CD in your research, please cite it as below."
-type: software
+type: dataset
 title: "PAI-CD: PAI Constitutional Document"
 abstract: "An open constitutional standard for deployed AI systems. Six non-derogable invariants protecting authorial sovereignty at the deployment layer."
 authors:
