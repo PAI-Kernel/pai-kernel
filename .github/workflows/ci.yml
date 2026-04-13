@@ -35,7 +35,7 @@ jobs:
           errors = []
           for md in pathlib.Path('.').rglob('*.md'):
               text = md.read_text(encoding='utf-8', errors='replace')
-              for m in re.finditer(r'\[([^\]]+)\]\((?!https?://)([^)#]+)', text):
+              for m in re.finditer(r'\[([^\]]+)\]\((?!https?://|mailto:)([^)#]+)', text):
                   target = md.parent / m.group(2)
                   if not target.exists():
                       errors.append(f'  {md}: broken link -> {m.group(2)}')
