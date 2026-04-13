@@ -2,11 +2,11 @@ cff-version: 1.2.0
 message: "If you use PAI-CD in your research, please cite it as below."
 type: dataset
 title: "PAI-CD: PAI Constitutional Document"
-abstract: "An open constitutional standard for deployed AI systems. Six non-derogable invariants protecting authorial sovereignty at the deployment layer."
+abstract: "An open constitutional framework for deployed AI systems. Six non-derogable invariants protecting authorial sovereignty at the deployment layer."
 authors:
   - family-names: Sergeev
     given-names: Mikhail Anatolievich
-    affiliation: PAI-Kernel Project
+    affiliation: Independent Researcher; PAI-Kernel Initiative
     email: Mikhail.Sergeev@paikernel.org
     orcid: "https://orcid.org/0009-0001-6443-855X"
 version: "2.2"

@@ -1,0 +1,24 @@
+name: Change proposal
+description: Propose a change to the PAI-CD normative framework.
+title: "[PROPOSAL] "
+labels: ["proposal"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Proposal summary
+    validations:
+      required: true
+  - type: textarea
+    id: invariants
+    attributes:
+      label: Invariant impact
+      description: Which invariants are affected?
+    validations:
+      required: true
+  - type: textarea
+    id: risks
+    attributes:
+      label: Risks / threat model delta
+    validations:
+      required: true

@@ -1,0 +1,16 @@
+{
+  // PAI-CD v2.2 Corpus — Released Documents
+  //
+  // These three documents are excluded from markdown linting because
+  // v2.2 was prepared manually without automated lint verification.
+  // Their content is canonical constitutional text, integrity-verified
+  // via SHA-256 hashes in release assets.
+  //
+  // This exclusion applies only to the v2.2 released corpus.
+  // Future public releases will be lint-verified before publication.
+  "ignores": [
+    "PAI_Constitutional_Document.md",
+    "PAI_Bill_of_Authorial_Rights.md",
+    "Glossary.md"
+  ]
+}
