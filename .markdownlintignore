@@ -1,0 +1,20 @@
+# PAI-CD v2.2 Corpus — Released Documents
+#
+# These three documents constitute the v2.2 public release of the
+# PAI Constitutional Document (PAI-CD) corpus, published March 2026.
+#
+# They are excluded from automated markdown linting because:
+# v2.2 was prepared manually without automated lint verification.
+# The documents are canonical constitutional text — their content
+# has been ratified through the PAI-CD amendment procedure and is
+# integrity-verified via SHA-256 hashes in release assets.
+#
+# Editing released canonical text solely for formatting compliance
+# would alter the published artifact without constitutional authority.
+#
+# This exclusion applies only to the v2.2 released corpus.
+# Future public releases will be lint-verified before publication.
+
+PAI_Constitutional_Document.md
+PAI_Bill_of_Authorial_Rights.md
+Glossary.md

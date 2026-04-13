@@ -4,25 +4,28 @@
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
 [![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
-[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X) [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
+[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
+[0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
 
-**Personal Authorial Intelligence — Constitutional Framework**
+## Personal Authorial Intelligence — Constitutional Framework
 
 > A normative layer for human-centric AI governance.  
 > Version 2.2 — Public Edition
 
 -----
 
-The canonical frozen version of this release is available via DOI:  
-https://doi.org/10.5281/zenodo.19151900
+The canonical frozen version of this release is available via DOI:
+<https://doi.org/10.5281/zenodo.19151900>
 
 -----
 
 ## Document Status & Publication Model
 
-**PAI-CD v2.2** is a constitutional framework consisting of **10 normative documents**, organized as a layered system.
+**PAI-CD v2.2** is a constitutional framework consisting of
+**10 normative documents**, organized as a layered system.
 
-This repository contains the **Public Edition** — a deliberately scoped release of **3 foundational documents (Layer 0)** that establish:
+This repository contains the **Public Edition** — a deliberately scoped
+release of **3 foundational documents (Layer 0)** that establish:
 
 - the constitutional invariants
 - the authorial rights layer
@@ -55,17 +58,29 @@ A separate **research paper** (arXiv submission) is in preparation for submissio
 
 ## What This Is
 
-**PAI (Personal Authorial Intelligence)** is a normative framework that ensures AI systems operate exclusively under the declared and verifiable authority of the human author they represent.
+**PAI (Personal Authorial Intelligence)** is a normative framework
+that ensures AI systems operate exclusively under the declared and
+verifiable authority of the human author they represent.
 
-PAI defines the constitutional conditions required to preserve authorial sovereignty at the deployment layer of AI systems.
+PAI defines the constitutional conditions required to preserve
+authorial sovereignty at the deployment layer of AI systems.
 
-**PAI-Kernel** is the public normative layer of the **PAI Constitutional Framework (PAI-CD)** — a formal specification defining the constitutional principles, authorial rights, and governance invariants for Personal Authorial Intelligence systems.
+**PAI-Kernel** is the public normative layer of the
+**PAI Constitutional Framework (PAI-CD)** — a formal specification
+defining the constitutional principles, authorial rights, and
+governance invariants for Personal Authorial Intelligence systems.
 
-The PAI Constitutional Framework (PAI-CD) is a structured corpus of normative documents establishing the governance model of PAI systems.
+The PAI Constitutional Framework (PAI-CD) is a structured corpus
+of normative documents establishing the governance model of
+PAI systems.
 
-This repository contains the **Public Edition** — the Layer 0 release of the PAI-CD corpus.
+This repository contains the **Public Edition** — the Layer 0
+release of the PAI-CD corpus.
 
-PAI-CD is not a product. It is not a startup. It is a **Layer 0 normative infrastructure** — a constitutional substrate on which compliant implementations, governance bodies, and execution systems may be built.
+PAI-CD is not a product. It is not a startup. It is a
+**Layer 0 normative infrastructure** — a constitutional substrate
+on which compliant implementations, governance bodies, and
+execution systems may be built.
 
 -----
 
@@ -73,7 +88,10 @@ PAI-CD is not a product. It is not a startup. It is a **Layer 0 normative infras
 
 Most AI governance discourse focuses on what AI systems *should do*.
 
-PAI-CD focuses on something prior: **who holds final authority**, and what structural guarantees protect that authority from erosion — by providers, by optimization pressure, by infrastructure lock-in, or by cumulative drift.
+PAI-CD focuses on something prior: **who holds final authority**,
+and what structural guarantees protect that authority from erosion —
+by providers, by optimization pressure, by infrastructure lock-in,
+or by cumulative drift.
 
 The framework defines six non-derogable invariants:
 
@@ -86,7 +104,9 @@ The framework defines six non-derogable invariants:
 |**Reversibility**        |Reconstructability of all structural changes          |
 |**Drift Immutability**   |Protection against cumulative invariant erosion       |
 
-These invariants are **non-derogable** — they cannot be suspended by emergency, majority vote, economic pressure, security update, or provider policy.
+These invariants are **non-derogable** — they cannot be suspended
+by emergency, majority vote, economic pressure, security update,
+or provider policy.
 
 PAI-CD operates at **Layer 0 — below models, providers, and application logic.**
 
@@ -96,13 +116,16 @@ PAI-CD operates at **Layer 0 — below models, providers, and application logic.
 
 This repository publishes three foundational documents:
 
-|Document                                                              |Description                                                                                          |
-|----------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------|
-|[`PAI_Constitutional_Document.md`](./PAI_Constitutional_Document.md)  |The constitutional core. Establishes invariants, interpretation rules, and the non-derogation clause.|
-|[`PAI_Bill_of_Authorial_Rights.md`](./PAI_Bill_of_Authorial_Rights.md)|Enumeration of enforceable Author rights derived from the Constitutional Core.                       |
-|[`Glossary.md`](./Glossary.md)                                        |Binding terminology authority for PAI-CD v2.2.                                                       |
+| Document                                                               | Description                         |
+|------------------------------------------------------------------------|-------------------------------------|
+| [`PAI_Constitutional_Document.md`](./PAI_Constitutional_Document.md)   | Invariants and interpretation rules |
+| [`PAI_Bill_of_Authorial_Rights.md`](./PAI_Bill_of_Authorial_Rights.md) | Enforceable Author rights           |
+| [`Glossary.md`](./Glossary.md)                                         | Binding terminology for PAI-CD v2.2 |
 
-The full corpus (10 documents) includes implementation mapping, threat modeling, compliance verification, and governance control layers. The complete framework will be made available through the PAI Foundation as it develops.
+The full corpus (10 documents) includes implementation mapping,
+threat modeling, compliance verification, and governance control
+layers. The complete framework will be made available through the
+PAI Foundation as it develops.
 
 -----
 
@@ -130,7 +153,9 @@ This principle applies to all documents in this repository and to any compliant 
 
 This work is published under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
 
-You are free to share and adapt this material for any purpose, provided you give appropriate attribution to PAI-Kernel and indicate if changes were made.
+You are free to share and adapt this material for any purpose,
+provided you give appropriate attribution to PAI-Kernel and
+indicate if changes were made.
 
 See [`LICENSE`](./LICENSE) for full terms.
 
