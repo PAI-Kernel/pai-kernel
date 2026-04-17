@@ -41,7 +41,7 @@ The remaining layers of the corpus introduce:
 - governance and amendment mechanisms
 - implementation and integration mapping
 
-These layers will be released progressively as the PAI Foundation develops.
+These layers will be released progressively as the project develops.
 
 This repository is **not a research paper**.
 
