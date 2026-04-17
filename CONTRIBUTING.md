@@ -4,10 +4,10 @@
 
 Thank you for your interest in PAI-Kernel.
 
-This is a normative standard — not a software project. Contributing here means
+This is a normative framework — not a software project. Contributing here means
 engaging with governance architecture, not writing code. The bar for contribution
-is high by design: a weakened standard that is widely adopted is worse than a
-rigorous standard adopted narrowly.
+is high by design: a weakened framework that is widely adopted is worse than a
+rigorous framework adopted narrowly.
 
 ---
 
@@ -29,7 +29,7 @@ realistic deployment scenario, document the scenario and the conflict.
 open a Pull Request with the model and the proof artifact.
 
 **Reference implementations.** Independent implementations of PAI-CD that pass the
-Conformance Suite are the primary metric of the standard's success. We want to know
+Conformance Suite are the primary metric of the framework's success. We want to know
 about them.
 
 ### What we are not looking for

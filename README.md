@@ -124,8 +124,8 @@ This repository publishes three foundational documents:
 
 The full corpus (10 documents) includes implementation mapping,
 threat modeling, compliance verification, and governance control
-layers. The complete framework will be made available through the
-PAI Foundation as it develops.
+layers. The complete framework is maintained by the author and will be
+extended as the project develops.
 
 -----
 
@@ -139,13 +139,17 @@ This principle applies to all documents in this repository and to any compliant 
 
 ## Status
 
-|Item                    |Status                                |
-|------------------------|--------------------------------------|
-|Constitutional Framework|v2.2 — Freeze Edition                 |
-|Copyright Filing        |Initiated 23 February 2026            |
-|Domain                  |[paikernel.org](https://paikernel.org)|
-|Fiscal Host             |Open Source Collective (pending)      |
-|Foundation              |In formation                          |
+|Item                    |Status                                          |
+|------------------------|------------------------------------------------|
+|Constitutional Framework|v2.2 — Freeze Edition                           |
+|Copyright Filing        |Initiated Q1 2026                               |
+|Domain                  |[paikernel.org](https://paikernel.org)          |
+|Governance              |Currently maintained by the primary author      |
+
+> **Note on versioning:** This Public Edition (v2.2, released March 2026)
+> is a frozen snapshot of foundational documents. Internal corpus development
+> continues; subsequent Public Edition releases will incorporate stabilized
+> updates. For academic citation, see CITATION.cff.
 
 -----
 

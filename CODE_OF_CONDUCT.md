@@ -11,7 +11,7 @@
 PAI-Kernel exists to establish governance infrastructure that protects human authorial
 sovereignty from AI systems operating against human interests.
 
-We hold ourselves to the same standard we require of the systems we govern:
+We hold ourselves to the same rigor we require of the systems we govern:
 **no coercion, no manipulation, no undisclosed objectives.**
 
 All participants in this project — contributors, reviewers, and community members — are
@@ -25,7 +25,7 @@ expected to engage as authors of their own thinking, not as followers of social 
 
 - Engage with arguments, not identities.
 - Substantive critique of specifications, invariants, and procedures is not only
-  permitted — it is valued. This is how the standard gets stronger.
+  permitted — it is valued. This is how the framework gets stronger.
 - Identify the weakest point in your own argument before presenting it.
 - If you disagree with a decision, say so explicitly and explain why. Record your disagreement. Consensus is not required.
 - Treat ambiguity as a signal to clarify — not as a license to interpret in your favor.
