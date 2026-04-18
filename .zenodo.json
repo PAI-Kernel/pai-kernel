@@ -1,0 +1,44 @@
+{
+  "upload_type": "publication",
+  "publication_type": "standard",
+  "title": "PAI-CD: A Protocol for Authorial Sovereignty in AI Systems",
+  "creators": [
+    {
+      "name": "Sergeev, Mikhail Anatolievich",
+      "orcid": "0009-0001-6443-855X",
+      "affiliation": "PAI-Kernel"
+    }
+  ],
+  "description": "PAI-CD (PAI Constitutional Document; PAI — Personal Authorial Intelligence) is a normative governance framework establishing constitutional constraints for personal AI systems. It specifies deployment-layer governance architecture ensuring authorial sovereignty, consent-based capability control, and provider-independent enforcement. PAI-CD is designed to be reproducible on any AI infrastructure and verifiable independently of any provider.",
+  "access_right": "open",
+  "license": "cc-by-4.0",
+  "language": "eng",
+  "keywords": [
+    "AI governance",
+    "authorial sovereignty",
+    "constitutional AI",
+    "deployment-layer governance",
+    "cognitive autonomy",
+    "Personal Authorial Intelligence",
+    "Personal Authorial Intelligence (PAI)",
+    "normative framework",
+    "consent architecture"
+  ],
+  "communities": [
+    { "identifier": "zenodo" }
+  ],
+  "related_identifiers": [
+    {
+      "scheme": "url",
+      "identifier": "https://paikernel.org",
+      "relation": "isDocumentedBy",
+      "resource_type": "other"
+    },
+    {
+      "scheme": "doi",
+      "identifier": "10.5281/zenodo.19151899",
+      "relation": "isNewVersionOf",
+      "resource_type": "publication-standard"
+    }
+  ]
+}
