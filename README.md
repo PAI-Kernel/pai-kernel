@@ -1,100 +1,193 @@
-# PAI-CD v3.1 SDK — Reference Implementation
+# PAI-Kernel
 
-[![CI](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml/badge.svg)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml)
-[![Tests](https://img.shields.io/badge/tests-286%20passing-brightgreen)]()
-[![Clippy](https://img.shields.io/badge/clippy-0%20warnings-brightgreen)]()
-[![Rust](https://img.shields.io/badge/rust-1.86%2B-orange)](https://www.rust-lang.org)
-[![License](https://img.shields.io/badge/license-see%20LICENSE-blue)]()
-[![unsafe forbidden](https://img.shields.io/badge/unsafe-forbidden-success.svg)](https://github.com/rust-secure-code/safety-dance/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
+[![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
+[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
+[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
+[0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
 
-The PAI-Kernel SDK implements the full PAI-CD v3.1 normative framework —
-a constitutional governance runtime for Personal Authorial Intelligence.
+## Personal Authorial Intelligence — Constitutional Framework
 
-**30 crates · 286 tests · 0 clippy warnings · `#![forbid(unsafe_code)]` everywhere**
+> A normative layer for human-centric AI governance.  
+> Version 2.2 — Public Edition
 
-## Architecture
+-----
 
-### HAC Core (6 primitives)
+The canonical frozen version of this release is available via DOI:
+<https://doi.org/10.5281/zenodo.19151900>
 
-| # | Component | Crate | Tests | Invariants |
-|---|-----------|-------|-------|------------|
-| 1 | ConsentGate | `pai_gate` | 2 | Consent not inferred from silence |
-| 2 | ConservativeModeFSM | `governance_daemon` | 6 | Fail-closed, breach auto-activation |
-| 3 | GovernanceVersionBinding | `governance_daemon` | — | Constitutional version immutability |
-| 4 | DelegationValidator | `pai_delegation` | 12 | Explicit scope, expiry, revocability |
-| 5 | WitnessLog | `pai_witness` | 12 | Append-only, hash-chained, tamper-evident |
-| 6 | RecActionBoundary | `pai_classify` | 18 | Recommendation vs Informational boundary |
+-----
 
-### v3.1 Compliance Layer (15 gap items)
+## Document Status & Publication Model
 
-| Ref | Feature | Crate | Tests |
-|-----|---------|-------|-------|
-| MP-1 | Anti-Evasion Detection | `pai_evasion` | 14 |
-| MP-3 | Quantitative Bias Thresholds | `pai_classify` | 8 |
-| MP-5 | System Boundary Declaration | `pai_boundary` | 10 |
-| MP-6 | Independent Verification Signals | `compliance_test_suite` | 5 |
-| MP-7 | 100% Portability Parity | `pai_export` | 7 |
-| MP-8 | Tier Aggregation (Sequence) | `pai_sequence` | 12 |
-| MP-9 | Granular Consent & Expiry | `governance_daemon` | 10 |
-| G-1/H-2 | Compliance Identity & Certification | `pai_compliance_id` | 13 |
-| Doc 10 | TCB & Attestation | `pai_attestation` | 12 |
-| Doc 11 | Supply Chain Provenance | `pai_provenance` | 14 |
-| Doc 14 | Causal Telemetry | `pai_causal` | 13 |
-| Doc 15 | Runtime Capture Detection | `governance_daemon` | 5 |
-| Doc 18 | Graduated Response | `governance_daemon` | 12 |
-| Doc 20 | Author Vulnerability Protection | `pai_vulnerability` | 15 |
-| B2.5 | PII Detection Baseline | `pai_pii` | 16 |
+**PAI-CD v2.2** is a constitutional framework consisting of
+**10 normative documents**, organized as a layered system.
 
-### Supporting Infrastructure
+This repository contains the **Public Edition** — a deliberately scoped
+release of **3 foundational documents (Layer 0)** that establish:
 
-| Crate | Purpose | Tests |
-|-------|---------|-------|
-| `pai_api` | HTTP API layer | 8 |
-| `pai_config` | Configuration management | 5 |
-| `pai_drift` | Drift detection engine | 6 |
-| `pai_export` | Portability bundle export/import | 12 |
-| `pai_harness` | Test harness utilities | — |
-| `pai_influence` | Influence event tracking | — |
-| `pai_interface` | Kernel context interface | — |
-| `pai_policy` | OPA/Rego policy engine | 10 |
-| `pai_storage` | Persistence layer | 8 |
-| `pai_mcp` | MCP adapter | 5 |
-| `pai_openai_adapter` | OpenAI adapter | 4 |
-| `pai_examples` | Runnable SDK examples (5 binaries) | — |
+- the constitutional invariants
+- the authorial rights layer
+- the binding terminology
 
-## Formal Verification
+The remaining layers of the corpus introduce:
 
-- **TLA+**: 464K states, 7 invariants verified (StateModel)
-- **SPARK**: ConsentGate formally proven (no runtime exceptions)
+- interpretation rules and conflict resolution
+- threat modeling and attack surfaces
+- protocol and system constraints
+- compliance and enforcement logic
+- audit and verification procedures
+- governance and amendment mechanisms
+- implementation and integration mapping
 
-## Repository Structure
+These layers will be released progressively as the project develops.
 
-```
-corpus/          — PAI-CD v3.1 constitutional documents (42 files)
-formal/          — TLA+ state model + SPARK proofs
-crates/          — SDK primitives (22 crates)
-runtime/         — Governance daemon + kernel binary
-compliance/      — Compliance test suite + integration tests
-adapters/        — MCP + OpenAI protocol adapters
-```
+This repository is **not a research paper**.
 
-## Quick Start
+It is a **normative constitutional specification (Layer 0 infrastructure)**.
 
-```bash
-cargo test --workspace          # 262 tests
-cargo clippy --workspace        # 0 warnings
-cargo run -p pai_compliance > compliance_report.json
-```
+A separate **research paper** (arXiv submission) is in preparation for submission to arXiv and will formally describe:
 
-## Pre-Audit
+- the problem space
+- the threat model
+- the invariant architecture
+- the system implications
 
-```bash
-bash scripts/pre_audit.sh       # Full pre-audit gate suite
-bash scripts/generate_sbom.sh   # CycloneDX SBOM
-```
+-----
 
-## External Anchoring
+## What This Is
 
-```bash
-bash scripts/timestamp_hash.sh  # Public timestamp proof for corpus hash
-```
+**PAI (Personal Authorial Intelligence)** is a normative framework
+that ensures AI systems operate exclusively under the declared and
+verifiable authority of the human author they represent.
+
+PAI defines the constitutional conditions required to preserve
+authorial sovereignty at the deployment layer of AI systems.
+
+**PAI-Kernel** is the public normative layer of the
+**PAI Constitutional Framework (PAI-CD)** — a formal specification
+defining the constitutional principles, authorial rights, and
+governance invariants for Personal Authorial Intelligence systems.
+
+The PAI Constitutional Framework (PAI-CD) is a structured corpus
+of normative documents establishing the governance model of
+PAI systems.
+
+This repository contains the **Public Edition** — the Layer 0
+release of the PAI-CD corpus.
+
+PAI-CD is not a product. It is not a startup. It is a
+**Layer 0 normative infrastructure** — a constitutional substrate
+on which compliant implementations, governance bodies, and
+execution systems may be built.
+
+-----
+
+## Core Premise
+
+Most AI governance discourse focuses on what AI systems *should do*.
+
+PAI-CD focuses on something prior: **who holds final authority**,
+and what structural guarantees protect that authority from erosion —
+by providers, by optimization pressure, by infrastructure lock-in,
+or by cumulative drift.
+
+The framework defines six non-derogable invariants:
+
+|Invariant                |What It Protects                                      |
+|-------------------------|------------------------------------------------------|
+|**Authorship Supremacy** |Final human authority over all consequential decisions|
+|**Cognitive Sovereignty**|Freedom from covert persuasion and behavioral shaping |
+|**Anti-Manipulation**    |Prohibition on undeclared optimization objectives     |
+|**Provider Independence**|Portability and governance reproducibility            |
+|**Reversibility**        |Reconstructability of all structural changes          |
+|**Drift Immutability**   |Protection against cumulative invariant erosion       |
+
+These invariants are **non-derogable** — they cannot be suspended
+by emergency, majority vote, economic pressure, security update,
+or provider policy.
+
+PAI-CD operates at **Layer 0 — below models, providers, and application logic.**
+
+-----
+
+## Public Edition — Document Index
+
+This repository publishes three foundational documents:
+
+| Document                                                               | Description                         |
+|------------------------------------------------------------------------|-------------------------------------|
+| [`PAI_Constitutional_Document.md`](./PAI_Constitutional_Document.md)   | Invariants and interpretation rules |
+| [`PAI_Bill_of_Authorial_Rights.md`](./PAI_Bill_of_Authorial_Rights.md) | Enforceable Author rights           |
+| [`Glossary.md`](./Glossary.md)                                         | Binding terminology for PAI-CD v2.2 |
+
+The full corpus (10 documents) includes implementation mapping,
+threat modeling, compliance verification, and governance control
+layers. The complete framework is maintained by the author and will be
+extended as the project develops.
+
+-----
+
+## Interpretation Principle
+
+> Ambiguity resolves toward stronger invariant protection, minimal authority expansion, and maximum portability.
+
+This principle applies to all documents in this repository and to any compliant implementation.
+
+-----
+
+## Status
+
+|Item                    |Status                                          |
+|------------------------|------------------------------------------------|
+|Constitutional Framework|v2.2 — Freeze Edition                           |
+|Copyright Filing        |Initiated Q1 2026                               |
+|Domain                  |[paikernel.org](https://paikernel.org)          |
+|Governance              |Currently maintained by the primary author      |
+
+> **Note on versioning:** This Public Edition (v2.2, released March 2026)
+> is a frozen snapshot of foundational documents. Internal corpus development
+> continues; subsequent Public Edition releases will incorporate stabilized
+> updates. For academic citation, see CITATION.cff.
+
+-----
+
+## License
+
+This work is published under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
+
+You are free to share and adapt this material for any purpose,
+provided you give appropriate attribution to PAI-Kernel and
+indicate if changes were made.
+
+See [`LICENSE`](./LICENSE) for full terms.
+
+-----
+
+## Contributing
+
+PAI-Kernel is in early formation. Community standards are published in this repository:
+
+- [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) — grounded in PAI-CD anti-manipulation principles
+- [`CONTRIBUTING.md`](./CONTRIBUTING.md) — amendment procedure as contribution pathway
+- [`SECURITY.md`](./SECURITY.md) — responsible disclosure for specification vulnerabilities
+
+At this stage, the most valuable contributions are:
+
+- Careful reading and substantive critique of the normative layer
+- Identification of ambiguities that require clarification via Amendment
+- Academic or institutional engagement
+
+Please open an Issue using the provided templates to begin a public discussion.
+
+-----
+
+## Contact
+
+For institutional inquiries, academic collaboration, or governance discussion:  
+Open an Issue in this repository, reach out via [paikernel.org](https://paikernel.org), or email [contact@paikernel.org](mailto:contact@paikernel.org).
+
+-----
+
+*PAI-Kernel is a public normative layer of PAI-CD. It is not affiliated with any AI provider.*
