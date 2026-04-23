@@ -16,9 +16,9 @@ pai_cd:
   status: "Canonical"
   source:
     file: "PAI_Constitutional_Document.md"
-    path: "corpus/core/PAI_Constitutional_Document.md"
+    path: "PAI_Constitutional_Document.md"
     commit: "fcf0c99c"
-    authority_repo: "PAI-Kernel/pai-kernel-internal"
+    authority_repo: "PAI-Kernel/pai-kernel"
   cite_as: "PAI-CD v2.2.1 § Core · Constitutional Core"
   last_amendment: "2026-04-23"
 ---
@@ -232,4 +232,4 @@ END OF DOCUMENT
 
 ---
 
-*Source: `corpus/core/PAI_Constitutional_Document.md` · PAI-CD v2.2.1 · commit `fcf0c99c` · [View canonical source](https://github.com/PAI-Kernel/pai-kernel-internal/blob/fcf0c99c/corpus/core/PAI_Constitutional_Document.md) (private) · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/PAI_Constitutional_Document.md)*
+*Source: `PAI_Constitutional_Document.md` · PAI-CD v2.2.1 · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/PAI_Constitutional_Document.md)*

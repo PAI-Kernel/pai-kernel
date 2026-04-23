@@ -16,9 +16,9 @@ pai_cd:
   status: "Canonical"
   source:
     file: "Glossary.md"
-    path: "corpus/core/Glossary.md"
+    path: "Glossary.md"
     commit: "fcf0c99c"
-    authority_repo: "PAI-Kernel/pai-kernel-internal"
+    authority_repo: "PAI-Kernel/pai-kernel"
   cite_as: "PAI-CD v2.2.1 § Reference · Glossary"
   last_amendment: "2026-04-23"
 ---
@@ -373,4 +373,4 @@ If definitional interpretation conflicts with invariant protection, invariant pr
 END OF DOCUMENT
 ---
 
-*Source: `corpus/core/Glossary.md` · PAI-CD v2.2.1 · commit `fcf0c99c` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/Glossary.md)*
+*Source: `Glossary.md` · PAI-CD v2.2.1 · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/Glossary.md)*

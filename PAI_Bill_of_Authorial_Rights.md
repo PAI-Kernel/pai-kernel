@@ -16,9 +16,9 @@ pai_cd:
   status: "Canonical"
   source:
     file: "PAI_Bill_of_Authorial_Rights.md"
-    path: "corpus/core/PAI_Bill_of_Authorial_Rights.md"
+    path: "PAI_Bill_of_Authorial_Rights.md"
     commit: "fcf0c99c"
-    authority_repo: "PAI-Kernel/pai-kernel-internal"
+    authority_repo: "PAI-Kernel/pai-kernel"
   cite_as: "PAI-CD v2.2.1 § Core · Bill of Authorial Rights"
   last_amendment: "2026-04-23"
 ---
@@ -379,4 +379,4 @@ The system MUST NOT:
 END OF DOCUMENT
 ---
 
-*Source: `corpus/core/PAI_Bill_of_Authorial_Rights.md` · PAI-CD v2.2.1 · commit `fcf0c99c` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/PAI_Bill_of_Authorial_Rights.md)*
+*Source: `PAI_Bill_of_Authorial_Rights.md` · PAI-CD v2.2.1 · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/PAI_Bill_of_Authorial_Rights.md)*
