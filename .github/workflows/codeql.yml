@@ -15,6 +15,10 @@ jobs:
   analyze:
     name: Analyze
     runs-on: ubuntu-latest
+    # CodeQL is configured for the canonical public repo. Skip cleanly in
+    # forks, mirrors, or private rehearsal environments where anonymous
+    # clone is unavailable.
+    if: github.repository == 'PAI-Kernel/pai-kernel'
     permissions:
       security-events: write
     strategy:

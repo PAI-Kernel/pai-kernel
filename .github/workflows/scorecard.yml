@@ -13,6 +13,10 @@ jobs:
   analysis:
     name: Scorecard analysis
     runs-on: ubuntu-latest
+    # OpenSSF Scorecard is intended for public OSS repositories. Gate to the
+    # canonical public repo so it skips cleanly in forks, mirrors, or private
+    # rehearsal environments.
+    if: github.repository == 'PAI-Kernel/pai-kernel'
     permissions:
       security-events: write
       id-token: write
