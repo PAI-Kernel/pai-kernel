@@ -12,7 +12,7 @@ metadata:
   keywords: "PAI-CD, Constitutional Core, invariants, authorial sovereignty"
   robots: "index"
 pai_cd:
-  version: "v2.2.1"
+  version: "2.2.1"
   status: "Canonical"
   source:
     file: "PAI_Constitutional_Document.md"

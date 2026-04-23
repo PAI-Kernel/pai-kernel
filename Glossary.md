@@ -12,7 +12,7 @@ metadata:
   keywords: "PAI-CD, Glossary, terminology, definitions, Author, Provider, Instance"
   robots: "index"
 pai_cd:
-  version: "v2.2.1"
+  version: "2.2.1"
   status: "Canonical"
   source:
     file: "Glossary.md"

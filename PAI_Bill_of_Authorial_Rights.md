@@ -12,7 +12,7 @@ metadata:
   keywords: "PAI-CD, Authorial Rights, Bill of Rights, sovereignty, consent, portability"
   robots: "index"
 pai_cd:
-  version: "v2.2.1"
+  version: "2.2.1"
   status: "Canonical"
   source:
     file: "PAI_Bill_of_Authorial_Rights.md"
