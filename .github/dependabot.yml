@@ -1,0 +1,14 @@
+# Dependabot config for the public corpus repository (pai-kernel).
+# Copy as .github/dependabot.yml when pushing to PAI-Kernel/pai-kernel.
+# Only monitors GitHub Actions — no Cargo/npm in public repo.
+
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "ci"

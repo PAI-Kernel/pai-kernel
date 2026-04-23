@@ -1,0 +1,24 @@
+# pai-kernel.toml — Default configuration
+# Per PHASE1-TZ-001 Section 9.1
+
+[server]
+bind = "127.0.0.1"
+port = 9100
+tls = false
+
+[storage]
+backend = "sqlite"
+sqlite_path = "./pai-kernel.db"
+
+[policy]
+rego_dir = "./policies/"
+reload_interval_secs = 30
+
+[drift]
+objective_changes_30d = 5
+classification_changes_30d = 3
+consecutive_upgrades_without_gap = 2
+
+[logging]
+level = "info"
+format = "json"

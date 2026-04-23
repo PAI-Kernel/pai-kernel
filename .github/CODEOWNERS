@@ -1,0 +1,24 @@
+# PAI-Kernel Code Owners
+# All changes require review from the maintainer.
+# Expand teams as the project grows.
+
+# Default owner for everything
+*                    @MikhailSergeev
+
+# Constitutional corpus — highest sensitivity
+/corpus/             @MikhailSergeev
+/corpus/core/        @MikhailSergeev
+
+# Formal verification
+/formal/             @MikhailSergeev
+/spark/              @MikhailSergeev
+
+# Runtime and SDK
+/crates/             @MikhailSergeev
+/runtime/            @MikhailSergeev
+
+# Governance documents
+/governance/         @MikhailSergeev
+
+# CI/CD and security
+/.github/            @MikhailSergeev

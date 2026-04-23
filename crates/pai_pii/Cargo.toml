@@ -1,0 +1,11 @@
+[package]
+name = "pai_pii"
+version = "0.1.0"
+edition = "2021"
+description = "PII detection baseline for PAI-CD — regex-based pattern scanner"
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+regex = "1"

@@ -1,0 +1,9 @@
+[package]
+name = "pai_sequence"
+version = "0.1.0"
+edition = "2021"
+description = "MP-8 Tier Aggregation — sequence-level risk evaluation for PAI-CD governance"
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

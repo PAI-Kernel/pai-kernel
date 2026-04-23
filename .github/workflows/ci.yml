@@ -1,0 +1,51 @@
+# Lightweight CI for the public corpus repository (pai-kernel).
+# Copy as .github/workflows/ci.yml when pushing to PAI-Kernel/pai-kernel.
+# Does NOT include Rust/TLC/coverage — those live in the internal repo CI.
+
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint & verify
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Markdown lint
+        run: npx --yes markdownlint-cli2 '**/*.md' '#node_modules'
+
+      - name: Validate CITATION.cff
+        run: |
+          pip install --quiet cffconvert
+          cffconvert --validate
+
+      - name: Check internal links
+        run: |
+          python3 -c "
+          import pathlib, re, sys
+          errors = []
+          for md in pathlib.Path('.').rglob('*.md'):
+              text = md.read_text(encoding='utf-8', errors='replace')
+              for m in re.finditer(r'\[([^\]]+)\]\((?!https?://|mailto:)([^)#]+)', text):
+                  target = md.parent / m.group(2)
+                  if not target.exists():
+                      errors.append(f'  {md}: broken link -> {m.group(2)}')
+          if errors:
+              print('Broken internal links found:')
+              print('\n'.join(errors))
+              sys.exit(1)
+          print('All internal links OK')
+          "

@@ -1,0 +1,10 @@
+[package]
+name = "pai_compliance_id"
+version = "0.1.0"
+edition = "2021"
+description = "G-1 Compliance Identity + H-2 Certification Nomenclature for PAI-CD"
+publish = false
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"

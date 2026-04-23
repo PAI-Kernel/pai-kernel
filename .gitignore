@@ -1,0 +1,29 @@
+/target
+*.log
+*.ots
+tla2tools.jar
+compliance_report.json
+coverage/
+*.profraw
+*.profdata
+
+# SQLite runtime databases
+*.db
+*.db-shm
+*.db-wal
+
+# Never commit secret keys
+keys/mcc_runtime/author_seckey.base64
+**/.DS_Store
+.obsidian/
+console/node_modules/
+console/dist/
+spark/**/obj/
+target/
+
+# Local worktrees + developer tool installs (per C-023 §6.1 hygiene flag)
+.claude/worktrees/
+formal/gnatprove_*/
+
+# Root-level archives (does not affect archives elsewhere in tree)
+/*.zip

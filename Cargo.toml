@@ -1,0 +1,33 @@
+[workspace]
+members = [
+  "runtime/governance_daemon",
+  "runtime/pai_kernel",
+  "compliance/test_suite"
+,
+  "crates/pai_interface",
+  "crates/pai_gate",
+  "crates/pai_influence",
+  "crates/pai_harness",
+  "crates/pai_delegation",
+  "crates/pai_witness",
+  "crates/pai_classify",
+  "crates/pai_storage",
+  "crates/pai_drift",
+  "crates/pai_pii",
+  "crates/pai_policy",
+  "crates/pai_api",
+  "crates/pai_export",
+  "crates/pai_sequence",
+  "crates/pai_compliance_id",
+  "crates/pai_provenance",
+  "crates/pai_causal",
+  "crates/pai_vulnerability",
+  "crates/pai_boundary",
+  "crates/pai_attestation",
+  "crates/pai_evasion",
+  "crates/pai_config",
+  "examples",
+  "adapters/mcp",
+  "adapters/openai"
+]
+resolver = "2"

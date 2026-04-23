@@ -1,7 +1,7 @@
 cff-version: 1.2.0
 message: "If you use PAI-CD in your research, please cite it as below."
-type: dataset
-title: "PAI-CD: PAI Constitutional Document"
+type: software
+title: "PAI-CD: Personal Authorial Intelligence Constitutional Document"
 abstract: "An open constitutional framework for deployed AI systems. Six non-derogable invariants protecting authorial sovereignty at the deployment layer."
 authors:
   - family-names: Sergeev
@@ -9,24 +9,36 @@ authors:
     affiliation: Independent Researcher; PAI-Kernel Initiative
     email: Mikhail.Sergeev@paikernel.org
     orcid: "https://orcid.org/0009-0001-6443-855X"
-version: "2.2"
-date-released: "2026-03-21"
+version: "2.2.1"
+date-released: "2026-04-23"
 license: CC-BY-4.0
-repository-code: "https://github.com/pai-kernel/pai-kernel"
+repository-code: "https://github.com/PAI-Kernel/pai-kernel"
 url: "https://paikernel.org"
-doi: "10.5281/zenodo.19151900"
+doi: "10.2139/ssrn.6512218"
 identifiers:
   - type: doi
-    value: "10.5281/zenodo.19151900"
-    description: "Version v2.2 (this version)"
-  - type: doi
-    value: "10.5281/zenodo.19151899"
-    description: "All versions (concept DOI — always resolves to latest)"
+    value: "10.2139/ssrn.6512218"
+    description: "Paper DOI (SSRN) — citation target for v2.2.1 release"
+# Zenodo DOIs will be auto-minted via GitHub integration upon v2.2.1 release;
+# CITATION.cff updated in subsequent patch (v2.2.2 or v3.1.0) to include them.
+preferred-citation:
+  type: article
+  title: "PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems"
+  authors:
+    - family-names: Sergeev
+      given-names: Mikhail Anatolievich
+      affiliation: Independent Researcher; PAI-Kernel Initiative
+      orcid: "https://orcid.org/0009-0001-6443-855X"
+  year: 2026
+  doi: "10.2139/ssrn.6512218"
+  url: "https://doi.org/10.2139/ssrn.6512218"
+  journal: "SSRN"
 keywords:
   - Personal Authorial Intelligence
   - PAI
   - PAI-CD
   - PAI-Kernel
+  - framework
   - artificial intelligence
   - AI governance
   - constitutional AI
