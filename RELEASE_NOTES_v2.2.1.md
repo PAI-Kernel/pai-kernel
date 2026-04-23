@@ -17,7 +17,7 @@ The pause has been lifted. v2.2.1 is the authorized first release — **early pr
 
 ### Integration level · honest framing
 
-PAI-Kernel v2.2.1 SDK provides the **governance substrate** — invariants, witness chain, consent gates, drift monitoring, export primitives. This release runs **side-by-side with Ollama** (or any LLM runtime) for local demonstration purposes. The AI-mediation wiring — routing model responses through governance gates, Conservative Mode blocking AI output mid-stream, witness entries auto-populated from chat turns — is scheduled for **v3.1 Phase Q-SDK**, not this release.
+PAI-Kernel v2.2.1 SDK provides the **governance substrate** — invariants, witness chain, consent gates, drift monitoring, export primitives. This release runs **side-by-side with Ollama** (or any LLM runtime) for local demonstration purposes. The AI-mediation wiring — routing model responses through governance gates, Conservative Mode blocking AI output mid-stream, witness entries auto-populated from chat turns — is scheduled for a future release.
 
 See `INSTALL.md` § 8 "What you're seeing (Level 1 Demo Mode)" and `KNOWN_LIMITATIONS.md` for the full scope statement.
 
@@ -100,12 +100,12 @@ The v2.2.1 GitHub release surface **does apply** R2 patches. This matches the bi
 
 See `KNOWN_LIMITATIONS.md` for full text. Key items:
 
-- v2.2 is a **citationally-stable freeze**; canonical corpus evolves toward v3.1 (not auto-reflected here)
-- SDK v1.3.0 exceeds v2.2 corpus scope — implements v3.0-Extended / v3.1-trajectory invariants; adopters using SDK bind to superset
+- v2.2 is a **citationally-stable freeze**; future corpus freezes may introduce additional normative content (not auto-reflected here)
+- SDK v1.3.0 exceeds v2.2 corpus scope — the runtime implements additional invariants ahead of their publication in a future corpus freeze; adopters using SDK bind to this superset
 - Several corpus-required items (TCB attestation, supply-chain provenance, multi-principal governance, author vulnerability protection V4 path) are **not runtime-enforced** in SDK v1.3.0 yet
-- Multi-instance ATMAN coordination (Package P) is v3.2 or v4.0 target — NOT in v2.2.1
-- Zone Sovereignty + Provider Disposition Disclosure (Package S) are v4.0 target — NOT in v2.2.1
-- Package Q verification methods produce **specification-level** verdicts, not runtime-SDK conformance
+- Multi-instance coordination (multiple PAI Authors cooperating) is proposal-stage — NOT in v2.2.1
+- Regulatory zone governance + provider-disposition disclosure are scheduled for a later release — NOT in v2.2.1
+- Formal verification methods produce **specification-level** verdicts, not runtime-SDK conformance
 
 ---
 
@@ -154,7 +154,7 @@ Or browse online: [corpus.paikernel.org](https://corpus.paikernel.org)
 
 Transition to general availability gated on:
 
-- v3.1 Freeze Edition publication, OR
+- Next major corpus release publication, OR
 - Early adopter feedback validating stability
 
 Either transition requires new DL.
@@ -206,7 +206,7 @@ Specific acknowledgments are deferred to the general-availability release; early
 ## Next
 
 - **v2.2.2 (patch candidate):** reserved for security or citation-critical fixes only
-- **v3.1 Freeze Edition:** under active development per Tier 1→2→3 freeze sequence; timeline ~6-10 cycles
+- **Next major corpus release:** under active development; timeline subject to dedicated publication cycle
 - **Public announcement:** separate future DL; gated on readiness signals above
 
 ---

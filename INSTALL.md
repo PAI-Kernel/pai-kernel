@@ -73,7 +73,7 @@ Running the steps in this guide produces:
 
 - **PAI-Kernel does NOT mediate Ollama's responses.** Chat messages flow directly between you and the Ollama process; they are not routed through the governance daemon in v2.2.1.
 - **No witness-chain entries are auto-populated from Ollama chat.** Witness entries come from direct SDK calls you make.
-- **No Conservative Mode blocking** of AI output. That's a v3.1 Phase Q-SDK feature.
+- **No Conservative Mode blocking** of AI output. That's a future SDK-integration feature.
 - **No production-hardened defaults.** Bind is localhost-only; no TLS by default; no multi-tenant.
 
 See `KNOWN_LIMITATIONS.md` in the repository root for the full scope statement.
@@ -101,30 +101,30 @@ See `KNOWN_LIMITATIONS.md` in the repository root for the full scope statement.
 ### 1.5 Architecture at a glance
 
 ```
-┌──────────────────────────────────────────────────────────┐
-│  Your machine                                            │
-│                                                          │
-│   ┌─────────────────────┐    ┌────────────────────────┐  │
-│   │ pai_governance_daemon│    │ ollama serve           │  │
-│   │ axum HTTP           │    │ local LLM runtime      │  │
-│   │ :9100 localhost     │    │ :11434 localhost       │  │
-│   │                     │    │                        │  │
-│   │ witness chain       │    │ llama3.2 / qwen2.5 /   │  │
-│   │ consent gates       │    │ mixtral / ...          │  │
-│   │ drift monitor       │    │                        │  │
-│   │ export bundle       │    │                        │  │
-│   └─────────────────────┘    └────────────────────────┘  │
-│           ▲                              ▲               │
-│           │ JSON API                     │ chat          │
-│           │                              │               │
-│   ┌───────┴────────┐         ┌───────────┴────────────┐  │
-│   │ curl / browser │         │ ollama run llama3.2    │  │
-│   │ pai-console UI │         │ (your prompts/replies) │  │
-│   └────────────────┘         └────────────────────────┘  │
-│                                                          │
-│   Note (Level 1 honest): no wire between the two boxes   │
-│   in v2.2.1. AI-mediation is v3.1 Phase Q-SDK.           │
-└──────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────┐
+│  Your machine                                                │
+│                                                              │
+│  ┌────────────────────────┐  ┌────────────────────────┐      │
+│  │ pai_governance_daemon  │  │ ollama serve           │      │
+│  │ axum HTTP              │  │ local LLM runtime      │      │
+│  │ :9100 localhost        │  │ :11434 localhost       │      │
+│  │                        │  │                        │      │
+│  │ witness chain          │  │ llama3.2 / qwen2.5     │      │
+│  │ consent gates          │  │ / mixtral / ...        │      │
+│  │ drift monitor          │  │                        │      │
+│  │ export bundle          │  │                        │      │
+│  └────────────────────────┘  └────────────────────────┘      │
+│              ▲                           ▲                   │
+│              │ JSON API                  │ chat              │
+│              │                           │                   │
+│  ┌────────────────────────┐  ┌────────────────────────┐      │
+│  │ curl / browser         │  │ ollama run             │      │
+│  │ pai-console UI         │  │ (your prompts)         │      │
+│  └────────────────────────┘  └────────────────────────┘      │
+│                                                              │
+│  Note: no wire between the two boxes in v2.2.1.              │
+│  SDK + model integration is future roadmap.                  │
+└──────────────────────────────────────────────────────────────┘
 ```
 
 ---
@@ -375,9 +375,9 @@ curl http://127.0.0.1:9100/api/v1/version
 # {"version":"1.3.0","pai_cd_version":"3.1","build_profile":"release"}
 #
 # Note on version fields: this release is tagged v2.2.1 (corpus snapshot), SDK
-# binary version is 1.3.0, and the SDK-enforced invariant set is v3.1-trajectory
-# (superset of the published v2.2 corpus — SDK implements MP-1 through MP-9
-# ahead of their publication in v3.1 Freeze Edition). This is expected and
+# binary version is 1.3.0, and the SDK-enforced invariant set is a superset of
+# the published v2.2 corpus (SDK implements additional invariants ahead of
+# their publication in a future corpus freeze). This is expected and
 # documented in KNOWN_LIMITATIONS.md § 1.3.
 ```
 
@@ -548,7 +548,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 
 v2.2.1 SDK provides the **governance substrate** — the invariants, witness chain, consent semantics, export primitives, drift monitoring. It is the layer on which AI-mediation will be built.
 
-The AI-mediation wiring itself — routing Ollama's responses through the governance layer, binding Conservative Mode to actual model output, populating witness entries from chat turns — is the **Phase Q-SDK** workstream, scoped for the v3.1 Freeze Edition.
+The AI-mediation wiring itself — routing Ollama's responses through the governance layer, binding Conservative Mode to actual model output, populating witness entries from chat turns — is scheduled for a future release.
 
 **Adopters should read the roadmap framing in `KNOWN_LIMITATIONS.md`** before building on top of this release.
 
@@ -740,11 +740,11 @@ Error in browser console: `Failed to fetch /api/v1/...`
 
 Full scope: see `KNOWN_LIMITATIONS.md`. Key items:
 
-- **v2.2 is a citationally-stable freeze.** Internal canonical develops toward v3.1 independently; adopters integrating now bind to v2.2 semantics.
-- **SDK v1.3.0 exceeds v2.2 corpus scope** — implements v3.0-Extended / v3.1-trajectory invariants (MP-1 through MP-9). Adopters using SDK bind to superset.
-- **Package Q verification is specification-level**, not runtime-SDK-conformance. Current "PAI-compliant" status requires independent audit.
-- **Multi-instance ATMAN coordination** (Package P) is v3.2 or v4.0 target — not in v2.2.1.
-- **Zone Sovereignty + Provider Disposition Disclosure** (Package S) are v4.0 target.
+- **v2.2 is a citationally-stable freeze.** The published corpus is a frozen snapshot; adopters integrating now bind to v2.2 semantics. Future corpus freezes may introduce additional normative content.
+- **SDK v1.3.0 exceeds v2.2 corpus scope** — the runtime implements additional invariants ahead of their publication in a future corpus freeze. Adopters using SDK bind to this superset.
+- **Formal verification is specification-level**, not runtime-SDK-conformance. Current compliance status requires independent audit.
+- **Multi-instance coordination** (multiple PAI Authors cooperating) is not in v2.2.1 scope; dyadic deployments only.
+- **Regulatory zone governance and provider-disposition disclosure** are scheduled for a later release; not in v2.2.1.
 
 ---
 

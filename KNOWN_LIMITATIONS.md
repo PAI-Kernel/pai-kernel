@@ -25,13 +25,13 @@ The published framework is **PAI-CD v2.2 Freeze Edition** (March 2026 snapshot).
 
 ### 1.2 Internal canonical evolves beyond v2.2
 
-Under internal governance, PAI-CD continues to develop toward v3.1 Freeze Edition (Extended layers, additional Operating Principles, refined threat model). This internal development is deliberately **lagged from public surface** per bifurcation discipline (public snapshot layer ≠ canonical layer).
+Future corpus freezes may introduce additional normative content (Extended layers, new Operating Principles, refinements to threat model). Canonical development is deliberately **lagged from public surface** per bifurcation discipline (public snapshot layer ≠ internal canonical layer).
 
-**Implication:** do not expect v2.2.1 published content to auto-update as canonical evolves. A future explicit rebase DL publishes v3.1 Freeze Edition.
+**Implication:** do not expect v2.2.1 published content to auto-update as canonical evolves. Future major releases are published as explicit events with their own tags.
 
 ### 1.3 SDK v1.3.0 vs corpus v2.2 scope gap
 
-The Rust SDK is at **v1.3.0** — reflecting 3 sprint cycles of invariant implementation beyond the v2.2 corpus baseline. The SDK runtime enforces several v3.0-Extended and v3.1-trajectory invariants (MP-1 through MP-9) that are NOT in v2.2 normative text.
+The Rust SDK is at **v1.3.0** — reflecting multiple cycles of invariant implementation beyond the v2.2 corpus baseline. The SDK runtime enforces several invariants (developed ahead of their publication in a future corpus freeze) that are NOT in v2.2 normative text.
 
 **Implication:** SDK behavior may be **stricter than v2.2 corpus requires**. This is deliberate (SDK trajectory leads corpus publication). Adopters treating SDK behavior as normative should note SDK enforces superset.
 
@@ -55,13 +55,9 @@ The following normative items are **defined in corpus but NOT runtime-enforced**
 
 ### 2.3 Specification-level vs runtime-level verification
 
-Package Q verification program (CAO-led) produces **specification-level** verdicts across three methods:
+The framework verification program produces **specification-level** verdicts via formal modeling (TLA+ state-space exploration), adversarial review, and narrative / case analysis.
 
-- **Method 1 · Formal (TLA+)** — invariants modeled at specification level; 464K states / 7 invariants verified
-- **Method 2 · Adversarial review** — 9 BLOCKING objections open as of v2.2.1; Tier-2 responses staged
-- **Method 3 · Narrative / Case** — Case N1 factual summary target 2026-04-26
-
-**None of the three methods is a runtime-SDK verifier.** Runtime SDK conformance is a separate track (Phase Q-SDK; activated by Package Q verdict CONFIRMED or PARTIAL-alignment-value).
+**None of these methods is a runtime-SDK verifier.** Runtime SDK conformance is a separate workstream and is not delivered in this release.
 
 **Implication:** "PAI-compliant" status under current corpus (G-1 / H-2 certification nomenclature) requires independent audit; SDK alone is insufficient evidence of compliance.
 
@@ -71,17 +67,17 @@ Package Q verification program (CAO-led) produces **specification-level** verdic
 
 ### 3.1 Author vulnerability protection (Doc 20) operationalization
 
-V4 Lock-Out Resolution procedure (corpus amendment S2-004 during v3.0-Extended freeze) exists normatively but requires external Recovery Designee / V3 Auditor relationships not part of software scope. Adopters deploying PAI instances for vulnerable Authors must establish these relationships externally.
+V4 Lock-Out Resolution procedure exists normatively but requires external Recovery Designee / V3 Auditor relationships not part of software scope. Adopters deploying PAI instances for vulnerable Authors must establish these relationships externally.
 
 ### 3.2 Multi-Principal Governance (Doc 17) scope
 
-Current Multi-Principal Governance covers multi-human (P1/P2/P3) classification. Multi-instance ATMAN coordination (Package P target v3.2 or v4.0) is **proposal-stage** — not in v2.2.1.
+Current Multi-Principal Governance covers multi-human (P1/P2/P3) classification. Multi-instance coordination (multiple PAI Authors cooperating) is **proposal-stage** — not in v2.2.1.
 
-**Implication:** v2.2.1 governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for Package P activation.
+**Implication:** v2.2.1 governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for a future release.
 
-### 3.3 Zone Sovereignty and Dual Guarantee
+### 3.3 Regulatory zone governance
 
-Package S (regulatory zone sovereignty + provider-usage disclosure) is **v4.0 target** — proposal-stage, not in v2.2.1. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
+Regulatory zone sovereignty and provider-usage disclosure are **proposal-stage**, scheduled for a later release — not in v2.2.1. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
 
 ---
 
@@ -98,7 +94,7 @@ Current `corpus.paikernel.org` hosts three canonical v2.2 documents (Constitutio
 OP-1 through OP-10 v2 are canonically ratified. OP-11 through OP-17 are at varying stages:
 
 - OP-11 through OP-15: ratified (operational discipline)
-- OP-16 Self-Report Discipline: **v1.0 in v3.1 Freeze Edition** — not in v2.2 normative text (but implicit compliance expectation from this release forward)
+- OP-16 Self-Report Discipline: scheduled for publication in a future corpus release — not in v2.2 normative text (but implicit compliance expectation from this release forward)
 - OP-17 Markdown & Documentation Style: **draft v0.1** — governs v2.2.1 release production and public-surface rendering
 
 ### 4.3 Amendment procedure
@@ -137,13 +133,13 @@ Contributions, funding structure, and organizational evolution are separate futu
 
 ## 6. Security posture
 
-### 6.1 Dual Guarantee framework
+### 6.1 Dual guarantee (author sovereignty + provider non-circumvention)
 
-The Dual Guarantee (author sovereignty + provider non-circumvention) is specified in corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are **Package S scope for v4.0** — not enforced in v2.2.1.
+The dual guarantee (author sovereignty + provider non-circumvention) is specified in corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are scheduled for a later release — not enforced in v2.2.1.
 
 ### 6.2 Known attack vectors
 
-Threat Model (Doc 04) enumerates 11 threat classes — most recent (THREAT CLASS 11 · Self-Report Category Error) is **v3.1 scope** — not in v2.2 normative text but adopters should be aware per OP-16 discipline.
+Threat Model (Doc 04) enumerates 10 threat classes in v2.2; a self-report category-error class is scheduled for publication in a future corpus release — adopters should be aware per OP-16 discipline.
 
 ### 6.3 Security disclosure
 
@@ -187,7 +183,7 @@ Per invitation-only distribution policy: feedback welcomed via:
 
 | Version | Date | Changes |
 |---|---|---|
-| **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, Package Q specification-level scope, Operating Principles registry status, licensing, security, feedback channels. |
+| **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, specification-level verification scope, Operating Principles registry status, licensing, security, feedback channels. |
 
 ---
 
