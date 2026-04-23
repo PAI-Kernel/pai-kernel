@@ -9,12 +9,19 @@
 
 ## Personal Authorial Intelligence — Constitutional Framework
 
-> A normative layer for human-centric AI governance.  
-> Version 2.2 — Public Edition
+> A normative layer for human-centric AI governance.
+> **Release v2.2.1 — Early Preview** · April 2026
+
+### Start here
+
+- **New adopter?** Begin with [`INSTALL.md`](./INSTALL.md) — cross-platform install guide (~30–60 min).
+- **Want to know what's inside and what's not?** See [`KNOWN_LIMITATIONS.md`](./KNOWN_LIMITATIONS.md).
+- **Release overview:** [`RELEASE_NOTES_v2.2.1.md`](./RELEASE_NOTES_v2.2.1.md).
+- **Research paper:** *"PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems"* · SSRN · [DOI 10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218).
 
 -----
 
-The canonical frozen version of this release is available via DOI:
+The frozen v2.2 corpus snapshot is archived via DOI:
 <https://doi.org/10.5281/zenodo.19151900>
 
 -----
@@ -24,35 +31,27 @@ The canonical frozen version of this release is available via DOI:
 **PAI-CD v2.2** is a constitutional framework consisting of
 **10 normative documents**, organized as a layered system.
 
-This repository contains the **Public Edition** — a deliberately scoped
-release of **3 foundational documents (Layer 0)** that establish:
+The **v2.2.1 release package** contains:
 
-- the constitutional invariants
-- the authorial rights layer
-- the binding terminology
+- **Three foundational corpus documents (Layer 0)** — constitutional invariants, authorial rights, binding terminology
+- **Companion research paper** (SSRN DOI 10.2139/ssrn.6512218)
+- **Rust SDK v1.3.0** — 22 library crates + governance daemon binary + 5 runnable examples
+- **Install guide** (`INSTALL.md`) — cross-platform walkthrough
+- **Release notes, known limitations, license, contribution policy, security policy, citation metadata**
 
-The remaining layers of the corpus introduce:
-
-- interpretation rules and conflict resolution
-- threat modeling and attack surfaces
-- protocol and system constraints
-- compliance and enforcement logic
-- audit and verification procedures
-- governance and amendment mechanisms
-- implementation and integration mapping
-
-These layers will be released progressively as the project develops.
+The remaining corpus layers (interpretation rules, threat modeling beyond Layer 0, protocol constraints, compliance logic, audit procedures, governance mechanisms, implementation mapping) exist in internal canonical development and will be released progressively in subsequent publications.
 
 This repository is **not a research paper**.
 
 It is a **normative constitutional specification (Layer 0 infrastructure)**.
 
-A separate **research paper** (arXiv submission) is in preparation for submission to arXiv and will formally describe:
+A companion **research paper** describing the problem space, threat model, invariant architecture, and system implications is published on SSRN:
 
-- the problem space
-- the threat model
-- the invariant architecture
-- the system implications
+> *"PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems"*
+> Mikhail Anatolievich Sergeev · Independent Researcher; PAI-Kernel Initiative · 2026
+> DOI: [10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218)
+
+The paper PDF is also included in this repository under [`papers/`](./papers/).
 
 -----
 
@@ -141,15 +140,14 @@ This principle applies to all documents in this repository and to any compliant 
 
 |Item                    |Status                                          |
 |------------------------|------------------------------------------------|
-|Constitutional Framework|v2.2 — Freeze Edition                           |
-|Copyright Filing        |Initiated Q1 2026                               |
+|Constitutional Framework|v2.2 corpus — Freeze Edition (March 2026)       |
+|Release package         |v2.2.1 — Early Preview (April 2026)             |
+|Distribution            |Invitation-only early adopter preview           |
 |Domain                  |[paikernel.org](https://paikernel.org)          |
+|Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
 |Governance              |Currently maintained by the primary author      |
 
-> **Note on versioning:** This Public Edition (v2.2, released March 2026)
-> is a frozen snapshot of foundational documents. Internal corpus development
-> continues; subsequent Public Edition releases will incorporate stabilized
-> updates. For academic citation, see CITATION.cff.
+> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.1 release package (April 2026) publishes that corpus together with adopter materials, the research paper, and the Rust SDK v1.3.0. Future releases may introduce additional normative content; v2.2.1 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
 
 -----
 
