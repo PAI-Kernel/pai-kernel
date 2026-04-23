@@ -100,7 +100,7 @@ See `KNOWN_LIMITATIONS.md` in the repository root for the full scope statement.
 
 ### 1.5 Architecture at a glance
 
-```
+```text
 ┌──────────────────────────────────────────────────────────────┐
 │  Your machine                                                │
 │                                                              │
@@ -277,7 +277,7 @@ cargo build --workspace --release
 
 **Expected final output lines (abbreviated):**
 
-```
+```text
    Compiling pai_api v1.3.0
    Compiling pai_kernel v1.3.0 (/path/to/pai-kernel/runtime/pai_kernel)
     Finished `release` profile [optimized] target(s) in 5m 34s
@@ -348,7 +348,7 @@ This default is safe for local testing. Adjust later if needed.
 
 **Expected log output** (JSON-formatted):
 
-```
+```text
 {"timestamp":"2026-04-23T14:00:12.345Z","level":"INFO","message":"Loading configuration from ./pai-kernel.toml"}
 {"timestamp":"2026-04-23T14:00:12.350Z","level":"INFO","message":"Storage backend: sqlite path=./pai-kernel.db"}
 {"timestamp":"2026-04-23T14:00:12.355Z","level":"INFO","message":"Policy engine: loaded N rego modules from ./policies/"}
@@ -488,13 +488,13 @@ ollama run llama3.2
 
 Expected prompt:
 
-```
+```text
 >>> Send a message (/? for help)
 ```
 
 Try a prompt:
 
-```
+```text
 >>> What does PAI-CD stand for?
 ```
 
@@ -682,7 +682,7 @@ xattr -d com.apple.quarantine ./target/release/pai_governance_daemon
 
 Freshly compiled binaries may trigger heuristic alerts. Add an exclusion:
 
-```
+```text
 Settings → Privacy & Security → Windows Security → Virus & threat protection
   → Manage settings → Add or remove exclusions → Add exclusion → Folder
   → Select: C:\path\to\pai-kernel\target\
@@ -712,7 +712,7 @@ Similar process.
 
 ### 11.8 SQLite permission errors
 
-```
+```text
 Error: unable to open database file
 ```
 

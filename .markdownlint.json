@@ -10,6 +10,7 @@
   "MD026": { "punctuation": ".,;:" },
   "MD032": false,
   "MD033": { "allowed_elements": ["a", "br", "details", "summary"] },
+  "MD035": false,
   "MD041": false,
   "MD046": { "style": "fenced" },
   "MD048": { "style": "backtick" },
