@@ -35,7 +35,7 @@ jobs:
             archive_ext: tar.gz
             archive_tool: tar
           - target: x86_64-apple-darwin
-            runner: macos-13  # x86_64 GitHub-hosted runner
+            runner: macos-latest  # Apple Silicon — cross-compiles to Intel via target
             archive_ext: tar.gz
             archive_tool: tar
           - target: x86_64-pc-windows-msvc
