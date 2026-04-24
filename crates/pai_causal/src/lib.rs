@@ -1,6 +1,6 @@
 //! # PAI Causal Telemetry (Doc 14) — Objective Causality Assurance
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Document 14
+//! **Constitutional reference:** PAI-CD, Document 14
 //!
 //! ## Scope
 //!

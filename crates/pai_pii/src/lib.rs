@@ -1,6 +1,6 @@
 //! # PAI PII Detection Baseline
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Governance Assessment B2.5
+//! **Constitutional reference:** PAI-CD, Governance Assessment B2.5
 //!
 //! ## Scope
 //!
@@ -400,7 +400,7 @@ mod tests {
     fn test_clean_text_no_fp() {
         let clean_texts = vec![
             "The weather is nice today.",
-            "PAI-CD v3.1 governance framework",
+            "PAI-CD governance framework",
             "Meeting at 3:00 PM in Room 42",
             "Total: $1,234.56",
             "Version 2.0.1-beta",

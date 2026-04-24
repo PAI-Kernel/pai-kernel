@@ -1,6 +1,6 @@
 //! # PAI Trusted Computing Base & Attestation (Doc 10)
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Document 10
+//! **Constitutional reference:** PAI-CD, Document 10
 //!
 //! ## Scope
 //!

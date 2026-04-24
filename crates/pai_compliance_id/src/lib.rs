@@ -1,6 +1,6 @@
 //! # PAI Compliance Identity (G-1) & Certification Nomenclature (H-2)
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Amendments G-1, H-2
+//! **Constitutional reference:** PAI-CD, Amendments G-1, H-2
 //!
 //! ## G-1: Compliance Identity
 //!

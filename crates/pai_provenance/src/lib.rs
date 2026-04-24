@@ -1,6 +1,6 @@
 //! # PAI Provenance (Doc 11) — Supply Chain & Artifact Provenance
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Document 11
+//! **Constitutional reference:** PAI-CD, Document 11
 //!
 //! ## Scope
 //!

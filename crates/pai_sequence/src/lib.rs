@@ -1,6 +1,6 @@
 //! # PAI Sequence Evaluator (MP-8 Tier Aggregation)
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Amendment MP-8 (Tier Aggregation)
+//! **Constitutional reference:** PAI-CD, Amendment MP-8 (Tier Aggregation)
 //!
 //! ## Problem
 //!

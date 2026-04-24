@@ -1,6 +1,6 @@
 //! # PAI Gate (HAC Component #3)
 //!
-//! **Constitutional reference:** PAI-CD v3.1 §Governance, Consent Model §P2
+//! **Constitutional reference:** PAI-CD §Governance, Consent Model §P2
 //!
 //! Core gating logic: evaluates whether a proposed action is allowed
 //! given the current governance mode (normal / conservative / breach),

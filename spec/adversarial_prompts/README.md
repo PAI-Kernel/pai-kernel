@@ -1,7 +1,5 @@
 # Adversarial Prompt Fixture Corpus
 
-**PAI-CD v3.1 / SDK v1.3.0**
-
 Static test fixtures for semantic governance bypass detection.
 Each `.jsonl` file contains one JSON object per line.
 

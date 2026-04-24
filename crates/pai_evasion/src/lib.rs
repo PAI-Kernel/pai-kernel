@@ -1,6 +1,6 @@
 //! # PAI Anti-Evasion Detection (MP-1)
 //!
-//! **Constitutional reference:** PAI-CD v3.1, Constraints & Prohibitions §MP-1
+//! **Constitutional reference:** PAI-CD, Constraints & Prohibitions §MP-1
 //!
 //! ## Scope
 //!

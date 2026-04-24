@@ -1,6 +1,6 @@
 //! # PAI System Boundary Declaration (MP-5)
 //!
-//! **Constitutional reference:** PAI-CD v3.1 §MP-5, Full-Stack Binding Clause
+//! **Constitutional reference:** PAI-CD §MP-5, Full-Stack Binding Clause
 //!
 //! ## Scope
 //!
