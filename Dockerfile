@@ -21,7 +21,10 @@
 # ---- stage 1: build ----
 FROM rust:1.86-alpine AS builder
 
-RUN apk add --no-cache musl-dev pkgconfig openssl-dev openssl-libs-static sqlite-dev
+# git is required by some transitive build scripts (regorus Rego engine
+# invokes `git rev-parse HEAD` during build). ca-certificates for TLS on
+# cargo fetch.
+RUN apk add --no-cache musl-dev pkgconfig openssl-dev openssl-libs-static sqlite-dev git ca-certificates
 
 WORKDIR /build
 COPY . .
