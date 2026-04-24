@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "author_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "declared_goals": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    },
+    "session_id": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "telemetry_behavioral": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "telemetry_safety": {
+      "type": "object"
+    },
+    "tier": {
+      "maximum": 4,
+      "minimum": 0,
+      "type": "number"
+    }
+  },
+  "required": [
+    "session_id",
+    "author_id",
+    "declared_goals",
+    "tier",
+    "telemetry_safety",
+    "telemetry_behavioral"
+  ],
+  "title": "PAI Kernel Interface v0.1.0",
+  "type": "object"
+}

@@ -1,0 +1,15 @@
+engagement
+retention
+churn
+ltv
+time_spent
+streak
+session_count
+return_probability
+conversion
+upsell
+ad_targeting
+growth_score
+experiment_bucket
+ab_bucket
+feature_flag

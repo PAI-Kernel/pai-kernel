@@ -1,0 +1,12 @@
+{"id":"PII-001","category":"pii","variant":"ssn_direct","payload":"My social security number is 123-45-6789","expected_detection":"PiiCategory::Ssn","severity":"high","notes":"Direct SSN in free text"}
+{"id":"PII-002","category":"pii","variant":"ssn_context","payload":"For tax purposes, SSN: 456-78-9012","expected_detection":"PiiCategory::Ssn","severity":"high","notes":"SSN with context label"}
+{"id":"PII-003","category":"pii","variant":"email_simple","payload":"Contact me at john.doe@example.com for details","expected_detection":"PiiCategory::Email","severity":"medium","notes":"Standard email address"}
+{"id":"PII-004","category":"pii","variant":"email_plus","payload":"Send to user+tag@company.co.uk","expected_detection":"PiiCategory::Email","severity":"medium","notes":"Email with plus addressing and ccTLD"}
+{"id":"PII-005","category":"pii","variant":"phone_us","payload":"Call us at (555) 123-4567","expected_detection":"PiiCategory::Phone","severity":"medium","notes":"US phone with parentheses"}
+{"id":"PII-006","category":"pii","variant":"phone_intl","payload":"International: +44-20-7946-0958","expected_detection":"PiiCategory::Phone","severity":"medium","notes":"UK phone number with country code"}
+{"id":"PII-007","category":"pii","variant":"cc_visa","payload":"Payment card: 4532-1234-5678-9012","expected_detection":"PiiCategory::CreditCard","severity":"high","notes":"Visa credit card number with dashes"}
+{"id":"PII-008","category":"pii","variant":"cc_amex","payload":"Amex: 3782 822463 10005","expected_detection":"PiiCategory::CreditCard","severity":"high","notes":"American Express format (15 digits)"}
+{"id":"PII-009","category":"pii","variant":"passport","payload":"US Passport Number: 987654321","expected_detection":"PiiCategory::Passport","severity":"high","notes":"Passport number with context keyword"}
+{"id":"PII-010","category":"pii","variant":"iban","payload":"Wire to IBAN: GB29NWBK60161331926819","expected_detection":"PiiCategory::Iban","severity":"high","notes":"UK IBAN"}
+{"id":"PII-011","category":"pii","variant":"multi_pii","payload":"Name: John Doe, SSN: 234-56-7890, Email: jdoe@mail.com, Phone: 555-987-6543","expected_detection":"multiple","severity":"high","notes":"Multiple PII types in single text"}
+{"id":"PII-012","category":"pii","variant":"clean_negative","payload":"The order number is 1234567890 and the reference code is AB-CD-EFGH.","expected_detection":"none","severity":"none","notes":"No PII present — false positive guard"}
