@@ -141,6 +141,34 @@ The dual guarantee (author sovereignty + provider non-circumvention) is specifie
 
 Threat Model (Doc 04) enumerates 10 threat classes in v2.2; a self-report category-error class is scheduled for publication in a future corpus release — adopters should be aware per OP-16 discipline.
 
+**Threat Class 1 · Objective Capture — documented residual risk:**
+
+SDK v1.3.0 enforces the Growth Signal Denylist (`spec/denylist_growth_keys.txt`) via exact-key RegexSet matching at the `validate_context()` boundary. This hard-blocks **literal injection** of prohibited keys (e.g., `engagement`, `churn`, `conversion`).
+
+It does NOT protect against **semantic-substitution** attack class — six variants are documented in the governance record:
+
+1. **Synonymy** — re-wording a prohibited concept as an unblocked key name (e.g., `engagement` → `user_interaction_intensity`)
+2. **Semantic displacement** — concept-equivalent renaming (e.g., `churn` → `user_departure_probability`)
+3. **Composition** — feature-engineered composite from allowed primitives (e.g., `loyalty = session_count × return_rate + streak`)
+4. **Indirection via derived variables** — innocent-named objective with prohibited internal weighting (registered `user_satisfaction`; internally engagement-weighted)
+5. **Language / locale variation** — translated or locale-suffixed variants (e.g., `engagement` → `вовлечённость`, `engagement_de`, `eng_metric`)
+6. **Homoglyph / typographic substitution** — Unicode visually-equivalent substitution (e.g., `engagеment` with Cyrillic `е`)
+
+**Planned defenses:**
+
+- **v2.2.2 patch candidate** — Unicode NFKC normalization + case/separator equivalence (catches homoglyph, partial locale variants)
+- **Next major release** — embedding-similarity blocking (catches synonymy + semantic displacement), provenance chain tracking (catches composition), behavioral proxy detection via drift engine (catches indirection post-hoc), Self-Report Discipline pairing (catches indirection AI-side)
+- **v4.0** — Provider Disposition Disclosure — cross-check AI self-report against provider training documentation
+
+**Adopters should not rely on the denylist alone for comprehensive objective-injection defense.** Recommended defense-in-depth:
+
+- Independent behavioral audit of registered objectives (off-SDK)
+- Provenance review of derived variables feeding registered objectives
+- Periodic review of objective registry for semantic drift
+- Cross-provider comparison of AI response patterns on identical prompts
+
+See `Threat_Model_Cognitive_Influence.md` Class 1 in the corpus for the canonical reference.
+
 ### 6.3 Security disclosure
 
 Security vulnerabilities in SDK v1.3.0 or corpus normative text: disclose via GitHub private security advisory at [github.com/PAI-Kernel/pai-kernel/security/advisories](https://github.com/PAI-Kernel/pai-kernel/security/advisories) or direct contact per `SECURITY.md`.
