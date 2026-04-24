@@ -29,8 +29,10 @@ Pick the fastest path that suits your environment. All paths deliver the same `p
 ### Option A1 · One-line install script (macOS / Linux) — ~30 sec
 
 ```bash
-curl -fsSL https://paikernel.org/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.1/install.sh | sh
 ```
+
+(A shorter URL `https://paikernel.org/install.sh` will be available once the redirect is deployed — track release notes.)
 
 Auto-detects your OS + CPU architecture, downloads the matching binary from the GitHub Release, verifies the SHA256 checksum, and installs to `~/.local/pai-kernel/` with an optional symlink into `~/.local/bin/`. No Rust toolchain required.
 
@@ -638,7 +640,7 @@ The AI-mediation wiring itself — routing Ollama's responses through the govern
 
 The `console/` directory contains a React + Vite application that visualizes governance state via the daemon's JSON API. Useful for adopters who prefer a UI over `curl`.
 
-### 10.1 Build the console
+### 11.1 Build the console
 
 Prerequisites: **Node.js 20+** and npm.
 
@@ -656,7 +658,7 @@ npm run build
 # Expected: built files in console/dist/ (≈ 300 KB total)
 ```
 
-### 10.2 Run the console
+### 11.2 Run the console
 
 Development mode (hot reload, proxies `/api` to daemon):
 
@@ -687,7 +689,7 @@ Open `http://127.0.0.1:3000` in your browser. Navigate through:
 
 ## § 12 · Troubleshooting
 
-### 11.1 Port 9100 is already in use
+### 12.1 Port 9100 is already in use
 
 Check what's using it:
 
@@ -704,7 +706,7 @@ Options:
 - Stop the other process, OR
 - Change port: edit `pai-kernel.toml` → `[server] port = 9101` and restart daemon
 
-### 11.2 Rust compilation errors
+### 12.2 Rust compilation errors
 
 **macOS:** `error: linking with 'cc' failed` → reinstall Xcode CLT:
 
@@ -719,7 +721,7 @@ xcode-select --install
 
 **Any platform:** `rustc version X.Y.Z < 1.86.0` → `rustup update stable && rustup default stable`.
 
-### 11.3 Ollama can't pull a model
+### 12.3 Ollama can't pull a model
 
 **Firewall / proxy:** set environment variables before pull:
 
@@ -736,7 +738,7 @@ curl -v https://registry.ollama.ai
 
 **Disk space:** Ollama stores models under `~/.ollama/` (macOS/Linux) or `%USERPROFILE%\.ollama\` (Windows). Ensure adequate free space.
 
-### 11.4 Port 11434 (Ollama) conflict
+### 12.4 Port 11434 (Ollama) conflict
 
 ```bash
 # Tell Ollama to use a different port
@@ -745,7 +747,7 @@ OLLAMA_HOST=127.0.0.1:11435 ollama serve
 OLLAMA_HOST=127.0.0.1:11435 ollama run llama3.2
 ```
 
-### 11.5 macOS Gatekeeper blocking binary
+### 12.5 macOS Gatekeeper blocking binary
 
 If macOS warns "cannot verify developer":
 
@@ -758,7 +760,7 @@ xattr -d com.apple.quarantine ./target/release/pai_governance_daemon
 
 (Adopters build from source, so this is normally not an issue — only happens on binaries distributed pre-built.)
 
-### 11.6 Windows Defender quarantine
+### 12.6 Windows Defender quarantine
 
 Freshly compiled binaries may trigger heuristic alerts. Add an exclusion:
 
@@ -768,7 +770,7 @@ Settings → Privacy & Security → Windows Security → Virus & threat protecti
   → Select: C:\path\to\pai-kernel\target\
 ```
 
-### 11.7 Linux SELinux / AppArmor denying SQLite write
+### 12.7 Linux SELinux / AppArmor denying SQLite write
 
 If the daemon logs `Permission denied` on `pai-kernel.db`:
 
@@ -790,7 +792,7 @@ sudo aa-status | head
 
 Similar process.
 
-### 11.8 SQLite permission errors
+### 12.8 SQLite permission errors
 
 ```text
 Error: unable to open database file
@@ -806,7 +808,7 @@ cd ~/pai-kernel
 ./pai_governance_daemon
 ```
 
-### 11.9 Console dev server can't reach daemon
+### 12.9 Console dev server can't reach daemon
 
 Error in browser console: `Failed to fetch /api/v1/...`
 
