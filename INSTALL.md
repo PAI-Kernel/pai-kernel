@@ -22,19 +22,54 @@ pai_cd:
 
 ---
 
-## TL;DR — three install paths
+## TL;DR — install paths by convenience
 
-Choose the path that matches your situation.
+Pick the fastest path that suits your environment. All paths deliver the same `pai_governance_daemon` binary + default config + policies.
 
-### Option A · Pre-built binary (fastest, no Rust toolchain) — ~3 min
+### Option A1 · One-line install script (macOS / Linux) — ~30 sec
 
-Download the pre-built daemon for your platform from the release page and run it.
+```bash
+curl -fsSL https://paikernel.org/install.sh | sh
+```
+
+Auto-detects your OS + CPU architecture, downloads the matching binary from the GitHub Release, verifies the SHA256 checksum, and installs to `~/.local/pai-kernel/` with an optional symlink into `~/.local/bin/`. No Rust toolchain required.
+
+After install:
+```bash
+~/.local/pai-kernel/pai_governance_daemon --config ~/.local/pai-kernel/pai-kernel.toml
+```
+
+### Option A2 · Homebrew (macOS) — ~1 min
+
+```bash
+brew install PAI-Kernel/tap/pai-kernel
+pai_governance_daemon init   # creates config + policies/ in current dir
+pai_governance_daemon
+```
+
+(Availability: once the `PAI-Kernel/homebrew-tap` repository is live — see release notes for status.)
+
+### Option A3 · Docker (any OS with Docker) — ~1 min, zero host install
+
+```bash
+docker run --rm -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.1
+```
+
+No Rust toolchain, no Gatekeeper/Defender issues, no host-side state. Daemon listens inside the container and publishes to host port 9100. For persistent state:
+
+```bash
+docker run -v pai-kernel-data:/data -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.1
+```
+
+### Option A4 · Manual binary download — ~3 min
+
+Download the pre-built daemon for your platform directly from the release page:
 
 ```bash
 # 1. Download (pick your platform)
 curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz
 
-# 2. Verify checksum (optional but recommended)
+# 2. Verify checksum (recommended)
 curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
 shasum -a 256 -c pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
 
@@ -46,7 +81,7 @@ cd pai_governance_daemon-v2.2.1-aarch64-apple-darwin
 
 Binary + default config + policies + docs are in the archive. No Rust toolchain needed.
 
-**Platform notes:** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround (v2.2.1 early preview binaries are not codesigned; signing will be added for general availability).
+**Platform notes (Options A1 / A4):** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround. Options A2 (Homebrew) and A3 (Docker) handle this automatically. v2.2.1 binaries are not codesigned; signing will be added for general availability.
 
 ### Option B · Build from source (full SDK, all crates, 28 crates) — ~30–60 min
 
@@ -76,11 +111,14 @@ pai_governance_daemon --config /path/to/pai-kernel.toml
 
 ### Adopter comparison
 
-| Path | Rust toolchain? | Time | Best for |
-|---|---|---|---|
-| **A · Binary** | No | ~3 min | Just want to try the daemon; early adopter first run |
-| **B · Source build** | Yes | ~30–60 min | Customizing SDK; contributing; running full test suite |
-| **C · cargo install** | Yes | ~10 min | Rust developers who want the daemon via Cargo conventions |
+| Path | Rust? | Docker? | Time | Best for |
+|---|---|---|---|---|
+| **A1 · install.sh** | No | No | **~30 sec** | macOS/Linux adopter, one-line install |
+| **A2 · Homebrew** | No | No | ~1 min | macOS users (auto-updates via `brew upgrade`) |
+| **A3 · Docker** | No | Yes | ~1 min | Any OS with Docker; zero host install |
+| **A4 · Manual binary** | No | No | ~3 min | Adopter who prefers explicit download path |
+| **B · Source build** | Yes | No | ~30–60 min | Customizing SDK; contributing; full test suite |
+| **C · cargo install** | Yes | No | ~10 min | Rust developers preferring Cargo conventions |
 
 All three paths deliver the same `pai_governance_daemon` binary. Options A and C also get the default config + Rego policies. Option B gets the full 28-crate workspace.
 
