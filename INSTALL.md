@@ -22,38 +22,80 @@ pai_cd:
 
 ---
 
-## TL;DR — 30-second view (experienced users)
+## TL;DR — three install paths
+
+Choose the path that matches your situation.
+
+### Option A · Pre-built binary (fastest, no Rust toolchain) — ~3 min
+
+Download the pre-built daemon for your platform from the release page and run it.
 
 ```bash
-# Prerequisites: Rust 1.86+ toolchain, 8 GB RAM, 20 GB disk, working internet.
+# 1. Download (pick your platform)
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz
 
-# 1. Get source
+# 2. Verify checksum (optional but recommended)
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
+shasum -a 256 -c pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
+
+# 3. Extract + run
+tar xzf pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz
+cd pai_governance_daemon-v2.2.1-aarch64-apple-darwin
+./pai_governance_daemon --config pai-kernel.toml
+```
+
+Binary + default config + policies + docs are in the archive. No Rust toolchain needed.
+
+**Platform notes:** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround (v2.2.1 early preview binaries are not codesigned; signing will be added for general availability).
+
+### Option B · Build from source (full SDK, all crates, 28 crates) — ~30–60 min
+
+Best for developers customizing the SDK or running the full test suite.
+
+```bash
+# Prerequisites: Rust 1.86+ toolchain, 8 GB RAM, 20 GB disk, internet.
+
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 cd pai-kernel
 git checkout v2.2.1
 
-# 2. Build SDK
 cargo build --workspace --release
-
-# 3. Run daemon (Terminal 1)
 ./target/release/pai_governance_daemon
-
-# 4. (optional, Terminal 2) Install Ollama + run chat for side-by-side demo
-ollama pull llama3.2
-ollama run llama3.2
-
-# 5. (optional, Terminal 3) Inspect SDK state while chat is running
-curl http://127.0.0.1:9100/api/v1/state | jq
 ```
 
-If everything above ran without errors you're done. Continue reading if any step failed, or for the full walk-through.
+See §§ 2–9 below for the full per-OS walkthrough.
 
-**Install via crates.io** is an alternative for people who want SDK only (no source tree):
+### Option C · `cargo install` (Rust developers, no source tree) — ~10 min
+
+Requires Rust toolchain but skips manual clone + workspace build.
 
 ```bash
 cargo install pai-kernel
 pai_governance_daemon --config /path/to/pai-kernel.toml
 ```
+
+### Adopter comparison
+
+| Path | Rust toolchain? | Time | Best for |
+|---|---|---|---|
+| **A · Binary** | No | ~3 min | Just want to try the daemon; early adopter first run |
+| **B · Source build** | Yes | ~30–60 min | Customizing SDK; contributing; running full test suite |
+| **C · cargo install** | Yes | ~10 min | Rust developers who want the daemon via Cargo conventions |
+
+All three paths deliver the same `pai_governance_daemon` binary. Options A and C also get the default config + Rego policies. Option B gets the full 28-crate workspace.
+
+### After daemon is running (all paths)
+
+```bash
+# Terminal 2 — Install Ollama + chat (side-by-side demo; optional)
+ollama pull llama3.2
+ollama run llama3.2
+
+# Terminal 3 — Inspect SDK state while chat is running
+curl http://127.0.0.1:9100/api/v1/state | jq
+```
+
+If everything above ran without errors you're done. Continue reading if any step failed, or for the full walk-through.
 
 ---
 

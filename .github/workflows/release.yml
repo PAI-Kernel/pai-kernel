@@ -1,0 +1,163 @@
+# Release workflow — builds cross-platform binaries and attaches them to
+# the GitHub Release on tag push.
+#
+# Triggers on any tag matching v* (e.g. v2.2.1). Builds pai_governance_daemon
+# for 5 target triples:
+#   - aarch64-apple-darwin          (Apple Silicon Mac)
+#   - x86_64-apple-darwin           (Intel Mac)
+#   - x86_64-pc-windows-msvc        (Windows x64)
+#   - x86_64-unknown-linux-gnu      (Linux x64, glibc)
+#   - aarch64-unknown-linux-gnu     (Linux ARM64, glibc, cross-compiled)
+#
+# Each binary is packaged with pai-kernel.toml + policies/ + LICENSE + README
+# and uploaded to the corresponding GitHub Release along with a SHA256 checksum.
+
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write  # needed to upload release assets
+
+jobs:
+  build:
+    name: Build ${{ matrix.target }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            runner: macos-latest
+            archive_ext: tar.gz
+            archive_tool: tar
+          - target: x86_64-apple-darwin
+            runner: macos-13  # x86_64 GitHub-hosted runner
+            archive_ext: tar.gz
+            archive_tool: tar
+          - target: x86_64-pc-windows-msvc
+            runner: windows-latest
+            archive_ext: zip
+            archive_tool: zip
+            binary_suffix: .exe
+          - target: x86_64-unknown-linux-gnu
+            runner: ubuntu-latest
+            archive_ext: tar.gz
+            archive_tool: tar
+          - target: aarch64-unknown-linux-gnu
+            runner: ubuntu-latest
+            archive_ext: tar.gz
+            archive_tool: tar
+            cross: true
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Install Rust 1.86.0 + target
+        uses: dtolnay/rust-toolchain@56f84321dbccf38fb67ce3626f008a4e5ebc90c3 # 1.86.0
+        with:
+          toolchain: 1.86.0
+          targets: ${{ matrix.target }}
+
+      - name: Install cross (for aarch64-linux)
+        if: matrix.cross
+        run: cargo install cross --locked
+
+      - name: Cache cargo
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: release-${{ matrix.target }}-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            release-${{ matrix.target }}-
+
+      - name: Build pai_governance_daemon
+        shell: bash
+        run: |
+          set -euo pipefail
+          if [ "${{ matrix.cross }}" = "true" ]; then
+            cross build --release --locked --target ${{ matrix.target }} -p pai_kernel
+          else
+            cargo build --release --locked --target ${{ matrix.target }} -p pai_kernel
+          fi
+
+      - name: Package archive
+        shell: bash
+        env:
+          TARGET: ${{ matrix.target }}
+          EXT: ${{ matrix.archive_ext }}
+          BIN_SUFFIX: ${{ matrix.binary_suffix }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          NAME="pai_governance_daemon-${TAG}-${TARGET}"
+          STAGE="dist/${NAME}"
+          mkdir -p "${STAGE}"
+          cp "target/${TARGET}/release/pai_governance_daemon${BIN_SUFFIX}" "${STAGE}/"
+          cp pai-kernel.toml "${STAGE}/"
+          cp -r policies "${STAGE}/policies"
+          cp LICENSE "${STAGE}/"
+          cp README.md "${STAGE}/"
+          cp KNOWN_LIMITATIONS.md "${STAGE}/"
+          cp INSTALL.md "${STAGE}/"
+          cd dist
+          if [ "${EXT}" = "zip" ]; then
+            if command -v 7z >/dev/null 2>&1; then
+              7z a "${NAME}.zip" "${NAME}" > /dev/null
+            else
+              powershell -Command "Compress-Archive -Path '${NAME}' -DestinationPath '${NAME}.zip'"
+            fi
+          else
+            tar czf "${NAME}.tar.gz" "${NAME}"
+          fi
+          # SHA256 checksum
+          if command -v sha256sum >/dev/null 2>&1; then
+            sha256sum "${NAME}.${EXT}" > "${NAME}.${EXT}.sha256"
+          else
+            shasum -a 256 "${NAME}.${EXT}" > "${NAME}.${EXT}.sha256"
+          fi
+          ls -la
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-${{ matrix.target }}
+          path: |
+            dist/*.${{ matrix.archive_ext }}
+            dist/*.sha256
+
+  publish:
+    name: Publish GitHub Release
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Download all build artifacts
+        uses: actions/download-artifact@018cc2cf5baa6db3ef3c5f8a56943fffe632ef53 # v6.0.0
+        with:
+          path: dist
+          pattern: release-*
+          merge-multiple: true
+
+      - name: List downloaded artifacts
+        run: ls -la dist/
+
+      - name: Upload assets to GitHub Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          gh release upload "${TAG}" dist/* --clobber
