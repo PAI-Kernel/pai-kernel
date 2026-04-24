@@ -100,13 +100,23 @@ jobs:
           NAME="pai_governance_daemon-${TAG}-${TARGET}"
           STAGE="dist/${NAME}"
           mkdir -p "${STAGE}"
+          # Binary
           cp "target/${TARGET}/release/pai_governance_daemon${BIN_SUFFIX}" "${STAGE}/"
+          # SDK runtime config + policies
           cp pai-kernel.toml "${STAGE}/"
           cp -r policies "${STAGE}/policies"
+          # Framework corpus (3 canonical v2.2 documents)
+          cp PAI_Constitutional_Document.md "${STAGE}/"
+          cp PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
+          cp Glossary.md "${STAGE}/"
+          # Release governance + adopter docs
           cp LICENSE "${STAGE}/"
           cp README.md "${STAGE}/"
-          cp KNOWN_LIMITATIONS.md "${STAGE}/"
           cp INSTALL.md "${STAGE}/"
+          cp KNOWN_LIMITATIONS.md "${STAGE}/"
+          cp RELEASE_NOTES_v2.2.1.md "${STAGE}/"
+          cp SECURITY.md "${STAGE}/"
+          cp CITATION.cff "${STAGE}/"
           cd dist
           if [ "${EXT}" = "zip" ]; then
             if command -v 7z >/dev/null 2>&1; then
@@ -132,6 +142,55 @@ jobs:
           path: |
             dist/*.${{ matrix.archive_ext }}
             dist/*.sha256
+
+  corpus-bundle:
+    name: Build corpus-only bundle (framework docs without SDK)
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Package corpus-only bundle
+        shell: bash
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          set -euo pipefail
+          NAME="PAI-CD-corpus-${TAG}"
+          STAGE="dist/${NAME}"
+          mkdir -p "${STAGE}"
+          # 3 canonical corpus documents (the normative framework itself)
+          cp PAI_Constitutional_Document.md "${STAGE}/"
+          cp PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
+          cp Glossary.md "${STAGE}/"
+          # Release governance
+          cp LICENSE "${STAGE}/"
+          cp README.md "${STAGE}/"
+          cp CITATION.cff "${STAGE}/"
+          cp RELEASE_NOTES_v2.2.1.md "${STAGE}/" 2>/dev/null || true
+          # Papers (if present — published SSRN paper PDFs)
+          if [ -d papers ]; then
+            mkdir -p "${STAGE}/papers"
+            cp papers/*.pdf "${STAGE}/papers/" 2>/dev/null || true
+          fi
+          cd dist
+          tar czf "${NAME}.tar.gz" "${NAME}"
+          zip -qr "${NAME}.zip" "${NAME}"
+          sha256sum "${NAME}.tar.gz" > "${NAME}.tar.gz.sha256"
+          sha256sum "${NAME}.zip" > "${NAME}.zip.sha256"
+          ls -la
+
+      - name: Upload corpus bundle artifacts
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: release-corpus-bundle
+          path: |
+            dist/PAI-CD-corpus-*.tar.gz
+            dist/PAI-CD-corpus-*.zip
+            dist/PAI-CD-corpus-*.sha256
 
   docker:
     name: Build + push Docker image
@@ -176,7 +235,7 @@ jobs:
 
   publish:
     name: Publish GitHub Release
-    needs: build
+    needs: [build, corpus-bundle]
     runs-on: ubuntu-latest
     permissions:
       contents: write

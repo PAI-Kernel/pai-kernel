@@ -52,6 +52,10 @@ COPY --from=builder /build/pai-kernel.toml /app/pai-kernel.toml
 COPY --from=builder /build/policies /app/policies
 COPY --from=builder /build/LICENSE /app/LICENSE
 COPY --from=builder /build/README.md /app/README.md
+# Framework corpus (v2.2 canonical documents)
+COPY --from=builder /build/PAI_Constitutional_Document.md /app/PAI_Constitutional_Document.md
+COPY --from=builder /build/PAI_Bill_of_Authorial_Rights.md /app/PAI_Bill_of_Authorial_Rights.md
+COPY --from=builder /build/Glossary.md /app/Glossary.md
 
 RUN chown -R pai:pai /app
 
