@@ -154,10 +154,27 @@ jobs:
       - name: List downloaded artifacts
         run: ls -la dist/
 
-      - name: Upload assets to GitHub Release
+      - name: Create or update GitHub Release + upload assets
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ github.ref_name }}
         run: |
           set -euo pipefail
+
+          # Create release if it doesn't exist yet.
+          if ! gh release view "${TAG}" > /dev/null 2>&1; then
+            if [ -f RELEASE_NOTES_v2.2.1.md ] && [[ "${TAG}" == v2.2.1* ]]; then
+              gh release create "${TAG}" \
+                --title "PAI-Kernel ${TAG}" \
+                --notes-file RELEASE_NOTES_v2.2.1.md \
+                --prerelease
+            else
+              gh release create "${TAG}" \
+                --title "PAI-Kernel ${TAG}" \
+                --generate-notes \
+                --prerelease
+            fi
+          fi
+
+          # Upload/update all dist/ artifacts.
           gh release upload "${TAG}" dist/* --clobber
