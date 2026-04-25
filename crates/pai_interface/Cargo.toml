@@ -1,7 +1,13 @@
 [package]
 name = "pai_interface"
-version = "1.3.0"
-edition = "2021"
+description = "Shared types and validation schema for PAI-Kernel governance daemon · enforces growth-signal denylist on KernelContext per PAI-CD v2.2"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+rust-version.workspace = true
 
 [dependencies]
 serde = { version = "1", features = ["derive"] }

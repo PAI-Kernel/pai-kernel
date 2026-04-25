@@ -11,6 +11,9 @@ metadata:
   title: "Glossary — PAI-CD v2.2.1"
   keywords: "PAI-CD, Glossary, terminology, definitions, Author, Provider, Instance"
   robots: "index"
+license: "CC-BY-4.0"
+license_url: "https://creativecommons.org/licenses/by/4.0/"
+attribution: "Mikhail Sergeev / PAI-Kernel Initiative"
 pai_cd:
   version: "2.2.1"
   status: "Canonical"

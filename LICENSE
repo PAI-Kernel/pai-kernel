@@ -1,2 +1,21 @@
-Creative Commons Attribution 4.0 International (CC BY 4.0)
-https://creativecommons.org/licenses/by/4.0/
+PAI-Kernel Repository License Overview
+=======================================
+
+This repository contains both source code and documentation, which are
+licensed differently:
+
+  Source code (Rust crates · binaries · scripts · CI workflows):
+    Licensed under MIT OR Apache-2.0 (dual license · choose either).
+    See LICENSE-MIT and LICENSE-APACHE.
+
+  Documentation (PAI-CD framework documents · normative texts · README
+  narrative · governance prose):
+    Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
+    See LICENSE-CC-BY-4.0.
+
+Copyright (c) 2026 Mikhail Anatolievich Sergeev / PAI-Kernel Initiative
+
+For attribution requirements and full license terms, see the respective
+LICENSE-* files. For frequently asked questions about licensing, see the
+project documentation site at https://paikernel.org (License FAQ section,
+forthcoming in v2.2.2).

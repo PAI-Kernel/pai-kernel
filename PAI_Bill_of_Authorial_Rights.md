@@ -11,6 +11,9 @@ metadata:
   title: "Bill of Authorial Rights — PAI-CD v2.2.1"
   keywords: "PAI-CD, Authorial Rights, Bill of Rights, sovereignty, consent, portability"
   robots: "index"
+license: "CC-BY-4.0"
+license_url: "https://creativecommons.org/licenses/by/4.0/"
+attribution: "Mikhail Sergeev / PAI-Kernel Initiative"
 pai_cd:
   version: "2.2.1"
   status: "Canonical"

@@ -1,8 +1,13 @@
 [package]
 name = "pai_policy"
-version = "1.3.0"
-edition = "2021"
-license = "MIT OR Apache-2.0"
+description = "Policy evaluation engine for PAI-Kernel · OPA/Rego decision layer via regorus (pure-Rust, no external server) for PAI-CD v2.2 constitutional rules"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+homepage.workspace = true
+authors.workspace = true
+rust-version.workspace = true
 
 [dependencies]
 regorus = "0.5"

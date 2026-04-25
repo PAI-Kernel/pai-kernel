@@ -2,7 +2,8 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
-[![License: CC BY 4.0](https://img.shields.io/badge/license-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
+[![License (docs)](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
 [![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
 [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
@@ -153,13 +154,23 @@ This principle applies to all documents in this repository and to any compliant 
 
 ## License
 
-This work is published under the **Creative Commons Attribution 4.0 International (CC BY 4.0)** license.
+This repository is **dual-licensed** between code and documentation:
 
-You are free to share and adapt this material for any purpose,
-provided you give appropriate attribution to PAI-Kernel and
-indicate if changes were made.
+- **Source code** (Rust crates · binaries · scripts · CI workflows):
+  Licensed under **MIT OR Apache-2.0** (dual license · choose either at your discretion).
+  See [`LICENSE-MIT`](./LICENSE-MIT) and [`LICENSE-APACHE`](./LICENSE-APACHE).
 
-See [`LICENSE`](./LICENSE) for full terms.
+- **Documentation** (PAI-CD framework normative texts · Constitutional Document ·
+  Bill of Authorial Rights · Glossary · this README's narrative sections):
+  Licensed under **Creative Commons Attribution 4.0 International (CC BY 4.0)**.
+  See [`LICENSE-CC-BY-4.0`](./LICENSE-CC-BY-4.0).
+
+You are free to share, adapt, and use this material — including in commercial
+products — provided you preserve copyright notices, give appropriate attribution
+to PAI-Kernel Initiative, and indicate if changes were made.
+
+For a license summary and FAQ, see [`LICENSE`](./LICENSE). A detailed
+License FAQ is published in v2.2.2.
 
 -----
 
