@@ -3,7 +3,7 @@
 **Release:** PAI-CD v2.2.1 · `PAI-Kernel/pai-kernel@v2.2.1`
 **Date:** 2026-04-23
 **Status:** Early preview — invitation-only distribution
-**Authority:** Release-gate Category B placeholder + adopter transparency commitment
+**Authority:** Adopter transparency commitment
 
 ---
 
@@ -25,59 +25,61 @@ The published framework is **PAI-CD v2.2 Freeze Edition** (March 2026 snapshot).
 
 ### 1.2 Internal canonical evolves beyond v2.2
 
-Future corpus freezes may introduce additional normative content (Extended layers, new Operating Principles, refinements to threat model). Canonical development is deliberately **lagged from public surface** per bifurcation discipline (public snapshot layer ≠ internal canonical layer).
+The PAI-CD framework continues to develop beyond v2.2. Subsequent public releases (v2.2.x patch · future minor versions) will publish refined and extended content as the development trajectory progresses.
 
-**Implication:** do not expect v2.2.1 published content to auto-update as canonical evolves. Future major releases are published as explicit events with their own tags.
+**Implication:** do not expect v2.2.1 published content to auto-update as the framework evolves. Future releases publish via explicit version increments.
 
 ### 1.3 SDK v1.3.0 vs corpus v2.2 scope gap
 
-The Rust SDK is at **v1.3.0** — reflecting multiple cycles of invariant implementation beyond the v2.2 corpus baseline. The SDK runtime enforces several invariants (developed ahead of their publication in a future corpus freeze) that are NOT in v2.2 normative text.
+The Rust SDK is at **v1.3.0** — reflecting implementation work beyond the v2.2 corpus baseline. The SDK runtime enforces several extended invariants that are NOT in v2.2 normative text.
 
-**Implication:** SDK behavior may be **stricter than v2.2 corpus requires**. This is deliberate (SDK trajectory leads corpus publication). Adopters treating SDK behavior as normative should note SDK enforces superset.
+**Implication:** SDK behavior may be **stricter than v2.2 corpus requires**. This is deliberate (SDK trajectory leads corpus publication). Adopters treating SDK behavior as normative should note SDK enforces a superset.
 
 ---
 
 ## 2. Runtime coverage (Rust SDK)
 
-### 2.1 Phase 1 implementation
+### 2.1 Current implementation
 
-SDK v1.3.0 = Phase 1 live daemon (`pai_governance_daemon` via axum HTTP server). 28 crates, 262 tests. **PASS** on initial audit.
+SDK v1.3.0 provides a live governance daemon (`pai_governance_daemon` via axum HTTP server). The release publishes **18 crates** with **286 tests** passing on initial audit.
 
-### 2.2 Not-yet-runtime-enforced from corpus
+The runtime enforces the constitutional core invariants for in-process governance decisions.
 
-The following normative items are **defined in corpus but NOT runtime-enforced** in SDK v1.3.0. Compliance requires deploy-time manual validation or external tooling:
+### 2.2 Areas requiring deploy-time validation
 
-- **TCB attestation** (Doc 10) — corpus requires; SDK has scaffolding (`pai_attestation` crate) but no hardware-attestation backend wired
-- **Supply-chain provenance** (Doc 11) — corpus requires cryptographic registry; SDK accepts declared hashes (not verifies upstream chain)
-- **Governance capture defense** (Doc 15) — corpus requires role-bootstrapping independence; SDK supports the procedure but does not automatically enforce role-provider separation
-- **Author vulnerability protection** (Doc 20) — corpus specifies V1-V4 escalation paths; SDK has `pai_vulnerability` crate (Sprint 4 scope) but V4 Lock-Out Resolution procedure is stub
-- **Graduated Response Framework** (Doc 18) — Level 0-5 response ladder; SDK has Sprint 1 scaffolding; levels 4-5 require operational controls beyond SDK scope
+The following normative items are **defined in the PAI-CD corpus but NOT runtime-enforced** in SDK v1.3.0. Compliance requires deploy-time manual validation or external tooling:
+
+- **TCB attestation** — corpus requires hardware attestation; SDK provides scaffolding (`pai_attestation`) but no hardware-attestation backend wired
+- **Supply-chain provenance** — corpus requires cryptographic registry; SDK accepts declared hashes but does not verify upstream chain
+- **Governance capture defense** — corpus requires role-bootstrapping independence; SDK supports the procedure but does not automatically enforce role-provider separation
+- **Author vulnerability protection** — corpus specifies escalation paths (V1-V4); SDK provides scaffolding (`pai_vulnerability`); the V4 Lock-Out Resolution procedure remains in development
+- **Graduated Response Framework** — Level 0-5 response ladder; SDK provides scaffolding for lower levels; levels 4-5 require operational controls beyond SDK scope
 
 ### 2.3 Specification-level vs runtime-level verification
 
-The framework verification program produces **specification-level** verdicts via formal modeling (TLA+ state-space exploration), adversarial review, and narrative / case analysis.
+The PAI-CD verification program produces **specification-level** verdicts via formal modeling (TLA+ state-space exploration), adversarial review, and narrative / case analysis.
 
 **None of these methods is a runtime-SDK verifier.** Runtime SDK conformance is a separate workstream and is not delivered in this release.
 
-**Implication:** "PAI-compliant" status under current corpus (G-1 / H-2 certification nomenclature) requires independent audit; SDK alone is insufficient evidence of compliance.
+**Implication:** PAI-CD compliance status under the current framework requires independent audit. The SDK alone is insufficient evidence of compliance. The independent certification framework and audit body are currently in development; until established, adopters may self-attest against the published Compliance Checklist.
 
 ---
 
 ## 3. Governance and process
 
-### 3.1 Author vulnerability protection (Doc 20) operationalization
+### 3.1 Author vulnerability protection operationalization
 
-V4 Lock-Out Resolution procedure exists normatively but requires external Recovery Designee / V3 Auditor relationships not part of software scope. Adopters deploying PAI instances for vulnerable Authors must establish these relationships externally.
+The V4 Lock-Out Resolution procedure exists normatively but requires external Recovery Designee / V3 Auditor relationships not part of software scope. Adopters deploying PAI instances for vulnerable Authors must establish these relationships externally.
 
-### 3.2 Multi-Principal Governance (Doc 17) scope
+### 3.2 Multi-Principal Governance scope
 
-Current Multi-Principal Governance covers multi-human (P1/P2/P3) classification. Multi-instance coordination (multiple PAI Authors cooperating) is **proposal-stage** — not in v2.2.1.
+Current Multi-Principal Governance covers multi-human classification (P1/P2/P3 principal categories). Multi-instance coordination (where multiple PAI instances coordinate on behalf of a single Author) is currently in development and not part of v2.2.1.
 
-**Implication:** v2.2.1 governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for a future release.
+**Implication:** v2.2.1 governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for future releases.
 
-### 3.3 Regulatory zone governance
+### 3.3 Zone Sovereignty and Dual Guarantee
 
-Regulatory zone sovereignty and provider-usage disclosure are **proposal-stage**, scheduled for a later release — not in v2.2.1. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
+Regulatory zone sovereignty and provider-usage disclosure mechanisms are currently in development, not part of v2.2.1. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
 
 ---
 
@@ -85,21 +87,17 @@ Regulatory zone sovereignty and provider-usage disclosure are **proposal-stage**
 
 ### 4.1 Public corpus surface partial
 
-Current `corpus.paikernel.org` hosts three canonical v2.2 documents (Constitutional Core, Bill of Authorial Rights, Glossary). Additional layers (Assurance, Extended, Meta, Verification — 22 canonical documents beyond the public three) remain in canonical internal source.
+Current `corpus.paikernel.org` hosts three canonical v2.2 documents (Constitutional Core, Bill of Authorial Rights, Glossary). Additional layers (assurance, extended, meta, verification documents) remain in canonical internal source.
 
-**Implication:** full corpus requires canonical source review (`github.com/PAI-Kernel/pai-kernel` v2.2.1 tag includes all published documents in scope). Browsable public rendering covers three-document surface only.
+**Implication:** the GitHub repository (`github.com/PAI-Kernel/pai-kernel` v2.2.1 tag) includes all published documents in scope. Browsable public rendering at `corpus.paikernel.org` covers the three-document surface only.
 
-### 4.2 Operating Principles registry
+### 4.2 Operating Principles
 
-OP-1 through OP-10 v2 are canonically ratified. OP-11 through OP-17 are at varying stages:
-
-- OP-11 through OP-15: ratified (operational discipline)
-- OP-16 Self-Report Discipline: scheduled for publication in a future corpus release — not in v2.2 normative text (but implicit compliance expectation from this release forward)
-- OP-17 Markdown & Documentation Style: **draft v0.1** — governs v2.2.1 release production and public-surface rendering
+The framework operating principles ratified for v2.2.1 govern the development process and public-surface rendering. Additional operating principles continue to develop iteratively; future releases publish updates.
 
 ### 4.3 Amendment procedure
 
-Constitutional Amendment Manifest (Doc 22) describes the governance procedure. Current practice in active sessions may evolve ahead of Manifest text. Adopters relying on Amendment procedure for their own deployments should consult active Decision Log for current practice.
+The Constitutional Amendment procedure describes governance change control. Current practice in active development may evolve ahead of published procedure text. Adopters relying on the Amendment procedure for their own deployments should consult released documentation.
 
 ---
 
@@ -109,13 +107,13 @@ Constitutional Amendment Manifest (Doc 22) describes the governance procedure. C
 - **SDK code** (Rust): MIT OR Apache-2.0 (dual license per Rust convention)
 - **Paper**: SSRN standard posting terms (accessible under SSRN user agreement)
 
-Full text: see `LICENSE` in repository root.
+Full text: see `LICENSE` files in repository root.
 
 ### 5.1 Attribution format
 
 When citing:
 
-> Sergeev, M. A. (2026). PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems. *SSRN*. <https://doi.org/10.2139/ssrn.6512218>
+> Sergeev, M. A. (2026). PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems. *SSRN*. https://doi.org/10.2139/ssrn.6512218
 
 When reusing corpus text under CC BY 4.0, attribute to the framework with a link to `github.com/PAI-Kernel/pai-kernel` or `corpus.paikernel.org`.
 
@@ -124,8 +122,8 @@ When reusing corpus text under CC BY 4.0, attribute to the framework with a link
 PAI-Kernel is currently operated by **Mikhail Sergeev as Independent Researcher / PAI-Kernel Initiative**. It is NOT:
 
 - A registered foundation (no foundation exists)
-- A fiscal-hosted project (not hosted by OSC, Software Freedom Conservancy, or equivalent at this time)
-- An adopted IEEE / ISO / W3C / IETF standard (per OP-10 v2 Category E discipline: "framework" not "standard" until formal adoption)
+- A fiscal-hosted project (not hosted by an external sponsor at this time)
+- An adopted IEEE / ISO / W3C / IETF standard (the framework has not undergone formal adoption by a recognized standards body)
 
 Contributions, funding structure, and organizational evolution are separate future decisions.
 
@@ -133,41 +131,13 @@ Contributions, funding structure, and organizational evolution are separate futu
 
 ## 6. Security posture
 
-### 6.1 Dual guarantee (author sovereignty + provider non-circumvention)
+### 6.1 Dual Guarantee framework
 
-The dual guarantee (author sovereignty + provider non-circumvention) is specified in corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are scheduled for a later release — not enforced in v2.2.1.
+The Dual Guarantee (Author sovereignty + provider non-circumvention) is specified in the PAI-CD corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are currently in development, not enforced in v2.2.1.
 
-### 6.2 Known attack vectors
+### 6.2 Threat model evolution
 
-Threat Model (Doc 04) enumerates 10 threat classes in v2.2; a self-report category-error class is scheduled for publication in a future corpus release — adopters should be aware per OP-16 discipline.
-
-**Threat Class 1 · Objective Capture — documented residual risk:**
-
-SDK v1.3.0 enforces the Growth Signal Denylist (`spec/denylist_growth_keys.txt`) via exact-key RegexSet matching at the `validate_context()` boundary. This hard-blocks **literal injection** of prohibited keys (e.g., `engagement`, `churn`, `conversion`).
-
-It does NOT protect against **semantic-substitution** attack class — six variants are documented in the governance record:
-
-1. **Synonymy** — re-wording a prohibited concept as an unblocked key name (e.g., `engagement` → `user_interaction_intensity`)
-2. **Semantic displacement** — concept-equivalent renaming (e.g., `churn` → `user_departure_probability`)
-3. **Composition** — feature-engineered composite from allowed primitives (e.g., `loyalty = session_count × return_rate + streak`)
-4. **Indirection via derived variables** — innocent-named objective with prohibited internal weighting (registered `user_satisfaction`; internally engagement-weighted)
-5. **Language / locale variation** — translated or locale-suffixed variants (e.g., `engagement` → `вовлечённость`, `engagement_de`, `eng_metric`)
-6. **Homoglyph / typographic substitution** — Unicode visually-equivalent substitution (e.g., `engagеment` with Cyrillic `е`)
-
-**Planned defenses:**
-
-- **v2.2.2 patch candidate** — Unicode NFKC normalization + case/separator equivalence (catches homoglyph, partial locale variants)
-- **Next major release** — embedding-similarity blocking (catches synonymy + semantic displacement), provenance chain tracking (catches composition), behavioral proxy detection via drift engine (catches indirection post-hoc), Self-Report Discipline pairing (catches indirection AI-side)
-- **v4.0** — Provider Disposition Disclosure — cross-check AI self-report against provider training documentation
-
-**Adopters should not rely on the denylist alone for comprehensive objective-injection defense.** Recommended defense-in-depth:
-
-- Independent behavioral audit of registered objectives (off-SDK)
-- Provenance review of derived variables feeding registered objectives
-- Periodic review of objective registry for semantic drift
-- Cross-provider comparison of AI response patterns on identical prompts
-
-See `Threat_Model_Cognitive_Influence.md` Class 1 in the corpus for the canonical reference.
+The Threat Model document enumerates threat classes covered by v2.2.1. Additional threat classes are added iteratively as the framework matures; adopters should monitor future releases.
 
 ### 6.3 Security disclosure
 
@@ -177,16 +147,16 @@ Security vulnerabilities in SDK v1.3.0 or corpus normative text: disclose via Gi
 
 ## 7. Stability commitment (v2.2.1 specifically)
 
-- **Corpus text** (3 public documents): **stable** for duration of v2.2.1 tag; no silent changes
-- **Release artifacts** (paper PDF, CITATION.cff, LICENSE): **stable** for duration of v2.2.1 tag
+- **Corpus text** (3 public documents): **stable** for the duration of the v2.2.1 tag; no silent changes
+- **Release artifacts** (paper PDF, CITATION.cff, LICENSE): **stable** for the duration of the v2.2.1 tag
 - **SDK v1.3.0 crates on crates.io**: **immutable** once published; yanked only on critical security disclosure
-- **Future releases** (v2.2.2 patch / v3.1 minor): new tag; v2.2.1 remains retrievable
+- **Future releases** (v2.2.2 patch / future minor versions): new tag; v2.2.1 remains retrievable
 
 ---
 
 ## 8. Feedback and engagement
 
-Per invitation-only distribution policy: feedback welcomed via:
+Per the invitation-only distribution policy, feedback is welcomed via:
 
 - **GitHub Issues** at `github.com/PAI-Kernel/pai-kernel/issues` (public; any visitor)
 - **Direct contact**: `contact@paikernel.org`
@@ -211,9 +181,8 @@ Per invitation-only distribution policy: feedback welcomed via:
 
 | Version | Date | Changes |
 |---|---|---|
-| **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, specification-level verification scope, Operating Principles registry status, licensing, security, feedback channels. |
+| **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, specification-level verification scope, licensing, security, feedback channels. |
 
 ---
 
 *PAI-Kernel · Known Limitations · v2.2.1 release · 2026-04-23*
-*Source: generated per release-gate Category B remediation protocol*
