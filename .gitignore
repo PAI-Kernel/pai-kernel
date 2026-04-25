@@ -27,3 +27,8 @@ formal/gnatprove_*/
 
 # Root-level archives (does not affect archives elsewhere in tree)
 /*.zip
+
+# Cargo credentials (security-sensitive)
+.cargo/credentials.toml
+.cargo/credentials*
+.cargo/config.toml
