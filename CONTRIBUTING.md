@@ -4,10 +4,17 @@
 
 Thank you for your interest in PAI-Kernel.
 
-This is a normative framework — not a software project. Contributing here means
-engaging with governance architecture, not writing code. The bar for contribution
-is high by design: a weakened framework that is widely adopted is worse than a
-rigorous framework adopted narrowly.
+PAI-Kernel is a normative framework — the PAI Constitutional Document (PAI-CD) —
+accompanied by a reference implementation (the PAI-Kernel SDK). Contributions can
+engage with either:
+
+- **Governance** — the constitutional corpus, threat model, invariants,
+  amendment procedure
+- **Implementation** — the SDK code, Conformance Suite, formal verification
+
+The bar for both is high by design: a weakened framework that is widely adopted
+is worse than a rigorous framework adopted narrowly. The same discipline applies
+to the implementation.
 
 ---
 
@@ -25,8 +32,12 @@ the failure mode, and why existing invariants do not close it.
 **Invariant conflicts.** If two invariants produce contradictory requirements in a
 realistic deployment scenario, document the scenario and the conflict.
 
-**Formal verification contributions.** If you can extend or verify the TLA+ specification,
-open a Pull Request with the model and the proof artifact.
+**Formal verification contributions.** The TLA+ specification (StateModel.tla,
+CoordinationModel.tla, governance_boundary_model.tla; verified properties documented
+in VERIFICATION_MATRIX.md) is currently maintained in the project's internal
+repository. Public release of the formal artifacts is scheduled for the framework's
+Phase 3 gate. Contributors interested in formal verification work may reach out via
+contact@paikernel.org for current state and collaboration.
 
 **Reference implementations.** Independent implementations of PAI-CD that pass the
 Conformance Suite are the primary metric of the framework's success. We want to know
@@ -80,9 +91,10 @@ If your contribution does not fit either template, open a blank issue with a cle
 
 ## Attribution
 
-All contributions are made under the project license (CC BY 4.0). By submitting a
-contribution, you agree that it may be included in the PAI-CD corpus under
-these terms.
+Documentation contributions to the constitutional corpus are licensed under
+CC BY 4.0. Code contributions to the SDK are licensed under MIT OR Apache-2.0.
+By submitting a contribution, you agree that it may be included in the
+PAI-Kernel project under these terms.
 
 Significant contributions will be acknowledged in the project's CONTRIBUTORS file and, where appropriate, in CITATION.cff.
 
