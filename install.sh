@@ -19,7 +19,7 @@
 #   - Aborts cleanly on error, leaves no partial install
 #
 # Windows users: install manually from the release page or via Docker.
-# See https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/INSTALL.md
+# See https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/docs/INSTALL.md
 
 set -eu
 
@@ -56,7 +56,7 @@ detect_target() {
       esac
       ;;
     *)
-      error "unsupported OS: $uname_s (Windows users: see INSTALL.md Option A manual)" ;;
+      error "unsupported OS: $uname_s (Windows users: see docs/INSTALL.md Option A manual)" ;;
   esac
 
   echo "${arch}-${os}"

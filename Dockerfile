@@ -53,9 +53,9 @@ COPY --from=builder /build/policies /app/policies
 COPY --from=builder /build/LICENSE /app/LICENSE
 COPY --from=builder /build/README.md /app/README.md
 # Framework corpus (v2.2 canonical documents)
-COPY --from=builder /build/PAI_Constitutional_Document.md /app/PAI_Constitutional_Document.md
-COPY --from=builder /build/PAI_Bill_of_Authorial_Rights.md /app/PAI_Bill_of_Authorial_Rights.md
-COPY --from=builder /build/Glossary.md /app/Glossary.md
+COPY --from=builder /build/corpus/PAI_Constitutional_Document.md /app/PAI_Constitutional_Document.md
+COPY --from=builder /build/corpus/PAI_Bill_of_Authorial_Rights.md /app/PAI_Bill_of_Authorial_Rights.md
+COPY --from=builder /build/corpus/Glossary.md /app/Glossary.md
 
 RUN chown -R pai:pai /app
 
@@ -75,4 +75,4 @@ LABEL org.opencontainers.image.title="PAI-Kernel Governance Daemon"
 LABEL org.opencontainers.image.description="Constitutional governance runtime for AI systems (PAI-CD framework)"
 LABEL org.opencontainers.image.source="https://github.com/PAI-Kernel/pai-kernel"
 LABEL org.opencontainers.image.licenses="MIT OR Apache-2.0"
-LABEL org.opencontainers.image.documentation="https://github.com/PAI-Kernel/pai-kernel/blob/main/INSTALL.md"
+LABEL org.opencontainers.image.documentation="https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/INSTALL.md"

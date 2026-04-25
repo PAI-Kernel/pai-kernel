@@ -15,9 +15,9 @@
 
 ### Start here
 
-- **New adopter?** Begin with [`INSTALL.md`](./INSTALL.md) — cross-platform install guide (~30–60 min).
-- **Want to know what's inside and what's not?** See [`KNOWN_LIMITATIONS.md`](./KNOWN_LIMITATIONS.md).
-- **Release overview:** [`RELEASE_NOTES_v2.2.1.md`](./RELEASE_NOTES_v2.2.1.md).
+- **New adopter?** Begin with [`docs/INSTALL.md`](./docs/INSTALL.md) — cross-platform install guide (~30–60 min).
+- **Want to know what's inside and what's not?** See [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md).
+- **Release overview:** [`docs/RELEASE_NOTES_v2.2.1.md`](./docs/RELEASE_NOTES_v2.2.1.md).
 - **Research paper:** *"PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems"* · SSRN · [DOI 10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218).
 
 -----
@@ -37,7 +37,7 @@ The **v2.2.1 release package** contains:
 - **Three foundational corpus documents (Layer 0)** — constitutional invariants, authorial rights, binding terminology
 - **Companion research paper** (SSRN DOI 10.2139/ssrn.6512218)
 - **Rust SDK v1.3.0** — 22 library crates + governance daemon binary + 5 runnable examples
-- **Install guide** (`INSTALL.md`) — cross-platform walkthrough
+- **Install guide** (`docs/INSTALL.md`) — cross-platform walkthrough
 - **Release notes, known limitations, license, contribution policy, security policy, citation metadata**
 
 The remaining corpus layers (interpretation rules, threat modeling beyond Layer 0, protocol constraints, compliance logic, audit procedures, governance mechanisms, implementation mapping) exist in internal canonical development and will be released progressively in subsequent publications.
@@ -118,9 +118,9 @@ This repository publishes three foundational documents:
 
 | Document                                                               | Description                         |
 |------------------------------------------------------------------------|-------------------------------------|
-| [`PAI_Constitutional_Document.md`](./PAI_Constitutional_Document.md)   | Invariants and interpretation rules |
-| [`PAI_Bill_of_Authorial_Rights.md`](./PAI_Bill_of_Authorial_Rights.md) | Enforceable Author rights           |
-| [`Glossary.md`](./Glossary.md)                                         | Binding terminology for PAI-CD v2.2 |
+| [`corpus/PAI_Constitutional_Document.md`](./corpus/PAI_Constitutional_Document.md)   | Invariants and interpretation rules |
+| [`corpus/PAI_Bill_of_Authorial_Rights.md`](./corpus/PAI_Bill_of_Authorial_Rights.md) | Enforceable Author rights           |
+| [`corpus/Glossary.md`](./corpus/Glossary.md)                                         | Binding terminology for PAI-CD v2.2 |
 
 The full corpus (10 documents) includes implementation mapping,
 threat modeling, compliance verification, and governance control

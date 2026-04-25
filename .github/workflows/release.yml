@@ -106,15 +106,15 @@ jobs:
           cp pai-kernel.toml "${STAGE}/"
           cp -r policies "${STAGE}/policies"
           # Framework corpus (3 canonical v2.2 documents)
-          cp PAI_Constitutional_Document.md "${STAGE}/"
-          cp PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
-          cp Glossary.md "${STAGE}/"
+          cp corpus/PAI_Constitutional_Document.md "${STAGE}/"
+          cp corpus/PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
+          cp corpus/Glossary.md "${STAGE}/"
           # Release governance + adopter docs
           cp LICENSE "${STAGE}/"
           cp README.md "${STAGE}/"
-          cp INSTALL.md "${STAGE}/"
-          cp KNOWN_LIMITATIONS.md "${STAGE}/"
-          cp RELEASE_NOTES_v2.2.1.md "${STAGE}/"
+          cp docs/INSTALL.md "${STAGE}/"
+          cp docs/KNOWN_LIMITATIONS.md "${STAGE}/"
+          cp docs/RELEASE_NOTES_v2.2.1.md "${STAGE}/"
           cp SECURITY.md "${STAGE}/"
           cp CITATION.cff "${STAGE}/"
           cd dist
@@ -163,14 +163,14 @@ jobs:
           STAGE="dist/${NAME}"
           mkdir -p "${STAGE}"
           # 3 canonical corpus documents (the normative framework itself)
-          cp PAI_Constitutional_Document.md "${STAGE}/"
-          cp PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
-          cp Glossary.md "${STAGE}/"
+          cp corpus/PAI_Constitutional_Document.md "${STAGE}/"
+          cp corpus/PAI_Bill_of_Authorial_Rights.md "${STAGE}/"
+          cp corpus/Glossary.md "${STAGE}/"
           # Release governance
           cp LICENSE "${STAGE}/"
           cp README.md "${STAGE}/"
           cp CITATION.cff "${STAGE}/"
-          cp RELEASE_NOTES_v2.2.1.md "${STAGE}/" 2>/dev/null || true
+          cp docs/RELEASE_NOTES_v2.2.1.md "${STAGE}/" 2>/dev/null || true
           # Papers (if present — published SSRN paper PDFs)
           if [ -d papers ]; then
             mkdir -p "${STAGE}/papers"
@@ -263,10 +263,10 @@ jobs:
 
           # Create release if it doesn't exist yet.
           if ! gh release view "${TAG}" > /dev/null 2>&1; then
-            if [ -f RELEASE_NOTES_v2.2.1.md ] && [[ "${TAG}" == v2.2.1* ]]; then
+            if [ -f docs/RELEASE_NOTES_v2.2.1.md ] && [[ "${TAG}" == v2.2.1* ]]; then
               gh release create "${TAG}" \
                 --title "PAI-Kernel ${TAG}" \
-                --notes-file RELEASE_NOTES_v2.2.1.md \
+                --notes-file docs/RELEASE_NOTES_v2.2.1.md \
                 --prerelease
             else
               gh release create "${TAG}" \

@@ -25,7 +25,7 @@ Breach-class shorthand codes (for advisory IDs): `GOV.BYPASS`, `OBJ.INJECTION`, 
 - Third-party LLM providers (Ollama, OpenAI, Anthropic, others) — report to respective projects
 - Platform-level OS vulnerabilities
 - Infrastructure-level DoS unless SDK-specific amplification exists
-- Documented known-limitation items — see `KNOWN_LIMITATIONS.md` § 6 for scope-boundary items that are NOT security vulnerabilities (e.g., L1 Demo Mode design decision; semantic-substitution sub-class pending Phase Q-SDK defenses)
+- Documented known-limitation items — see `docs/KNOWN_LIMITATIONS.md` § 6 for scope-boundary items that are NOT security vulnerabilities (e.g., L1 Demo Mode design decision; semantic-substitution sub-class pending future SDK defenses)
 
 ## Supported versions
 
@@ -133,7 +133,7 @@ This repository employs:
 
 ## Known-limitation framing
 
-Adopters should read `KNOWN_LIMITATIONS.md` § 6 before filing a security report — several documented items are **scope boundaries** not security vulnerabilities:
+Adopters should read `docs/KNOWN_LIMITATIONS.md` § 6 before filing a security report — several documented items are **scope boundaries** not security vulnerabilities:
 
 - **L1 Demo Mode** — the SDK does not mediate Ollama / LLM responses in v2.2.1; this is intentional design, not a bypass
 - **Semantic-substitution sub-class** — six attack vectors documented in PF-2026-04-041, with defenses scheduled for v2.2.2 (Defense 9) and future releases (Defenses 5-8). Reports on these specific vectors are valuable as **feedback on the documented roadmap**, not new-vulnerability reports, unless they demonstrate a materially different exploitation path
