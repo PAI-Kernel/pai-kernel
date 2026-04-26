@@ -1,9 +1,9 @@
-# coordination.rego — PAI-CD Package P Coordination Governance (C0-5, C0-6)
+# coordination.rego — PAI-CD Coordination Governance (C0-5, C0-6)
 # Validates coordination actions against Adjacent-Only, Anti-Capture,
 # and Emergency Bounded invariants.
 #
-# Ref: Amendment Package P (C0-1..C0-8), DL-2026-04-040
-# Ref: CoordinationModel.tla verified by TLC (DL-2026-04-072)
+# Ref: PAI-CD Coordination Governance (C0-1..C0-8)
+# Ref: CoordinationModel.tla verified by TLC
 package pai.constitutional.coordination
 
 # ---- C0-6: Adjacent-Only Coordination ----

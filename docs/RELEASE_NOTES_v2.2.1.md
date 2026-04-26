@@ -67,12 +67,12 @@ Applied to the 3 corpus documents:
 
 Other R2 rulings (Ruling 3 "protocol between instances", Ruling 4 "normative standard") do not apply to v2.2 source text — those terms were introduced in later Amendment cycles (v2.3+ / v3.x).
 
-#### Style normalization (per OP-17 draft v0.1)
+#### Style normalization
 
 Applied to all published Markdown:
 
 - Human-readable H1 titles replace filename-style H1 (`# PAI_Constitutional_Document.md` → `# Constitutional Core`)
-- Markdownlint configuration via `.markdownlint.json` (rule set per OP-17 § 8)
+- Markdownlint configuration via `.markdownlint.json` (project style rules)
 - Frontmatter added: title / slug / category / excerpt / metadata / `pai_cd.source.*` traceability block
 - Footer traceability line added
 
