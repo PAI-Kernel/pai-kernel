@@ -55,15 +55,15 @@ impl AppState {
         let mut policy = PolicyEngine::new();
         let _ = policy.add_policy(
             "consent.rego",
-            include_str!("../../../policies/constitutional/consent.rego"),
+            include_str!("../policies/constitutional/consent.rego"),
         );
         let _ = policy.add_policy(
             "conservative.rego",
-            include_str!("../../../policies/constitutional/conservative.rego"),
+            include_str!("../policies/constitutional/conservative.rego"),
         );
         let _ = policy.add_policy(
             "denylist.rego",
-            include_str!("../../../policies/operational/denylist.rego"),
+            include_str!("../policies/operational/denylist.rego"),
         );
 
         let drift = DriftEngine::new(DriftThresholds::new(10.0, 30 * 86400));
