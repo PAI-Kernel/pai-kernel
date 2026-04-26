@@ -23,8 +23,15 @@ This channel is preferred. Benefits:
 
 For sensitive reports, encrypt with the project PGP key:
 
-- Fingerprint: `95C4 B50E D565 44DC 033B 130D B84B 6C86 0ABA D0B1`
-- Available on request from `<contact@paikernel.org>`
+- **Fingerprint:** `95C4 B50E D565 44DC 033B 130D B84B 6C86 0ABA D0B1`
+- **Public key:** Available via [keys.openpgp.org](https://keys.openpgp.org/search?q=Mikhail.Sergeev%40paikernel.org) (search by `Mikhail.Sergeev@paikernel.org`)
+- **Direct URL:** <https://keys.openpgp.org/vks/v1/by-fingerprint/95C4B50ED56544DC033B130DB84B6C860ABAD0B1>
+
+GPG retrieval:
+
+```bash
+gpg --keyserver hkps://keys.openpgp.org --search-keys Mikhail.Sergeev@paikernel.org
+```
 
 ### 1.3 What to include
 
