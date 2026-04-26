@@ -13,9 +13,12 @@ version: "2.2.1"
 date-released: "2026-04-23"
 # Code (this software · SDK · binaries) is dual-licensed MIT OR Apache-2.0.
 # Documentation (PAI-CD framework normative texts) is licensed CC BY 4.0.
-# CITATION.cff describes type=software · license below reflects code license.
+# CITATION.cff describes type=software · license array reflects code license choice.
+# CFF schema requires array form for multiple SPDX identifiers (not SPDX expression).
 # See LICENSE-MIT, LICENSE-APACHE, LICENSE-CC-BY-4.0 for full terms.
-license: MIT OR Apache-2.0
+license:
+  - MIT
+  - Apache-2.0
 repository-code: "https://github.com/PAI-Kernel/pai-kernel"
 url: "https://paikernel.org"
 doi: "10.2139/ssrn.6512218"
