@@ -539,7 +539,7 @@ fn sha256_hex(bytes: &[u8]) -> String {
 fn default_denylist_patterns() -> Vec<String> {
     // Source of truth: spec/denylist_growth_keys.txt (one key per line).
     // We compile exact-match regex patterns: ^key$
-    include_str!("../../../spec/denylist_growth_keys.txt")
+    include_str!("../spec/denylist_growth_keys.txt")
         .lines()
         .filter(|l| !l.trim().is_empty())
         .map(|k| format!("^{}$", regex::escape(k.trim())))
@@ -1419,7 +1419,7 @@ impl GovernanceDaemon {
         )?;
         std::fs::write(
             dir.join("spec_version.txt"),
-            include_bytes!("../../../spec/spec_version.txt"),
+            include_bytes!("../spec/spec_version.txt"),
         )?;
         Ok(())
     }
