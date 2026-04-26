@@ -86,7 +86,7 @@ Prior to this release a public-repo defect inventory was maintained (ten items i
 
 ---
 
-## What did NOT change (preserved per P0 "без правок" discipline on prior snapshot)
+## What did NOT change
 
 The v2.2 Freeze Edition surface at [corpus.paikernel.org](https://corpus.paikernel.org) (ReadMe-hosted `corpus-docs` sync repo) uses **pure v2.2 verbatim** content without R2 patches. That surface is a **pure archival snapshot**.
 
@@ -149,7 +149,7 @@ Or browse online: [corpus.paikernel.org](https://corpus.paikernel.org)
 
 - Public GitHub release (discoverable but not announced)
 - crates.io publication (Rust developers can find via search; not promoted)
-- Direct personal invitations sent to initial adopter shortlist (Timur Asyaev, Sergey Antonov, Vladimir Ikher + P0 discretion)
+- Direct personal invitations sent to initial adopter shortlist
 - **No public announcement** on LinkedIn, X, HackerNews, Product Hunt until future DL authorizes it
 
 Transition to general availability gated on:
@@ -197,7 +197,7 @@ See `LICENSE` for full text.
 
 ## Acknowledgments
 
-v2.2.1 is the product of sustained solo effort across 2026. PAI-Kernel is built under the Dream Team Council discipline (CPO / CTO / CSO / CRO / CAO / CEO voices reconciled through P0 ratification). The framework's development benefited from internal governance discipline, not from unanimity — dissent was preserved as Decision Log and Process Findings where relevant.
+v2.2.1 is the product of sustained solo development effort across 2026 by the maintainer (Mikhail Sergeev as Independent Researcher / PAI-Kernel Initiative). The framework's development followed an internal governance discipline that systematically considered multiple perspectives — product, technical, standards, research, audit, and ecosystem — through documented decision-making processes.
 
 Specific acknowledgments are deferred to the general-availability release; early adopter contributions (once feedback arrives) will be documented in a future CONTRIBUTORS file.
 

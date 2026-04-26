@@ -60,7 +60,7 @@ Changes to the normative corpus (PAI-CD documents) require a formal Amendment pr
 3. **Invariant Impact Analysis.** The change must be assessed for protective
    direction — no amendment may weaken invariant protection without explicit
    justification.
-4. **Ratification.** P0 ratifies after CAO non-weakening declaration.
+4. **Approval.** Maintainer approves after non-weakening verification.
 5. **7-day pre-activation delay** before the change takes effect.
 
 Amendments that strengthen protections have a lower procedural burden than amendments
