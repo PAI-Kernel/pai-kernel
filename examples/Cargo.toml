@@ -5,13 +5,13 @@ edition = "2021"
 publish = false
 
 [dependencies]
-pai_classify = { path = "../crates/pai_classify" }
-pai_sequence = { path = "../crates/pai_sequence" }
-pai_boundary = { path = "../crates/pai_boundary" }
-pai_attestation = { path = "../crates/pai_attestation" }
-pai_evasion = { path = "../crates/pai_evasion" }
-pai_provenance = { path = "../crates/pai_provenance" }
-pai_causal = { path = "../crates/pai_causal" }
-pai_vulnerability = { path = "../crates/pai_vulnerability" }
-pai_compliance_id = { path = "../crates/pai_compliance_id" }
+pai_classify = { path = "../crates/pai_classify", version = "1.3.0" }
+pai_sequence = { path = "../crates/pai_sequence", version = "0.1.0" }
+pai_boundary = { path = "../crates/pai_boundary", version = "0.1.0" }
+pai_attestation = { path = "../crates/pai_attestation", version = "0.1.0" }
+pai_evasion = { path = "../crates/pai_evasion", version = "0.1.0" }
+pai_provenance = { path = "../crates/pai_provenance", version = "0.1.0" }
+pai_causal = { path = "../crates/pai_causal", version = "0.1.0" }
+pai_vulnerability = { path = "../crates/pai_vulnerability", version = "0.1.0" }
+pai_compliance_id = { path = "../crates/pai_compliance_id", version = "0.1.0" }
 serde_json = "1"
