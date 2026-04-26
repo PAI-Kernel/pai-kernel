@@ -37,7 +37,7 @@ CoordinationModel.tla, governance_boundary_model.tla; verified properties docume
 in VERIFICATION_MATRIX.md) is currently maintained in the project's internal
 repository. Public release of the formal artifacts is scheduled for the framework's
 Phase 3 gate. Contributors interested in formal verification work may reach out via
-contact@paikernel.org for current state and collaboration.
+<contact@paikernel.org> for current state and collaboration.
 
 **Reference implementations.** Independent implementations of PAI-CD that pass the
 Conformance Suite are the primary metric of the framework's success. We want to know

@@ -113,7 +113,7 @@ Full text: see `LICENSE` files in repository root.
 
 When citing:
 
-> Sergeev, M. A. (2026). PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems. *SSRN*. https://doi.org/10.2139/ssrn.6512218
+> Sergeev, M. A. (2026). PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems. *SSRN*. <https://doi.org/10.2139/ssrn.6512218>
 
 When reusing corpus text under CC BY 4.0, attribute to the framework with a link to `github.com/PAI-Kernel/pai-kernel` or `corpus.paikernel.org`.
 
