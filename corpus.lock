@@ -1,5 +1,5 @@
-# corpus.lock — SHA-256 integrity manifest для public canonical corpus
-# Generated: 2026-04-27 · Cycle 65 (REQ-248 F10)
+# corpus.lock — SHA-256 integrity manifest for canonical corpus documents
+# Generated: 2026-04-27
 # Source of truth: shasum -a 256 corpus/*.md
 # Verification: sha256sum -c corpus.lock
 
