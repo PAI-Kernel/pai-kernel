@@ -32,7 +32,7 @@ Pick the fastest path that suits your environment. All paths deliver the same `p
 curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/install.sh | sh
 ```
 
-(A shorter URL `https://paikernel.org/install.sh` will be available once the redirect is deployed — track release notes.)
+(A shorter URL `https://paikernel.org/install.sh` is also available — Cloudflare Worker redirects to the canonical raw GitHub path.)
 
 Auto-detects your OS + CPU architecture, downloads the matching binary from the GitHub Release, verifies the SHA256 checksum, and installs to `~/.local/pai-kernel/` with an optional symlink into `~/.local/bin/`. No Rust toolchain required.
 
@@ -49,7 +49,7 @@ pai_governance_daemon init   # creates config + policies/ in current dir
 pai_governance_daemon
 ```
 
-(Availability: once the `PAI-Kernel/homebrew-tap` repository is live — see release notes for status.)
+(The `PAI-Kernel/homebrew-tap` repository is live · formula `Formula/pai-kernel.rb` builds from cargo source per CI verification.)
 
 ### Option A3 · Docker (any OS with Docker) — ~1 min, zero host install
 
@@ -368,14 +368,16 @@ cargo build --workspace --release
 **Verification:**
 
 ```bash
-./target/release/pai_governance_daemon --version
+./target/release/pai_governance_daemon version
 # Expected:
 # PAI-Kernel Governance Sidecar v1.3.1
 # PAI-CD: v3.1
-# Rust: 1.88.0
+# Rust: 1.86.0
 ```
 
-(On Windows use `.\target\release\pai_governance_daemon.exe --version`.)
+The `--version` flag returns `pai-kernel 1.3.1` (clap default · single line); the `version` subcommand (no dashes) returns the three-line form above. The literal `Rust:` value in v1.3.1 binaries reflects an earlier hardcode; the actual repository toolchain pin is in `rust-toolchain.toml` (currently 1.88.0) — a v1.3.2 patch will switch the displayed value to read dynamically from the build.
+
+(On Windows use `.\target\release\pai_governance_daemon.exe version`.)
 
 **Optional: run the test suite:**
 
@@ -835,7 +837,7 @@ Full scope: see `KNOWN_LIMITATIONS.md`. Key items:
 We want feedback from early adopters. What to do:
 
 - **Try the install.** Did it work first time? Which step broke? What was confusing?
-- **Explore the corpus.** Start with `Constitutional Core`, then `Bill of Authorial Rights`, then `Glossary`. Browsable at <https://corpus.paikernel.org>.
+- **Explore the corpus.** Start with `Constitutional Core`, then `Bill of Authorial Rights`, then `Glossary`. Read directly from the repository at <https://github.com/PAI-Kernel/pai-kernel/tree/v2.2.2/corpus> · the `corpus.paikernel.org` browsable mirror is invitation-only during the early-preview window (request access via `contact@paikernel.org`).
 - **Read the paper.** DOI: [10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218).
 - **Make notes on architectural gaps.** Where does the framework feel incomplete for your use case?
 
@@ -1002,7 +1004,8 @@ rm -f ~/pai-kernel.db
 | Version | Date | Changes |
 |---|---|---|
 | **v0.1** | **2026-04-23** | Initial INSTALL.md for v2.2.1 release. Cross-platform (macOS / Windows / Linux). L1 Demo Mode framing. Ollama side-by-side walkthrough. Troubleshooting 9 subsections. Commands cheatsheet + uninstall path. |
-| **v0.2** | **2026-04-27** | v2.2.2 release update. SDK 1.3.0 → 1.3.1 (PATCH bump). Rust toolchain pin 1.86 → 1.88. URL refs к v2.2.2 release artifacts. Path correction for `docs/INSTALL.md` after Apr 25 root reorg. |
+| **v0.2** | **2026-04-27** | v2.2.2 release update. SDK 1.3.0 → 1.3.1 (PATCH bump). Rust toolchain pin 1.86 → 1.88. URL refs to v2.2.2 release artifacts. Path correction for `docs/INSTALL.md` after Apr 25 root reorg. |
+| **v0.3** | **2026-04-27** | Post-§5 doc/reality alignment. §A1 + §A2 stale "once X is deployed" captions updated (paikernel.org redirect operational; homebrew-tap repo live). § 4 verification updated to use `version` subcommand (matches actual binary three-line output) and noted hardcoded `Rust:` literal pending v1.3.2 dynamic patch. § 14 corpus link clarified as invitation-only and added direct repo-tree fallback URL. |
 
 ---
 
