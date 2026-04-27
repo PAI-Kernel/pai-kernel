@@ -47,12 +47,14 @@ open canonical corpus.
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
+[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
+[0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
+
 [![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
 [![License (docs)](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PAI-Kernel/pai-kernel/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel)
-[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
-[0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
+
 
 ## Personal Authorial Intelligence — Constitutional Framework
 
