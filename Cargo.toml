@@ -33,10 +33,10 @@ members = [
 resolver = "2"
 
 [workspace.package]
-version = "1.3.0"
+version = "1.3.1"
 edition = "2021"
 license = "MIT OR Apache-2.0"
 repository = "https://github.com/PAI-Kernel/pai-kernel"
 homepage = "https://paikernel.org"
 authors = ["Mikhail Anatolievich Sergeev <Mikhail.Sergeev@PAIkernel.org>"]
-rust-version = "1.75"
+rust-version = "1.88"

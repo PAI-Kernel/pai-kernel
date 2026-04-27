@@ -15,14 +15,14 @@ path = "src/main.rs"
 
 [dependencies]
 # Workspace crates
-pai_governance_daemon = { path = "../governance_daemon", version = "1.3.0", features = ["testing"] }
-pai_api = { path = "../../crates/pai_api", version = "1.3.0" }
-pai_storage = { path = "../../crates/pai_storage", version = "1.3.0" }
-pai_policy = { path = "../../crates/pai_policy", version = "1.3.0" }
-pai_drift = { path = "../../crates/pai_drift", version = "1.3.0" }
-pai_export = { path = "../../crates/pai_export", version = "1.3.0" }
-pai_config = { path = "../../crates/pai_config", version = "1.3.0" }
-pai_witness = { path = "../../crates/pai_witness", version = "1.3.0" }
+pai_governance_daemon = { path = "../governance_daemon", version = "1.3.1", features = ["testing"] }
+pai_api = { path = "../../crates/pai_api", version = "1.3.1" }
+pai_storage = { path = "../../crates/pai_storage", version = "1.3.1" }
+pai_policy = { path = "../../crates/pai_policy", version = "1.3.1" }
+pai_drift = { path = "../../crates/pai_drift", version = "1.3.1" }
+pai_export = { path = "../../crates/pai_export", version = "1.3.1" }
+pai_config = { path = "../../crates/pai_config", version = "1.3.1" }
+pai_witness = { path = "../../crates/pai_witness", version = "1.3.1" }
 
 # Runtime
 tokio = { version = "1", features = ["full"] }

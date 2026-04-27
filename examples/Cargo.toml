@@ -1,11 +1,11 @@
 [package]
 name = "pai_examples"
-version = "1.3.0"
+version = "1.3.1"
 edition = "2021"
 publish = false
 
 [dependencies]
-pai_classify = { path = "../crates/pai_classify", version = "1.3.0" }
+pai_classify = { path = "../crates/pai_classify", version = "1.3.1" }
 pai_sequence = { path = "../crates/pai_sequence", version = "0.1.0" }
 pai_boundary = { path = "../crates/pai_boundary", version = "0.1.0" }
 pai_attestation = { path = "../crates/pai_attestation", version = "0.1.0" }

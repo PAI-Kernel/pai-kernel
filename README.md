@@ -12,14 +12,81 @@
 ## Personal Authorial Intelligence — Constitutional Framework
 
 > A normative layer for human-centric AI governance.
-> **Release v2.2.1 — Early Preview** · April 2026
+> **Release v2.2.2** · May 2026
 
-### Start here
+### Choose your path
 
-- **New adopter?** Begin with [`docs/INSTALL.md`](./docs/INSTALL.md) — cross-platform install guide (~30–60 min).
-- **Want to know what's inside and what's not?** See [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md).
-- **Release overview:** [`docs/RELEASE_NOTES_v2.2.1.md`](./docs/RELEASE_NOTES_v2.2.1.md).
-- **Research paper:** *"PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems"* · SSRN · [DOI 10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218).
+| If you are... | Start here | Time |
+|---|---|---|
+| **An adopter** evaluating PAI-CD for your AI system | [§ Adopter Path](#adopter-path) | ~30 min |
+| **A researcher** interested in the constitutional framework | [§ Researcher Path](#researcher-path) | ~1 hour |
+| **An auditor** verifying invariants and compliance | [§ Auditor Path](#auditor-path) | ~2 hours |
+| **A contributor** wanting to propose changes | [§ Contributor Path](#contributor-path) | ~30 min |
+| **An engineer** integrating PAI-Kernel runtime | [§ Engineering Path](#engineering-path) | ~1 hour |
+
+### Adopter Path
+
+**Goal:** evaluate fit · install · run a demo · understand scope.
+
+1. Read [`docs/RELEASE_NOTES_v2.2.2.md`](./docs/RELEASE_NOTES_v2.2.2.md) — what's in this release.
+2. Read [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md) — what's NOT in this release.
+3. Follow [`docs/INSTALL.md`](./docs/INSTALL.md) — ~5–10 min via Homebrew binary OR `install.sh`.
+4. Run demo: `pai_governance_daemon --version` · explore `/api/v1/health`.
+5. Read [`corpus/PAI_Bill_of_Authorial_Rights.md`](./corpus/PAI_Bill_of_Authorial_Rights.md) — understand what's protected.
+
+**Continue further:** [§ Engineering Path](#engineering-path) · [§ Researcher Path](#researcher-path) · [SSRN paper](https://doi.org/10.2139/ssrn.6512218).
+
+### Researcher Path
+
+**Goal:** understand the framework's normative architecture · invariants · threat model.
+
+1. Read paper: *PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems* — [DOI 10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) · ~30 min.
+2. Read [`corpus/PAI_Constitutional_Document.md`](./corpus/PAI_Constitutional_Document.md) — ~15 min · six non-derogable invariants.
+3. Read [`corpus/PAI_Bill_of_Authorial_Rights.md`](./corpus/PAI_Bill_of_Authorial_Rights.md) — ~20 min · enforceable rights.
+4. Read [`corpus/Glossary.md`](./corpus/Glossary.md) — ~10 min · binding terminology.
+5. Browse [corpus.paikernel.org](https://corpus.paikernel.org) — current rendered surface (legacy ReadMe.com hosting · sustained through v2.2.x window).
+
+**Continue further:** [§ Auditor Path](#auditor-path) · cite the work · [contact maintainer](mailto:contact@paikernel.org) with research questions.
+
+### Auditor Path
+
+**Goal:** verify invariants hold · review compliance evidence · independent assessment.
+
+1. Read [`corpus/PAI_Constitutional_Document.md`](./corpus/PAI_Constitutional_Document.md) — invariants enumerated.
+2. Review [`docs/sbom/sbom.json`](./docs/sbom/sbom.json) — CycloneDX 1.4 supply chain inventory.
+3. Review [OpenSSF Scorecard](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel) — automated supply-chain scan.
+4. Review CI runs: [github.com/PAI-Kernel/pai-kernel/actions](https://github.com/PAI-Kernel/pai-kernel/actions).
+5. Verify GPG signature: `git tag --verify v2.2.2`.
+6. Audit compliance test results: `cargo run -p pai_compliance --locked`.
+
+**Continue further:** [contact maintainer](mailto:contact@paikernel.org) with audit findings · file issues at [github.com/PAI-Kernel/pai-kernel/issues](https://github.com/PAI-Kernel/pai-kernel/issues).
+
+### Contributor Path
+
+**Goal:** propose changes · understand contribution discipline · find where help is wanted.
+
+1. Read [`CONTRIBUTING.md`](./CONTRIBUTING.md) — contribution model · amendment procedure.
+2. Read [`CODE_OF_CONDUCT.md`](./CODE_OF_CONDUCT.md) — expected behavior.
+3. Read [`SECURITY.md`](./SECURITY.md) — vulnerability disclosure procedure.
+4. Browse open issues: [github.com/PAI-Kernel/pai-kernel/issues](https://github.com/PAI-Kernel/pai-kernel/issues).
+5. Propose corpus changes via Amendment procedure (per Governance and Change Control).
+6. Propose code changes via PR.
+
+**Continue further:** [§ Engineering Path](#engineering-path) for code-level orientation.
+
+### Engineering Path
+
+**Goal:** integrate PAI-Kernel runtime · understand API surface · build adapter.
+
+1. Read [`docs/INSTALL.md`](./docs/INSTALL.md) § HTTP API surface.
+2. Browse published crates on [crates.io](https://crates.io/search?q=pai_governance_daemon).
+3. Read [`runtime/governance_daemon/`](./runtime/governance_daemon/) — axum-based HTTP service.
+4. Read [`crates/pai_api/`](./crates/pai_api/) — core API types.
+5. Read [`crates/pai_witness/`](./crates/pai_witness/) — witness chain · audit log.
+6. Build with `cargo build --workspace --locked`.
+7. Run tests with `cargo test --workspace --locked`.
+
+**Continue further:** [§ Auditor Path](#auditor-path) for verification approach · [§ Contributor Path](#contributor-path) if submitting changes.
 
 -----
 
@@ -33,11 +100,11 @@ The frozen v2.2 corpus snapshot is archived via DOI:
 **PAI-CD v2.2** is a constitutional framework consisting of
 **10 normative documents**, organized as a layered system.
 
-The **v2.2.1 release package** contains:
+The **v2.2.2 release package** contains:
 
 - **Three foundational corpus documents (Layer 0)** — constitutional invariants, authorial rights, binding terminology
 - **Companion research paper** (SSRN DOI 10.2139/ssrn.6512218)
-- **Rust SDK v1.3.0** — 22 library crates + governance daemon binary + 5 runnable examples
+- **Rust SDK v1.3.1** — 22 library crates + governance daemon binary + 5 runnable examples (T2/T3 authorization composition correctness fix relative to v1.3.0)
 - **Install guide** (`docs/INSTALL.md`) — cross-platform walkthrough
 - **Release notes, known limitations, license, contribution policy, security policy, citation metadata**
 
@@ -126,7 +193,7 @@ This repository publishes three foundational documents:
 The full corpus (10 documents) includes implementation mapping,
 threat modeling, compliance verification, and governance control
 layers. The complete framework is maintained by the author and will be
-extended as the project develops.
+extended as the project develops. A consolidated bilingual portal is planned for v2.2.3 (~late June / early July 2026).
 
 -----
 
@@ -143,13 +210,13 @@ This principle applies to all documents in this repository and to any compliant 
 |Item                    |Status                                          |
 |------------------------|------------------------------------------------|
 |Constitutional Framework|v2.2 corpus — Freeze Edition (March 2026)       |
-|Release package         |v2.2.1 — Early Preview (April 2026)             |
+|Release package         |v2.2.2 — Stabilization Release (May 2026)       |
 |Distribution            |Invitation-only early adopter preview           |
 |Domain                  |[paikernel.org](https://paikernel.org)          |
 |Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
 |Governance              |Currently maintained by the primary author      |
 
-> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.1 release package (April 2026) publishes that corpus together with adopter materials, the research paper, and the Rust SDK v1.3.0. Future releases may introduce additional normative content; v2.2.1 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
+> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.2 release package (May 2026) ships that corpus alongside SDK v1.3.1 (T2/T3 authorization composition fix relative to v1.3.0), the research paper, and adopter materials. Future releases may introduce additional normative content; v2.2.2 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
 
 -----
 
@@ -171,7 +238,7 @@ products — provided you preserve copyright notices, give appropriate attributi
 to PAI-Kernel Initiative, and indicate if changes were made.
 
 For a license summary and FAQ, see [`LICENSE`](./LICENSE). A detailed
-License FAQ is published in v2.2.2.
+License FAQ is published progressively across v2.2.x releases.
 
 -----
 
