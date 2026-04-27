@@ -20,29 +20,29 @@ PAI-CD-aligned governance into their AI systems · contributors to the
 open canonical corpus.
 
 ```text
-┌─────────────────────────────────────────────────────────┐
+┌──────────────────────────────────────────────────────────┐
 │                                                          │
-│              PAI                                         │
-│        Personal Authorial Intelligence                   │
-│              (the concept)                               │
+│                           PAI                            │
+│             Personal Authorial Intelligence              │
+│                      (the concept)                       │
 │                                                          │
-│                    │                                     │
-│                    │ codified as                         │
-│                    ▼                                     │
+│                            │                             │
+│                            │ codified as                 │
+│                            ▼                             │
 │                                                          │
-│              PAI-CD                                      │
-│        PAI Constitutional Document                       │
-│              (normative framework)                       │
+│                          PAI-CD                          │
+│               PAI Constitutional Document                │
+│                  (normative framework)                   │
 │                                                          │
-│                    │                                     │
-│                    │ implemented by                      │
-│                    ▼                                     │
+│                            │                             │
+│                            │ implemented by              │
+│                            ▼                             │
 │                                                          │
-│              PAI-Kernel SDK                              │
-│        Reference implementation                          │
-│              (Rust crates · dual-licensed)               │
+│                      PAI-Kernel SDK                      │
+│                 Reference implementation                 │
+│              (Rust crates · dual-licensed)                │
 │                                                          │
-└─────────────────────────────────────────────────────────┘
+└──────────────────────────────────────────────────────────┘
 ```
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
@@ -57,7 +57,7 @@ open canonical corpus.
 ## Personal Authorial Intelligence — Constitutional Framework
 
 > A normative layer for human-centric AI governance.
-> **Release v2.2.2** · May 2026
+> **Release v2.2.2** · 2026-04-27
 
 ### Choose your path
 
@@ -255,7 +255,7 @@ This principle applies to all documents in this repository and to any compliant 
 |Item                    |Status                                          |
 |------------------------|------------------------------------------------|
 |Constitutional Framework|v2.2 corpus — Freeze Edition (March 2026)       |
-|Release package         |v2.2.2 — Stabilization Release (May 2026)       |
+|Release package         |v2.2.2 — Stabilization Release (2026-04-27)     |
 |Distribution            |Invitation-only early adopter preview           |
 |Domain                  |[paikernel.org](https://paikernel.org)          |
 |Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
@@ -265,7 +265,7 @@ This principle applies to all documents in this repository and to any compliant 
 **Background:** 12-year journey from a June 2014 manuscript к the present
 constitutional corpus · ORCID [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X).
 
-> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.2 release package (May 2026) ships that corpus alongside SDK v1.3.1 (T2/T3 authorization composition fix relative to v1.3.0), the research paper, and adopter materials. Future releases may introduce additional normative content; v2.2.2 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
+> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.2 release package (2026-04-27) ships that corpus alongside SDK v1.3.1 (T2/T3 authorization composition fix relative to v1.3.0), the research paper, and adopter materials. Future releases may introduce additional normative content; v2.2.2 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
 
 -----
 

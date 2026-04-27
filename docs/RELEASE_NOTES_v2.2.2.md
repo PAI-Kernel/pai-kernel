@@ -1,6 +1,6 @@
 # PAI-Kernel v2.2.2 — Release Notes
 
-**Release date:** May 2026 · target early-to-mid May
+**Release date:** 2026-04-27
 **Status:** Stabilization release · v2.2.x series
 **Framework version:** PAI-CD v2.2.2 (corpus 10 canonical documents · invariants unchanged)
 **SDK version:** v1.3.1 (parallel publication to crates.io)
@@ -387,5 +387,5 @@ Particularly valuable:
 
 ---
 
-*PAI-Kernel v2.2.2 · Release Notes · May 2026*
+*PAI-Kernel v2.2.2 · Release Notes · 2026-04-27*
 *Tag: `v2.2.2` · Commit: filled at tag creation*

@@ -10,7 +10,7 @@ authors:
     email: Mikhail.Sergeev@paikernel.org
     orcid: "https://orcid.org/0009-0001-6443-855X"
 version: "2.2.2"
-date-released: "2026-05-01"
+date-released: "2026-04-27"
 # Code (this software · SDK · binaries) is dual-licensed MIT OR Apache-2.0.
 # Documentation (PAI-CD framework normative texts) is licensed CC BY 4.0.
 # CITATION.cff describes type=software · license array reflects code license choice.
