@@ -30,11 +30,15 @@ jobs:
           persist-credentials: false
 
       - name: Markdown lint
-        run: npx --yes markdownlint-cli2 '**/*.md' '#node_modules'
+        # markdownlint-cli2 v0.18.x · pinned via @ to prevent silent upgrade;
+        # acceptable lightweight tool · readonly linter · not shipped в release artifacts.
+        run: npx --yes markdownlint-cli2@0.18.1 '**/*.md' '#node_modules'
 
       - name: Validate CITATION.cff
+        # cffconvert v2.0.x · pinned major.minor; readonly schema validator ·
+        # not shipped в release artifacts. PF-049 mitigation · documented acceptable risk.
         run: |
-          pip install --quiet cffconvert
+          pip install --quiet 'cffconvert==2.0.0'
           cffconvert --validate
 
       - name: Check internal links

@@ -1,0 +1,8 @@
+# corpus.lock — SHA-256 integrity manifest для public canonical corpus
+# Generated: 2026-04-27 · Cycle 65 (REQ-248 F10)
+# Source of truth: shasum -a 256 corpus/*.md
+# Verification: sha256sum -c corpus.lock
+
+c89b514d1456cff1995bc656853673eccf1e31cb25a99748b68ac5f4f48947cf  corpus/Glossary.md
+27403663b5a2d9500dbca3917799f202e8a8778856e43a68aee0e7b15386313d  corpus/PAI_Bill_of_Authorial_Rights.md
+920212468360b5135ecb2b4895e68e62d15eca480583493209941a6bc0e0662b  corpus/PAI_Constitutional_Document.md

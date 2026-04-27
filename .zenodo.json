@@ -1,6 +1,6 @@
 {
   "upload_type": "publication",
-  "publication_type": "standard",
+  "publication_type": "report",
   "title": "PAI-CD: A Constitutional Framework for Authorial Sovereignty in Deployed AI Systems",
   "creators": [
     {
@@ -38,7 +38,7 @@
       "scheme": "doi",
       "identifier": "10.5281/zenodo.19151899",
       "relation": "isNewVersionOf",
-      "resource_type": "publication-standard"
+      "resource_type": "publication-report"
     }
   ]
 }
