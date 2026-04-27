@@ -23,8 +23,30 @@ permissions:
   contents: write  # needed to upload release assets
 
 jobs:
+  # Constitutional compliance gate · runs BEFORE per-target build matrix.
+  # Failure here BLOCKS the entire release pipeline · prevents binaries from
+  # being uploaded и crates.io from being touched if T1..T6 invariant
+  # validation fails. Runtime invariant leg of the pre-publication audit
+  # triumvirate (citations · terminology · runtime compliance).
+  compliance-gate:
+    name: Compliance binary (constitutional gate)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Install Rust 1.88.0
+        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # action pinned · toolchain bumped к 1.88.0 in v2.2.2
+        with:
+          toolchain: 1.88.0
+
+      - name: Run compliance binary (locked)
+        run: cargo run -p pai_compliance --locked --release
+
   build:
     name: Build ${{ matrix.target }}
+    needs: compliance-gate
     runs-on: ${{ matrix.runner }}
     strategy:
       fail-fast: false
@@ -145,6 +167,7 @@ jobs:
 
   corpus-bundle:
     name: Build corpus-only bundle (framework docs without SDK)
+    needs: compliance-gate
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -194,6 +217,7 @@ jobs:
 
   docker:
     name: Build + push Docker image
+    needs: compliance-gate
     runs-on: ubuntu-latest
     permissions:
       contents: read

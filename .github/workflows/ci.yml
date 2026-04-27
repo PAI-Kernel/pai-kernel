@@ -86,3 +86,12 @@ jobs:
 
       - name: Test (release, workspace, locked)
         run: cargo test --workspace --release --locked
+
+      # Constitutional compliance gate · runs the binary harness (separate
+      # from workspace tests · exercises T1..T6 invariant validation through
+      # full daemon path). Failure of any compliance test BLOCKS CI ·
+      # symmetric с reference audit и terminology check disciplines · this
+      # is the runtime invariant verification leg of the pre-publication
+      # audit triumvirate.
+      - name: Compliance binary (constitutional gate)
+        run: cargo run -p pai_compliance --locked --release
