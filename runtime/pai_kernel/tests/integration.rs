@@ -267,7 +267,7 @@ fn cli_t01_version() {
         .expect("failed to run binary");
     assert!(output.status.success());
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("1.3.0"), "stdout: {stdout}");
+    assert!(stdout.contains("1.3.1"), "stdout: {stdout}");
     assert!(stdout.contains("PAI-CD"), "stdout: {stdout}");
 }
 

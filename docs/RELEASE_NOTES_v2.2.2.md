@@ -90,7 +90,7 @@ transitively, run `cargo update -p pai_governance_daemon` after pulling
 v2.2.2 to receive the v1.3.1 fix. The compliance suite distinguishes the
 two states:
 
-```
+```text
 $ cargo run -p pai_compliance --locked
 # v1.3.0:  8/10 PASS  (T2/T3 fail)
 # v1.3.1: 10/10 PASS  (T2/T3 pass · constitutional integrity restored)
