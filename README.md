@@ -45,7 +45,6 @@ open canonical corpus.
 └──────────────────────────────────────────────────────────┘
 ```
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
 [![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
 [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
