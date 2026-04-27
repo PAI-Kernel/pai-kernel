@@ -1,5 +1,50 @@
 # PAI-Kernel
 
+**The problem.** AI systems increasingly mediate decisions about humans —
+about cognitive influence, about whose authority shapes whose thinking.
+Current deployment models leave humans dependent on provider goodwill for
+the protection of their cognitive sovereignty. There is no
+provider-independent verification surface for what an AI is actually
+optimizing toward.
+
+**The framework.** PAI-CD (Personal Authorial Intelligence — Constitutional
+Document) defines normative invariants — independently verifiable — that
+deployed AI systems must satisfy to protect Author cognitive sovereignty
+at the deployment layer. PAI-Kernel is the public reference implementation
+in Rust (Apache 2.0 / MIT dual-licensed code · CC BY 4.0 documentation).
+
+**Who should read further.** Researchers exploring AI-alignment normative
+frameworks · engineers evaluating constitutional governance for deployed
+AI · auditors verifying provider compliance · adopters integrating
+PAI-CD-aligned governance into their AI systems · contributors to the
+open canonical corpus.
+
+```text
+┌─────────────────────────────────────────────────────────┐
+│                                                          │
+│              PAI                                         │
+│        Personal Authorial Intelligence                   │
+│              (the concept)                               │
+│                                                          │
+│                    │                                     │
+│                    │ codified as                         │
+│                    ▼                                     │
+│                                                          │
+│              PAI-CD                                      │
+│        PAI Constitutional Document                       │
+│              (normative framework)                       │
+│                                                          │
+│                    │                                     │
+│                    │ implemented by                      │
+│                    ▼                                     │
+│                                                          │
+│              PAI-Kernel SDK                              │
+│        Reference implementation                          │
+│              (Rust crates · dual-licensed)               │
+│                                                          │
+└─────────────────────────────────────────────────────────┘
+```
+
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.19151900.svg)](https://doi.org/10.5281/zenodo.19151900)
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
 [![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
@@ -215,6 +260,10 @@ This principle applies to all documents in this repository and to any compliant 
 |Domain                  |[paikernel.org](https://paikernel.org)          |
 |Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
 |Governance              |Currently maintained by the primary author      |
+
+**Author:** Mikhail Sergeev · independent researcher · Russia.
+**Background:** 12-year journey from a June 2014 manuscript к the present
+constitutional corpus · ORCID [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X).
 
 > **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.2 release package (May 2026) ships that corpus alongside SDK v1.3.1 (T2/T3 authorization composition fix relative to v1.3.0), the research paper, and adopter materials. Future releases may introduce additional normative content; v2.2.2 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
 
