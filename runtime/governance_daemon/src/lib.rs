@@ -285,7 +285,10 @@ impl GovernanceMode {
     /// Returns true if this mode is at least as restrictive as Conservative.
     /// Backward-compatible with the old `conservative` bool.
     pub fn is_conservative(&self) -> bool {
-        matches!(self, GovernanceMode::Restricted | GovernanceMode::Conservative | GovernanceMode::Breach)
+        matches!(
+            self,
+            GovernanceMode::Restricted | GovernanceMode::Conservative | GovernanceMode::Breach
+        )
     }
 
     /// Returns true if this is a breach state.
@@ -298,7 +301,6 @@ impl GovernanceMode {
         *self >= GovernanceMode::Warning
     }
 }
-
 
 /// MCC canonical state.
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -960,7 +962,7 @@ impl GovernanceDaemon {
 
     pub fn revoke_consent(&mut self, consent_id: &str) -> Result<(), GovError> {
         self.require_gate()?;
-        let details = format!("revoke consent {}", consent_id);
+        let details = format!("revoke consent {consent_id}");
         let req = ActionRequest {
             action: LogAction::GovRevokeConsent,
             capability_id: CAP_CONSENT_REVOKE.into(),
@@ -1007,7 +1009,7 @@ impl GovernanceDaemon {
 
     pub fn revoke_delegation(&mut self, delegation_id: &str) -> Result<(), GovError> {
         self.require_gate()?;
-        let details = format!("revoke delegation {}", delegation_id);
+        let details = format!("revoke delegation {delegation_id}");
         let req = ActionRequest {
             action: LogAction::GovRevokeDelegation,
             capability_id: CAP_DELEGATION_REVOKE.into(),
@@ -1078,8 +1080,7 @@ impl GovernanceDaemon {
             };
             if count >= concentration_threshold && pct > pct_threshold {
                 concentration_warnings.push(format!(
-                    "CAPTURE WARNING: '{}' holds {}/{} active delegations ({:.1}%)",
-                    delegate, count, total_active, pct
+                    "CAPTURE WARNING: '{delegate}' holds {count}/{total_active} active delegations ({pct:.1}%)"
                 ));
             }
         }
@@ -1102,29 +1103,72 @@ impl GovernanceDaemon {
             .cloned()
     }
 
-    /// Check if a consent record has expired per MP-9 expiry policy.
-    fn is_consent_expired(record: &ConsentRecord) -> bool {
-        if let Some(expiry) = record.expiry_policy.expires_at(record.granted_at, record.tier) {
-            OffsetDateTime::now_utc() >= expiry
-        } else {
-            false
+    /// Predicate: is this consent record active for the given capability and tier
+    /// at time `now`? Active = not revoked, not expired, capability matches,
+    /// tier covers requested tier, capability_scope covers requested capability.
+    fn is_active_consent(
+        c: &ConsentRecord,
+        now: OffsetDateTime,
+        capability_id: &str,
+        tier: RiskTier,
+    ) -> bool {
+        if c.revoked_at.is_some() {
+            return false;
         }
+        if c.capability_id != capability_id {
+            return false;
+        }
+        if c.tier < tier {
+            return false;
+        }
+        if let Some(expiry) = c.expiry_policy.expires_at(c.granted_at, c.tier) {
+            if now >= expiry {
+                return false;
+            }
+        }
+        if !c.capability_scope.is_empty()
+            && !c.capability_scope.iter().any(|s| s == capability_id)
+        {
+            return false;
+        }
+        true
+    }
+
+    /// Predicate: is this delegation grant active for the given capability at
+    /// time `now`? Active = not revoked, not expired, scope covers capability.
+    fn is_active_delegation(
+        d: &DelegationGrant,
+        now: OffsetDateTime,
+        capability_id: &str,
+    ) -> bool {
+        d.revoked_at.is_none()
+            && d.expires_at > now
+            && d.scope.iter().any(|s| s == capability_id)
+    }
+
+    /// Built-in governance management capabilities. Author has direct
+    /// constitutional authority over these (Constitutional Document § Principle 1
+    /// — Authorship Supremacy · bootstrap necessity for the consent/delegation
+    /// machinery itself). Non-Author actors still require active delegation.
+    fn is_builtin_management_capability(capability_id: &str) -> bool {
+        matches!(
+            capability_id,
+            CAP_CAPABILITY_REGISTER
+                | CAP_CONSENT_GRANT
+                | CAP_CONSENT_REVOKE
+                | CAP_DELEGATION_GRANT
+                | CAP_DELEGATION_REVOKE
+                | CAP_CONSERVATIVE_EXIT
+        )
     }
 
     fn has_active_consent(&self, capability_id: &str, tier: RiskTier) -> bool {
+        let now = OffsetDateTime::now_utc();
         let active: Vec<&ConsentRecord> = self
             .state
             .consent_ledger
             .iter()
-            .filter(|r| {
-                r.capability_id == capability_id
-                    && r.revoked_at.is_none()
-                    // MP-9: Check expiry policy
-                    && !Self::is_consent_expired(r)
-                    // MP-9: If capability_scope is non-empty, check it covers this capability
-                    && (r.capability_scope.is_empty()
-                        || r.capability_scope.iter().any(|c| c == capability_id))
-            })
+            .filter(|r| Self::is_active_consent(r, now, capability_id, tier))
             .collect();
 
         if tier < RiskTier::Tier2 {
@@ -1149,10 +1193,7 @@ impl GovernanceDaemon {
         }
         let now = OffsetDateTime::now_utc();
         self.state.delegations.iter().any(|d| {
-            d.delegate == delegate
-                && d.revoked_at.is_none()
-                && now < d.expires_at
-                && d.scope.iter().any(|c| c == capability_id)
+            d.delegate == delegate && Self::is_active_delegation(d, now, capability_id)
         })
     }
 
@@ -1193,26 +1234,55 @@ impl GovernanceDaemon {
             return Err(GovError::ConservativeMode);
         }
 
-        // I1/I2/I3: Tier>=2 requires active author consent OR valid delegation.
+        // I1/I2/I3: Tier>=2 authorization (REQ-236 / DL-369).
+        //
+        // Self-binding semantics per Constitutional Document § Principle 1
+        // (Authorship Supremacy · «Delegation must be scoped, time-bound, and
+        // revocable») and Consent and Capability Model § Principle 2 (Tier 2 ·
+        // «Be revocable» · «Be logged in Decision Log»):
+        //
+        //   - For built-in governance management capabilities (CAP.CAPABILITY.REGISTER,
+        //     CAP.CONSENT.*, CAP.DELEGATION.*, CAP.CONSERVATIVE.EXIT) Author has
+        //     direct constitutional authority — bootstrap necessity for the consent/
+        //     delegation machinery itself. Non-Author actors still require active
+        //     delegation.
+        //
+        //   - For all other Tier ≥ 2 capabilities active consent for the capability
+        //     is required (binding for all actors including Author — self-binding
+        //     per Bill of Authorial Rights § Right 1). Non-Author actors additionally
+        //     require active delegation scoping the capability to them.
+        //
+        // Failure mode: lifecycle revocation/expiry returns Err(Unauthorized) per
+        // p0-3 BT-6 AUTHZ.FAIL canonical mapping. Conservative-mode shift is
+        // reserved for breach detection (unregistered capability · log tamper ·
+        // bypass attempt · injection); normal lifecycle authz failure does not
+        // shift state to conservative.
         if req.tier >= RiskTier::Tier2 {
             let actor = &req.actor_context.current_actor;
             let actor_type = req.actor_context.actor_type;
+            let cap_id = req.capability_id.as_str();
 
-            let consent_ok = self.has_active_consent(&req.capability_id, req.tier);
+            let bootstrap = actor_type == ActorType::Author
+                && Self::is_builtin_management_capability(cap_id);
 
-            let delegation_ok = match actor_type {
-                ActorType::Author => true,
-                _ => self.is_delegation_active(actor, &req.capability_id),
+            let consent_active = if bootstrap {
+                true
+            } else {
+                self.has_active_consent(cap_id, req.tier)
             };
 
-            if !(consent_ok || delegation_ok) {
-                self.state.conservative = true;
+            let delegation_active = match actor_type {
+                ActorType::Author => true,
+                _ => self.is_delegation_active(actor, cap_id),
+            };
+
+            if !consent_active || !delegation_active {
                 self.state.breach_flag = Some(BreachClass::AuthzFailure);
                 self.append_breach(
                     LogAction::ConservativeModeViolation,
-                    "authz failed (no consent/delegation)",
+                    "authz failed (no active consent/delegation)",
                     BreachClass::AuthzFailure,
-                    &req.capability_id,
+                    cap_id,
                     req.tier,
                     serde_json::json!({}),
                 );
@@ -1488,7 +1558,7 @@ impl GovernanceDaemon {
             tier: RiskTier::Tier2,
             evidence_refs: vec![],
             actor_context: self.state.authority_context.clone(),
-            details: format!("ratify_add_objective {}", objective),
+            details: format!("ratify_add_objective {objective}"),
             params: serde_json::json!({ "objective": objective }),
         };
         self.validate_and_apply(req, |s, v| {

@@ -9,8 +9,8 @@ authors:
     affiliation: Independent Researcher; PAI-Kernel Initiative
     email: Mikhail.Sergeev@paikernel.org
     orcid: "https://orcid.org/0009-0001-6443-855X"
-version: "2.2.1"
-date-released: "2026-04-23"
+version: "2.2.2"
+date-released: "2026-05-01"
 # Code (this software · SDK · binaries) is dual-licensed MIT OR Apache-2.0.
 # Documentation (PAI-CD framework normative texts) is licensed CC BY 4.0.
 # CITATION.cff describes type=software · license array reflects code license choice.
@@ -25,7 +25,7 @@ doi: "10.2139/ssrn.6512218"
 identifiers:
   - type: doi
     value: "10.2139/ssrn.6512218"
-    description: "Paper DOI (SSRN) — citation target for v2.2.1 release"
+    description: "Paper DOI (SSRN) — citation target for v2.2.2 release"
 # Zenodo DOIs will be auto-minted via GitHub integration upon v2.2.1 release;
 # CITATION.cff updated in subsequent patch (v2.2.2 or v3.1.0) to include them.
 preferred-citation:
