@@ -1,22 +1,22 @@
 ---
-title: "Install Guide — PAI-Kernel v2.2.1 Early Preview"
+title: "Install Guide — PAI-Kernel v2.2.2 Early Preview"
 slug: install
 position: 0
 hidden: false
 excerpt: "Cross-platform build + run guide; includes Ollama side-by-side demo. ~30-60 min first install."
 pai_cd:
-  version: "2.2.1"
+  version: "2.2.2"
   status: "Canonical"
   source:
     file: "INSTALL.md"
     path: "INSTALL.md"
-    commit: "v2.2.1"
+    commit: "v2.2.2"
     authority_repo: "PAI-Kernel/pai-kernel"
-  cite_as: "PAI-CD v2.2.1 · Install Guide"
-  last_amendment: "2026-04-23"
+  cite_as: "PAI-CD v2.2.2 · Install Guide"
+  last_amendment: "2026-04-27"
 ---
 
-# Install Guide — PAI-Kernel v2.2.1 Early Preview
+# Install Guide — PAI-Kernel v2.2.2 Early Preview
 
 > **Early preview · invitation-only distribution.** This is not production-ready software. It is a governance substrate for AI systems; AI-model wiring is v3.1 roadmap. Adopters running this release observe PAI-Kernel and Ollama running side-by-side — see [§ 10 · What you're seeing](#-10--what-youre-seeing-level-1-demo-mode) for the honest L1 framing.
 
@@ -29,7 +29,7 @@ Pick the fastest path that suits your environment. All paths deliver the same `p
 ### Option A1 · One-line install script (macOS / Linux) — ~30 sec
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.1/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/install.sh | sh
 ```
 
 (A shorter URL `https://paikernel.org/install.sh` will be available once the redirect is deployed — track release notes.)
@@ -54,13 +54,13 @@ pai_governance_daemon
 ### Option A3 · Docker (any OS with Docker) — ~1 min, zero host install
 
 ```bash
-docker run --rm -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.1
+docker run --rm -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.2
 ```
 
 No Rust toolchain, no Gatekeeper/Defender issues, no host-side state. Daemon listens inside the container and publishes to host port 9100. For persistent state:
 
 ```bash
-docker run -v pai-kernel-data:/data -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.1
+docker run -v pai-kernel-data:/data -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.2
 ```
 
 ### Option A4 · Manual binary download — ~3 min
@@ -69,32 +69,32 @@ Download the pre-built daemon for your platform directly from the release page:
 
 ```bash
 # 1. Download (pick your platform)
-curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.2/pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz
 
 # 2. Verify checksum (recommended)
-curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.1/pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
-shasum -a 256 -c pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz.sha256
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.2/pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz.sha256
+shasum -a 256 -c pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz.sha256
 
 # 3. Extract + run
-tar xzf pai_governance_daemon-v2.2.1-aarch64-apple-darwin.tar.gz
-cd pai_governance_daemon-v2.2.1-aarch64-apple-darwin
+tar xzf pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz
+cd pai_governance_daemon-v2.2.2-aarch64-apple-darwin
 ./pai_governance_daemon --config pai-kernel.toml
 ```
 
 Binary + default config + policies + docs are in the archive. No Rust toolchain needed.
 
-**Platform notes (Options A1 / A4):** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround. Options A2 (Homebrew) and A3 (Docker) handle this automatically. v2.2.1 binaries are not codesigned; signing will be added for general availability.
+**Platform notes (Options A1 / A4):** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround. Options A2 (Homebrew) and A3 (Docker) handle this automatically. v2.2.2 binaries are not codesigned; signing will be added for general availability.
 
 ### Option B · Build from source (full SDK, all crates, 28 crates) — ~30–60 min
 
 Best for developers customizing the SDK or running the full test suite.
 
 ```bash
-# Prerequisites: Rust 1.86+ toolchain, 8 GB RAM, 20 GB disk, internet.
+# Prerequisites: Rust 1.88+ toolchain, 8 GB RAM, 20 GB disk, internet.
 
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 cd pai-kernel
-git checkout v2.2.1
+git checkout v2.2.2
 
 cargo build --workspace --release
 ./target/release/pai_governance_daemon
@@ -153,7 +153,7 @@ Running the steps in this guide produces:
 
 ### 1.2 What this release does NOT do
 
-- **PAI-Kernel does NOT mediate Ollama's responses.** Chat messages flow directly between you and the Ollama process; they are not routed through the governance daemon in v2.2.1.
+- **PAI-Kernel does NOT mediate Ollama's responses.** Chat messages flow directly between you and the Ollama process; they are not routed through the governance daemon in v2.2.2.
 - **No witness-chain entries are auto-populated from Ollama chat.** Witness entries come from direct SDK calls you make.
 - **No Conservative Mode blocking** of AI output. That's a future SDK-integration feature.
 - **No production-hardened defaults.** Bind is localhost-only; no TLS by default; no multi-tenant.
@@ -204,7 +204,7 @@ See `KNOWN_LIMITATIONS.md` in the repository root for the full scope statement.
 │  │ pai-console UI         │  │ (your prompts)         │      │
 │  └────────────────────────┘  └────────────────────────┘      │
 │                                                              │
-│  Note: no wire between the two boxes in v2.2.1.              │
+│  Note: no wire between the two boxes in v2.2.2.              │
 │  SDK + model integration is future roadmap.                  │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -236,7 +236,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 
 source "$HOME/.cargo/env"
 rustc --version
-# Expected: rustc 1.86.0 (...) or later
+# Expected: rustc 1.88.0 (...) or later
 ```
 
 (Optional) Homebrew for Ollama install later:
@@ -265,7 +265,7 @@ Install Rust via `rustup-init.exe`:
 
 ```powershell
 rustc --version
-# Expected: rustc 1.86.0 (...) or later
+# Expected: rustc 1.88.0 (...) or later
 ```
 
 (Recommended) PowerShell 7+:
@@ -304,14 +304,14 @@ Install Rust via `rustup`:
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 source "$HOME/.cargo/env"
 rustc --version
-# Expected: rustc 1.86.0 (...) or later
+# Expected: rustc 1.88.0 (...) or later
 ```
 
 ---
 
 ### 2.4 Verify Rust toolchain version
 
-PAI-Kernel pins Rust 1.86.0 via `rust-toolchain.toml` in the repository. `rustup` should auto-install this version when you enter the repo directory. If you see older version warnings during build:
+PAI-Kernel pins Rust 1.88.0 via `rust-toolchain.toml` in the repository. `rustup` should auto-install this version when you enter the repo directory. If you see older version warnings during build:
 
 ```bash
 rustup update stable
@@ -325,17 +325,17 @@ rustup show
 ```bash
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 cd pai-kernel
-git checkout v2.2.1
+git checkout v2.2.2
 ```
 
 Verify you're on the right tag:
 
 ```bash
 git describe --tags
-# Expected: v2.2.1
+# Expected: v2.2.2
 
 git log -1 --oneline
-# Expected: some commit SHA (this is the v2.2.1 tagged commit)
+# Expected: some commit SHA (this is the v2.2.2 tagged commit)
 ```
 
 ---
@@ -360,8 +360,8 @@ cargo build --workspace --release
 **Expected final output lines (abbreviated):**
 
 ```text
-   Compiling pai_api v1.3.0
-   Compiling pai_kernel v1.3.0 (/path/to/pai-kernel/runtime/pai_kernel)
+   Compiling pai_api v1.3.1
+   Compiling pai_kernel v1.3.1 (/path/to/pai-kernel/runtime/pai_kernel)
     Finished `release` profile [optimized] target(s) in 5m 34s
 ```
 
@@ -370,9 +370,9 @@ cargo build --workspace --release
 ```bash
 ./target/release/pai_governance_daemon --version
 # Expected:
-# PAI-Kernel Governance Sidecar v1.3.0
+# PAI-Kernel Governance Sidecar v1.3.1
 # PAI-CD: v3.1
-# Rust: 1.86.0
+# Rust: 1.88.0
 ```
 
 (On Windows use `.\target\release\pai_governance_daemon.exe --version`.)
@@ -434,7 +434,7 @@ This default is safe for local testing. Adjust later if needed.
 {"timestamp":"2026-04-23T14:00:12.345Z","level":"INFO","message":"Loading configuration from ./pai-kernel.toml"}
 {"timestamp":"2026-04-23T14:00:12.350Z","level":"INFO","message":"Storage backend: sqlite path=./pai-kernel.db"}
 {"timestamp":"2026-04-23T14:00:12.355Z","level":"INFO","message":"Policy engine: loaded N rego modules from ./policies/"}
-{"timestamp":"2026-04-23T14:00:12.360Z","level":"INFO","message":"PAI-Kernel Governance Sidecar v1.3.0 listening on 127.0.0.1:9100"}
+{"timestamp":"2026-04-23T14:00:12.360Z","level":"INFO","message":"PAI-Kernel Governance Sidecar v1.3.1 listening on 127.0.0.1:9100"}
 ```
 
 The daemon blocks the terminal. To stop it use `Ctrl+C`.
@@ -454,10 +454,10 @@ curl http://127.0.0.1:9100/api/v1/health
 ```bash
 curl http://127.0.0.1:9100/api/v1/version
 # Expected response:
-# {"version":"1.3.0","pai_cd_version":"3.1","build_profile":"release"}
+# {"version":"1.3.1","pai_cd_version":"3.1","build_profile":"release"}
 #
-# Note on version fields: this release is tagged v2.2.1 (corpus snapshot), SDK
-# binary version is 1.3.0, and the SDK-enforced invariant set is a superset of
+# Note on version fields: this release is tagged v2.2.2 (corpus snapshot), SDK
+# binary version is 1.3.1, and the SDK-enforced invariant set is a superset of
 # the published v2.2 corpus (SDK implements additional invariants ahead of
 # their publication in a future corpus freeze). This is expected and
 # documented in KNOWN_LIMITATIONS.md § 1.3.
@@ -604,7 +604,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 
 ## § 10 · What you're seeing (Level 1 Demo Mode)
 
-### What works in v2.2.1
+### What works in v2.2.2
 
 - ✅ Governance daemon builds, runs, binds to localhost
 - ✅ All 17 `/api/v1/*` endpoints respond with valid JSON
@@ -617,7 +617,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 - ✅ Ollama runs any supported model locally
 - ✅ PAI-Console React UI (optional, § 11) renders governance state
 
-### What does NOT work in v2.2.1 (by design)
+### What does NOT work in v2.2.2 (by design)
 
 - ❌ Ollama response filtering through SDK gates
 - ❌ Conservative Mode blocking AI output mid-stream
@@ -628,7 +628,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 
 ### Why this matters
 
-v2.2.1 SDK provides the **governance substrate** — the invariants, witness chain, consent semantics, export primitives, drift monitoring. It is the layer on which AI-mediation will be built.
+v2.2.2 SDK provides the **governance substrate** — the invariants, witness chain, consent semantics, export primitives, drift monitoring. It is the layer on which AI-mediation will be built.
 
 The AI-mediation wiring itself — routing Ollama's responses through the governance layer, binding Conservative Mode to actual model output, populating witness entries from chat turns — is scheduled for a future release.
 
@@ -719,7 +719,7 @@ xcode-select --install
 
 **Linux:** `error: cannot find -lssl` or `-lcrypto` → install the OpenSSL development headers per § 2.3.
 
-**Any platform:** `rustc version X.Y.Z < 1.86.0` → `rustup update stable && rustup default stable`.
+**Any platform:** `rustc version X.Y.Z < 1.88.0` → `rustup update stable && rustup default stable`.
 
 ### 12.3 Ollama can't pull a model
 
@@ -823,10 +823,10 @@ Error in browser console: `Failed to fetch /api/v1/...`
 Full scope: see `KNOWN_LIMITATIONS.md`. Key items:
 
 - **v2.2 is a citationally-stable freeze.** The published corpus is a frozen snapshot; adopters integrating now bind to v2.2 semantics. Future corpus freezes may introduce additional normative content.
-- **SDK v1.3.0 exceeds v2.2 corpus scope** — the runtime implements additional invariants ahead of their publication in a future corpus freeze. Adopters using SDK bind to this superset.
+- **SDK v1.3.1 exceeds v2.2 corpus scope** — the runtime implements additional invariants ahead of their publication in a future corpus freeze. Adopters using SDK bind to this superset.
 - **Formal verification is specification-level**, not runtime-SDK-conformance. Current compliance status requires independent audit.
-- **Multi-instance coordination** (multiple PAI Authors cooperating) is not in v2.2.1 scope; dyadic deployments only.
-- **Regulatory zone governance and provider-disposition disclosure** are scheduled for a later release; not in v2.2.1.
+- **Multi-instance coordination** (multiple PAI Authors cooperating) is not in v2.2.2 scope; dyadic deployments only.
+- **Regulatory zone governance and provider-disposition disclosure** are scheduled for a later release; not in v2.2.2.
 
 ---
 
@@ -868,7 +868,7 @@ brew install ollama  # or download DMG
 
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
-cd pai-kernel && git checkout v2.2.1
+cd pai-kernel && git checkout v2.2.2
 cargo build --workspace --release
 
 # Run
@@ -888,7 +888,7 @@ winget install Ollama.Ollama
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 Set-Location pai-kernel
-git checkout v2.2.1
+git checkout v2.2.2
 cargo build --workspace --release
 
 # Run
@@ -909,7 +909,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
-cd pai-kernel && git checkout v2.2.1
+cd pai-kernel && git checkout v2.2.2
 cargo build --workspace --release
 
 # Run
@@ -925,7 +925,7 @@ cargo install pai-kernel
 # Creates the `pai_governance_daemon` binary in ~/.cargo/bin/
 
 # Get a config file
-curl -o pai-kernel.toml https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.1/pai-kernel.toml
+curl -o pai-kernel.toml https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/pai-kernel.toml
 mkdir -p policies
 # (optional: copy policy modules if you want them)
 
@@ -1002,8 +1002,9 @@ rm -f ~/pai-kernel.db
 | Version | Date | Changes |
 |---|---|---|
 | **v0.1** | **2026-04-23** | Initial INSTALL.md for v2.2.1 release. Cross-platform (macOS / Windows / Linux). L1 Demo Mode framing. Ollama side-by-side walkthrough. Troubleshooting 9 subsections. Commands cheatsheet + uninstall path. |
+| **v0.2** | **2026-04-27** | v2.2.2 release update. SDK 1.3.0 → 1.3.1 (PATCH bump). Rust toolchain pin 1.86 → 1.88. URL refs к v2.2.2 release artifacts. Path correction for `docs/INSTALL.md` after Apr 25 root reorg. |
 
 ---
 
-*Install Guide · PAI-CD v2.2.1 · 2026-04-23*
-*Source: `INSTALL.md` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.1/INSTALL.md)*
+*Install Guide · PAI-CD v2.2.2 · 2026-04-27*
+*Source: `docs/INSTALL.md` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.2/docs/INSTALL.md)*
