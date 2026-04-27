@@ -40,7 +40,7 @@ open canonical corpus.
 │                                                          │
 │                      PAI-Kernel SDK                      │
 │                 Reference implementation                 │
-│              (Rust crates · dual-licensed)                │
+│              (Rust crates · dual-licensed)               │
 │                                                          │
 └──────────────────────────────────────────────────────────┘
 ```
