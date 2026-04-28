@@ -296,9 +296,9 @@ async fn health(State(s): State<AppState>) -> impl IntoResponse {
 async fn version() -> impl IntoResponse {
     let rid = request_id();
     let body = VersionResponse {
-        version: "1.3.0".into(),
+        version: env!("CARGO_PKG_VERSION").into(),
         pai_cd_version: "3.1".into(),
-        rust_toolchain: "1.86.0".into(),
+        rust_toolchain: env!("CARGO_PKG_RUST_VERSION").into(),
     };
     (StatusCode::OK, rid_headers(&rid), Json(body))
 }
