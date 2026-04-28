@@ -1,22 +1,22 @@
 ---
-title: "Install Guide — PAI-Kernel v2.2.2 Early Preview"
+title: "Install Guide — PAI-Kernel v2.2.3 Early Preview"
 slug: install
 position: 0
 hidden: false
 excerpt: "Cross-platform build + run guide; includes Ollama side-by-side demo. ~30-60 min first install."
 pai_cd:
-  version: "2.2.2"
+  version: "2.2.3"
   status: "Canonical"
   source:
     file: "INSTALL.md"
     path: "INSTALL.md"
-    commit: "v2.2.2"
+    commit: "v2.2.3"
     authority_repo: "PAI-Kernel/pai-kernel"
-  cite_as: "PAI-CD v2.2.2 · Install Guide"
-  last_amendment: "2026-04-27"
+  cite_as: "PAI-CD v2.2.3 · Install Guide"
+  last_amendment: "2026-04-28"
 ---
 
-# Install Guide — PAI-Kernel v2.2.2 Early Preview
+# Install Guide — PAI-Kernel v2.2.3 Early Preview
 
 > **Early preview · invitation-only distribution.** This is not production-ready software. It is a governance substrate for AI systems; AI-model wiring is v3.1 roadmap. Adopters running this release observe PAI-Kernel and Ollama running side-by-side — see [§ 10 · What you're seeing](#-10--what-youre-seeing-level-1-demo-mode) for the honest L1 framing.
 
@@ -29,7 +29,7 @@ Pick the fastest path that suits your environment. All paths deliver the same `p
 ### Option A1 · One-line install script (macOS / Linux) — ~30 sec
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.3/install.sh | sh
 ```
 
 (A shorter URL `https://paikernel.org/install.sh` is also available — Cloudflare Worker redirects to the canonical raw GitHub path.)
@@ -54,13 +54,13 @@ pai_governance_daemon
 ### Option A3 · Docker (any OS with Docker) — ~1 min, zero host install
 
 ```bash
-docker run --rm -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.2
+docker run --rm -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.3
 ```
 
 No Rust toolchain, no Gatekeeper/Defender issues, no host-side state. Daemon listens inside the container and publishes to host port 9100. For persistent state:
 
 ```bash
-docker run -v pai-kernel-data:/data -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.2
+docker run -v pai-kernel-data:/data -p 9100:9100 ghcr.io/pai-kernel/pai-kernel:v2.2.3
 ```
 
 ### Option A4 · Manual binary download — ~3 min
@@ -69,21 +69,21 @@ Download the pre-built daemon for your platform directly from the release page:
 
 ```bash
 # 1. Download (pick your platform)
-curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.2/pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.3/pai_governance_daemon-v2.2.3-aarch64-apple-darwin.tar.gz
 
 # 2. Verify checksum (recommended)
-curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.2/pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz.sha256
-shasum -a 256 -c pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz.sha256
+curl -LO https://github.com/PAI-Kernel/pai-kernel/releases/download/v2.2.3/pai_governance_daemon-v2.2.3-aarch64-apple-darwin.tar.gz.sha256
+shasum -a 256 -c pai_governance_daemon-v2.2.3-aarch64-apple-darwin.tar.gz.sha256
 
 # 3. Extract + run
-tar xzf pai_governance_daemon-v2.2.2-aarch64-apple-darwin.tar.gz
-cd pai_governance_daemon-v2.2.2-aarch64-apple-darwin
+tar xzf pai_governance_daemon-v2.2.3-aarch64-apple-darwin.tar.gz
+cd pai_governance_daemon-v2.2.3-aarch64-apple-darwin
 ./pai_governance_daemon --config pai-kernel.toml
 ```
 
 Binary + default config + policies + docs are in the archive. No Rust toolchain needed.
 
-**Platform notes (Options A1 / A4):** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround. Options A2 (Homebrew) and A3 (Docker) handle this automatically. v2.2.2 binaries are not codesigned; signing will be added for general availability.
+**Platform notes (Options A1 / A4):** macOS Gatekeeper and Windows Defender may flag the unsigned binary on first run. See § 12.5 (macOS) and § 12.6 (Windows) for the one-command workaround. Options A2 (Homebrew) and A3 (Docker) handle this automatically. v2.2.3 binaries are not codesigned; signing will be added for general availability.
 
 ### Option B · Build from source (full SDK, all crates, 28 crates) — ~30–60 min
 
@@ -94,7 +94,7 @@ Best for developers customizing the SDK or running the full test suite.
 
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 cd pai-kernel
-git checkout v2.2.2
+git checkout v2.2.3
 
 cargo build --workspace --release
 ./target/release/pai_governance_daemon
@@ -153,7 +153,7 @@ Running the steps in this guide produces:
 
 ### 1.2 What this release does NOT do
 
-- **PAI-Kernel does NOT mediate Ollama's responses.** Chat messages flow directly between you and the Ollama process; they are not routed through the governance daemon in v2.2.2.
+- **PAI-Kernel does NOT mediate Ollama's responses.** Chat messages flow directly between you and the Ollama process; they are not routed through the governance daemon in v2.2.3.
 - **No witness-chain entries are auto-populated from Ollama chat.** Witness entries come from direct SDK calls you make.
 - **No Conservative Mode blocking** of AI output. That's a future SDK-integration feature.
 - **No production-hardened defaults.** Bind is localhost-only; no TLS by default; no multi-tenant.
@@ -204,7 +204,7 @@ See `KNOWN_LIMITATIONS.md` in the repository root for the full scope statement.
 │  │ pai-console UI         │  │ (your prompts)         │      │
 │  └────────────────────────┘  └────────────────────────┘      │
 │                                                              │
-│  Note: no wire between the two boxes in v2.2.2.              │
+│  Note: no wire between the two boxes in v2.2.3.              │
 │  SDK + model integration is future roadmap.                  │
 └──────────────────────────────────────────────────────────────┘
 ```
@@ -325,17 +325,17 @@ rustup show
 ```bash
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 cd pai-kernel
-git checkout v2.2.2
+git checkout v2.2.3
 ```
 
 Verify you're on the right tag:
 
 ```bash
 git describe --tags
-# Expected: v2.2.2
+# Expected: v2.2.3
 
 git log -1 --oneline
-# Expected: some commit SHA (this is the v2.2.2 tagged commit)
+# Expected: some commit SHA (this is the v2.2.3 tagged commit)
 ```
 
 ---
@@ -360,8 +360,8 @@ cargo build --workspace --release
 **Expected final output lines (abbreviated):**
 
 ```text
-   Compiling pai_api v1.3.1
-   Compiling pai_kernel v1.3.1 (/path/to/pai-kernel/runtime/pai_kernel)
+   Compiling pai_api v1.3.2
+   Compiling pai_kernel v1.3.2 (/path/to/pai-kernel/runtime/pai_kernel)
     Finished `release` profile [optimized] target(s) in 5m 34s
 ```
 
@@ -370,12 +370,12 @@ cargo build --workspace --release
 ```bash
 ./target/release/pai_governance_daemon version
 # Expected:
-# PAI-Kernel Governance Sidecar v1.3.1
+# PAI-Kernel Governance Sidecar v1.3.2
 # PAI-CD: v3.1
-# Rust: 1.86.0
+# Rust: 1.88.0
 ```
 
-The `--version` flag returns `pai-kernel 1.3.1` (clap default · single line); the `version` subcommand (no dashes) returns the three-line form above. The literal `Rust:` value in v1.3.1 binaries reflects an earlier hardcode; the actual repository toolchain pin is in `rust-toolchain.toml` (currently 1.88.0) — a v1.3.2 patch will switch the displayed value to read dynamically from the build.
+The `--version` flag returns `pai-kernel 1.3.2` (clap default, single line); the `version` subcommand (no dashes) returns the three-line form above. As of v1.3.2 the displayed `Rust:` value is sourced dynamically from `Cargo.toml` `rust-version` at compile time (the v1.3.1 hardcoded `1.86.0` literal is replaced).
 
 (On Windows use `.\target\release\pai_governance_daemon.exe version`.)
 
@@ -422,7 +422,47 @@ format = "json"
 
 This default is safe for local testing. Adjust later if needed.
 
-### 5.2 Run the daemon
+### 5.2 Author keys (ENV setup) — required for production
+
+Starting with v1.3.2 the daemon loads author signing keys from environment variables instead of compile-time defaults. This protects author-supremacy invariants in adopter deployments: the signing identity is generated by the operator, never bundled with the binary.
+
+**Required env vars (production):**
+
+| Variable | Purpose | Format |
+|---|---|---|
+| `PAI_AUTHOR_API_KEY` | API key string identifying the Author | any non-empty UTF-8 string |
+| `PAI_AUTHOR_SIGNING_KEY` | Ed25519 signing key seed (32 bytes) | 64-character hex (lowercase or uppercase) |
+
+**Generate a signing key seed (one-time setup):**
+
+```bash
+# macOS / Linux
+openssl rand -hex 32
+
+# example output (do NOT reuse this — generate your own):
+# 8a4f...c1e7   (64 hex characters = 32 bytes)
+```
+
+**Export before running the daemon:**
+
+```bash
+export PAI_AUTHOR_API_KEY="your-author-api-key"
+export PAI_AUTHOR_SIGNING_KEY="<paste 64-character hex from openssl above>"
+```
+
+Persist across sessions by appending the two `export` lines to `~/.bashrc`, `~/.zshrc`, or your secrets manager of choice. Treat `PAI_AUTHOR_SIGNING_KEY` as a secret with the same care as an SSH private key.
+
+**Fail-closed behavior:** if either env var is missing or the signing key is not 64-character hex, the daemon exits at startup with a clear setup-guide message rather than falling back to a default key.
+
+**Local testing path (`--demo`):** for short-lived experimentation without setting env vars, pass `--demo`:
+
+```bash
+./target/release/pai_governance_daemon --config ./pai-kernel.toml --demo
+```
+
+In demo mode the daemon generates ephemeral in-memory keys per process invocation, prints stderr warnings, and forces the bind address to `127.0.0.1`. Demo keys cannot be reused across sessions — every restart produces a fresh signing identity. Never use `--demo` for production.
+
+### 5.3 Run the daemon
 
 **Terminal 1** — keep this running during the test:
 
@@ -436,7 +476,7 @@ This default is safe for local testing. Adjust later if needed.
 {"timestamp":"2026-04-23T14:00:12.345Z","level":"INFO","message":"Loading configuration from ./pai-kernel.toml"}
 {"timestamp":"2026-04-23T14:00:12.350Z","level":"INFO","message":"Storage backend: sqlite path=./pai-kernel.db"}
 {"timestamp":"2026-04-23T14:00:12.355Z","level":"INFO","message":"Policy engine: loaded N rego modules from ./policies/"}
-{"timestamp":"2026-04-23T14:00:12.360Z","level":"INFO","message":"PAI-Kernel Governance Sidecar v1.3.1 listening on 127.0.0.1:9100"}
+{"timestamp":"2026-04-23T14:00:12.360Z","level":"INFO","message":"PAI-Kernel Governance Sidecar v1.3.2 listening on 127.0.0.1:9100"}
 ```
 
 The daemon blocks the terminal. To stop it use `Ctrl+C`.
@@ -456,10 +496,10 @@ curl http://127.0.0.1:9100/api/v1/health
 ```bash
 curl http://127.0.0.1:9100/api/v1/version
 # Expected response:
-# {"version":"1.3.1","pai_cd_version":"3.1","build_profile":"release"}
+# {"version":"1.3.2","pai_cd_version":"3.1","build_profile":"release"}
 #
-# Note on version fields: this release is tagged v2.2.2 (corpus snapshot), SDK
-# binary version is 1.3.1, and the SDK-enforced invariant set is a superset of
+# Note on version fields: this release is tagged v2.2.3 (corpus snapshot), SDK
+# binary version is 1.3.2, and the SDK-enforced invariant set is a superset of
 # the published v2.2 corpus (SDK implements additional invariants ahead of
 # their publication in a future corpus freeze). This is expected and
 # documented in KNOWN_LIMITATIONS.md § 1.3.
@@ -606,7 +646,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 
 ## § 10 · What you're seeing (Level 1 Demo Mode)
 
-### What works in v2.2.2
+### What works in v2.2.3
 
 - ✅ Governance daemon builds, runs, binds to localhost
 - ✅ All 17 `/api/v1/*` endpoints respond with valid JSON
@@ -619,7 +659,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 - ✅ Ollama runs any supported model locally
 - ✅ PAI-Console React UI (optional, § 11) renders governance state
 
-### What does NOT work in v2.2.2 (by design)
+### What does NOT work in v2.2.3 (by design)
 
 - ❌ Ollama response filtering through SDK gates
 - ❌ Conservative Mode blocking AI output mid-stream
@@ -630,7 +670,7 @@ curl -s http://127.0.0.1:9100/api/v1/log | jq '.entries | length'
 
 ### Why this matters
 
-v2.2.2 SDK provides the **governance substrate** — the invariants, witness chain, consent semantics, export primitives, drift monitoring. It is the layer on which AI-mediation will be built.
+v2.2.3 SDK provides the **governance substrate** — the invariants, witness chain, consent semantics, export primitives, drift monitoring. It is the layer on which AI-mediation will be built.
 
 The AI-mediation wiring itself — routing Ollama's responses through the governance layer, binding Conservative Mode to actual model output, populating witness entries from chat turns — is scheduled for a future release.
 
@@ -825,10 +865,10 @@ Error in browser console: `Failed to fetch /api/v1/...`
 Full scope: see `KNOWN_LIMITATIONS.md`. Key items:
 
 - **v2.2 is a citationally-stable freeze.** The published corpus is a frozen snapshot; adopters integrating now bind to v2.2 semantics. Future corpus freezes may introduce additional normative content.
-- **SDK v1.3.1 exceeds v2.2 corpus scope** — the runtime implements additional invariants ahead of their publication in a future corpus freeze. Adopters using SDK bind to this superset.
+- **SDK v1.3.2 exceeds v2.2 corpus scope** — the runtime implements additional invariants ahead of their publication in a future corpus freeze. Adopters using SDK bind to this superset.
 - **Formal verification is specification-level**, not runtime-SDK-conformance. Current compliance status requires independent audit.
-- **Multi-instance coordination** (multiple PAI Authors cooperating) is not in v2.2.2 scope; dyadic deployments only.
-- **Regulatory zone governance and provider-disposition disclosure** are scheduled for a later release; not in v2.2.2.
+- **Multi-instance coordination** (multiple PAI Authors cooperating) is not in v2.2.3 scope; dyadic deployments only.
+- **Regulatory zone governance and provider-disposition disclosure** are scheduled for a later release; not in v2.2.3.
 
 ---
 
@@ -837,7 +877,7 @@ Full scope: see `KNOWN_LIMITATIONS.md`. Key items:
 We want feedback from early adopters. What to do:
 
 - **Try the install.** Did it work first time? Which step broke? What was confusing?
-- **Explore the corpus.** Start with `Constitutional Core`, then `Bill of Authorial Rights`, then `Glossary`. Read directly from the repository at <https://github.com/PAI-Kernel/pai-kernel/tree/v2.2.2/corpus> · the `corpus.paikernel.org` browsable mirror is invitation-only during the early-preview window (request access via `contact@paikernel.org`).
+- **Explore the corpus.** Start with `Constitutional Core`, then `Bill of Authorial Rights`, then `Glossary`. Read directly from the repository at <https://github.com/PAI-Kernel/pai-kernel/tree/v2.2.3/corpus> · the `corpus.paikernel.org` browsable mirror is invitation-only during the early-preview window (request access via `contact@paikernel.org`).
 - **Read the paper.** DOI: [10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218).
 - **Make notes on architectural gaps.** Where does the framework feel incomplete for your use case?
 
@@ -870,7 +910,7 @@ brew install ollama  # or download DMG
 
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
-cd pai-kernel && git checkout v2.2.2
+cd pai-kernel && git checkout v2.2.3
 cargo build --workspace --release
 
 # Run
@@ -890,7 +930,7 @@ winget install Ollama.Ollama
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
 Set-Location pai-kernel
-git checkout v2.2.2
+git checkout v2.2.3
 cargo build --workspace --release
 
 # Run
@@ -911,7 +951,7 @@ curl -fsSL https://ollama.com/install.sh | sh
 
 # Get & build
 git clone https://github.com/PAI-Kernel/pai-kernel.git
-cd pai-kernel && git checkout v2.2.2
+cd pai-kernel && git checkout v2.2.3
 cargo build --workspace --release
 
 # Run
@@ -927,7 +967,7 @@ cargo install pai-kernel
 # Creates the `pai_governance_daemon` binary in ~/.cargo/bin/
 
 # Get a config file
-curl -o pai-kernel.toml https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/pai-kernel.toml
+curl -o pai-kernel.toml https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.3/pai-kernel.toml
 mkdir -p policies
 # (optional: copy policy modules if you want them)
 
@@ -1006,8 +1046,9 @@ rm -f ~/pai-kernel.db
 | **v0.1** | **2026-04-23** | Initial INSTALL.md for v2.2.1 release. Cross-platform (macOS / Windows / Linux). L1 Demo Mode framing. Ollama side-by-side walkthrough. Troubleshooting 9 subsections. Commands cheatsheet + uninstall path. |
 | **v0.2** | **2026-04-27** | v2.2.2 release update. SDK 1.3.0 → 1.3.1 (PATCH bump). Rust toolchain pin 1.86 → 1.88. URL refs to v2.2.2 release artifacts. Path correction for `docs/INSTALL.md` after Apr 25 root reorg. |
 | **v0.3** | **2026-04-27** | Post-§5 doc/reality alignment. §A1 + §A2 stale "once X is deployed" captions updated (paikernel.org redirect operational; homebrew-tap repo live). § 4 verification updated to use `version` subcommand (matches actual binary three-line output) and noted hardcoded `Rust:` literal pending v1.3.2 dynamic patch. § 14 corpus link clarified as invitation-only and added direct repo-tree fallback URL. |
+| **v0.4** | **2026-04-28** | v2.2.3 release update. SDK 1.3.1 → 1.3.2 (PATCH bump). Author key initialization moved from compile-time defaults to environment variables across daemon, compliance, and API paths. New ENV setup section (§ 3.5) with key generation guide. § 4 Verification updated to dynamic Rust toolchain readout (now sourced from Cargo.toml at compile time). New optional `--demo` flag for local testing only (ephemeral keys, binds 127.0.0.1, prints stderr warnings). |
 
 ---
 
-*Install Guide · PAI-CD v2.2.2 · 2026-04-27*
-*Source: `docs/INSTALL.md` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.2/docs/INSTALL.md)*
+*Install Guide · PAI-CD v2.2.3 · 2026-04-28*
+*Source: `docs/INSTALL.md` · [View on GitHub](https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.3/docs/INSTALL.md)*

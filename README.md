@@ -58,7 +58,7 @@ open canonical corpus.
 ## Personal Authorial Intelligence — Constitutional Framework
 
 > A normative layer for human-centric AI governance.
-> **Release v2.2.2** · 2026-04-27
+> **Release v2.2.3** · 2026-04-28
 
 ### Choose your path
 
@@ -74,9 +74,9 @@ open canonical corpus.
 
 **Goal:** evaluate fit · install · run a demo · understand scope.
 
-1. Read [`docs/RELEASE_NOTES_v2.2.2.md`](./docs/RELEASE_NOTES_v2.2.2.md) — what's in this release.
+1. Read [`docs/RELEASE_NOTES_v2.2.3.md`](./docs/RELEASE_NOTES_v2.2.3.md) — what's in this release.
 2. Read [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md) — what's NOT in this release.
-3. Follow [`docs/INSTALL.md`](./docs/INSTALL.md) — ~5–10 min via Homebrew binary OR `install.sh`.
+3. Follow [`docs/INSTALL.md`](./docs/INSTALL.md) — ~30 sec via `install.sh` (`curl -fsSL https://paikernel.org/install.sh | sh`) OR ~1 min via Homebrew binary.
 4. Run demo: `pai_governance_daemon --version` · explore `/api/v1/health`.
 5. Read [`corpus/PAI_Bill_of_Authorial_Rights.md`](./corpus/PAI_Bill_of_Authorial_Rights.md) — understand what's protected.
 
@@ -102,7 +102,7 @@ open canonical corpus.
 2. Review [`docs/sbom/sbom.json`](./docs/sbom/sbom.json) — CycloneDX 1.4 supply chain inventory.
 3. Review [OpenSSF Scorecard](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel) — automated supply-chain scan.
 4. Review CI runs: [github.com/PAI-Kernel/pai-kernel/actions](https://github.com/PAI-Kernel/pai-kernel/actions).
-5. Verify GPG signature: `git tag --verify v2.2.2`.
+5. Verify GPG signature: `git tag --verify v2.2.3`.
 6. Audit compliance test results: `cargo run -p pai_compliance --locked`.
 
 **Continue further:** [contact maintainer](mailto:contact@paikernel.org) with audit findings · file issues at [github.com/PAI-Kernel/pai-kernel/issues](https://github.com/PAI-Kernel/pai-kernel/issues).
@@ -146,7 +146,7 @@ The frozen v2.2 corpus snapshot is archived via DOI:
 **PAI-CD v2.2** is a constitutional framework consisting of
 **10 normative documents**, organized as a layered system.
 
-The **v2.2.2 release package** contains:
+The **v2.2.3 release package** contains:
 
 - **Three foundational corpus documents (Layer 0)** — constitutional invariants, authorial rights, binding terminology
 - **Companion research paper** (SSRN DOI 10.2139/ssrn.6512218)
@@ -256,17 +256,17 @@ This principle applies to all documents in this repository and to any compliant 
 |Item                    |Status                                          |
 |------------------------|------------------------------------------------|
 |Constitutional Framework|v2.2 corpus — Freeze Edition (March 2026)       |
-|Release package         |v2.2.2 — Stabilization Release (2026-04-27)     |
+|Release package         |v2.2.3 — Stabilization Release (2026-04-28)     |
 |Distribution            |Invitation-only early adopter preview           |
 |Domain                  |[paikernel.org](https://paikernel.org)          |
 |Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
 |Governance              |Currently maintained by the primary author      |
 
 **Author:** Mikhail Sergeev · independent researcher · Russia.
-**Background:** 12-year journey from a June 2014 manuscript к the present
+**Background:** 12-year journey from a June 2014 manuscript to the present
 constitutional corpus · ORCID [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X).
 
-> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.2 release package (2026-04-27) ships that corpus alongside SDK v1.3.1 (T2/T3 authorization composition fix relative to v1.3.0), the research paper, and adopter materials. Future releases may introduce additional normative content; v2.2.2 remains retrievable under its tag. For academic citation, see [`CITATION.cff`](./CITATION.cff).
+> **Note on versioning:** The v2.2 corpus is a **frozen, citationally-stable snapshot** of the three foundational documents (March 2026). The v2.2.3 release package (2026-04-28) ships that corpus alongside SDK v1.3.2 (runtime configuration improvements: author key initialization moved from compile-time defaults to environment variables across daemon, compliance, and API paths; optional `--demo` flag for local testing), superseding v2.2.2. The research paper and adopter materials are unchanged. Future releases may introduce additional normative content; v2.2.2 and v2.2.3 each remain retrievable under their respective tags. For academic citation, see [`CITATION.cff`](./CITATION.cff).
 
 -----
 

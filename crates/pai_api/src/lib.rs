@@ -22,7 +22,7 @@ use std::sync::{Arc, Mutex};
 use uuid::Uuid;
 
 use pai_drift::{DriftEngine, DriftThresholds};
-use pai_governance_daemon::GovernanceDaemon;
+use pai_governance_daemon::{keyloader, GovernanceDaemon};
 use pai_policy::PolicyEngine;
 use pai_storage::{GovernanceStore, SqliteStore};
 use pai_witness::{
@@ -44,12 +44,65 @@ pub struct AppState {
 }
 
 impl AppState {
-    /// Create a new `AppState` with default in-memory components.
+    /// Create a new `AppState` for production use.
+    ///
+    /// Author keys are loaded from the environment via
+    /// [`pai_governance_daemon::keyloader::build_author_keys`]. Required env
+    /// vars: `PAI_AUTHOR_API_KEY` and `PAI_AUTHOR_SIGNING_KEY` (32-byte hex).
+    ///
+    /// **Behavior change in v1.3.2 (signature unchanged):** previous versions
+    /// initialized author keys from compile-time defaults. v1.3.2 reads from
+    /// the environment and **panics** with a setup-guide message if either
+    /// env var is missing or malformed. The function signature stays
+    /// `-> Self` so adopter call sites compile without modification, but
+    /// mis-deployed callers fail loudly instead of running silently with an
+    /// attacker-known signing key.
+    ///
+    /// For local testing or demo flows where env vars are inappropriate, use
+    /// [`AppState::new_in_memory_demo`] (ephemeral keys, stderr warning,
+    /// caller responsible for binding to 127.0.0.1).
+    ///
+    /// The canonical Result-based API surface (`try_new_in_memory ->
+    /// Result<Self, KeyError>`) is deferred to v2.3.0 / 1.4.0 (Constitutional
+    /// Amendment cycle, ~late May / early June 2026), with a documented
+    /// migration guide.
     pub fn new_in_memory() -> Self {
-        let sk = ed25519_dalek::SigningKey::from_bytes(&[7u8; 32]);
-        let vk = sk.verifying_key();
-        let daemon = GovernanceDaemon::new(10)
-            .with_author_keys("API_KEY", vk, Some(sk));
+        let (sk, vk, api_key) = keyloader::build_author_keys().expect(
+            "PAI-Kernel daemon initialization failed: missing or invalid env vars · \
+             see docs/INSTALL.md ENV setup section · \
+             https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/INSTALL.md",
+        );
+        Self::with_explicit_keys(sk, vk, &api_key)
+    }
+
+    /// Create a new `AppState` with ephemeral demo keys for local testing.
+    ///
+    /// Generates fresh in-memory keys per call and prints a stderr warning.
+    /// Caller MUST bind to `127.0.0.1` only. Never use in production paths.
+    ///
+    /// Marked `#[doc(hidden)]` to discourage adopter use; this is a testing
+    /// helper that may evolve in v2.3.0 / 1.4.0 alongside the canonical
+    /// Result-based API.
+    #[doc(hidden)]
+    pub fn new_in_memory_demo() -> Self {
+        let (sk, vk, api_key) = keyloader::build_demo_keys();
+        Self::with_explicit_keys(sk, vk, &api_key)
+    }
+
+    /// Create a new `AppState` with caller-provided author keys (advanced).
+    ///
+    /// Marked `#[doc(hidden)]` — used internally by [`new_in_memory`] and
+    /// [`new_in_memory_demo`] and exposed for integration test scaffolding.
+    /// Adopters should not depend on this entry point; it may be made
+    /// `pub(crate)` in v2.3.0 / 1.4.0 once the canonical Result-based API
+    /// lands.
+    #[doc(hidden)]
+    pub fn with_explicit_keys(
+        sk: ed25519_dalek::SigningKey,
+        vk: ed25519_dalek::VerifyingKey,
+        api_key: &str,
+    ) -> Self {
+        let daemon = GovernanceDaemon::new(10).with_author_keys(api_key, vk, Some(sk));
         let witness = WitnessLog::new();
 
         let mut policy = PolicyEngine::new();
@@ -175,7 +228,7 @@ fn append_witness(witness: &Mutex<WitnessLog>, action: &str, rid: &str) -> u64 {
             .scope_of_impact(vec![ImpactScope::Governance])
             .risk_tier(RiskTier::Tier1)
             .rationale(
-                StructuredRationale::new(&format!("{} [{}]", action, rid))
+                StructuredRationale::new(&format!("{action} [{rid}]"))
                     .unwrap_or_else(|_| StructuredRationale::new("governance action").unwrap()),
             )
             .constitutional_ref(ConstitutionalRef("API §4.4 WitnessMiddleware".into()))
@@ -184,10 +237,15 @@ fn append_witness(witness: &Mutex<WitnessLog>, action: &str, rid: &str) -> u64 {
     .unwrap_or(0)
 }
 
-fn gov_response(rid: &str, audit_seq: u64, result: serde_json::Value, conservative: bool) -> GovResponse {
+fn gov_response(
+    rid: &str,
+    audit_seq: u64,
+    result: serde_json::Value,
+    conservative: bool,
+) -> GovResponse {
     GovResponse {
         request_id: rid.into(),
-        audit_ref: format!("WIT-{}", audit_seq),
+        audit_ref: format!("WIT-{audit_seq}"),
         result,
         conservative_mode: conservative,
         timestamp: now_ts(),
@@ -284,7 +342,11 @@ async fn get_drift(State(s): State<AppState>) -> impl IntoResponse {
     let rid = request_id();
     let dr = s.drift.lock().unwrap();
     let report = dr.report();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(report).unwrap_or_default()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(serde_json::to_value(report).unwrap_or_default()),
+    )
 }
 
 async fn export_bundle(State(s): State<AppState>) -> impl IntoResponse {
@@ -316,9 +378,14 @@ async fn gate_evaluate(
             return (
                 StatusCode::BAD_REQUEST,
                 rid_headers(&rid),
-                Json(serde_json::to_value(ErrorResponse {
-                    request_id: rid, error: e.to_string(), code: 400,
-                }).unwrap()),
+                Json(
+                    serde_json::to_value(ErrorResponse {
+                        request_id: rid,
+                        error: e.to_string(),
+                        code: 400,
+                    })
+                    .unwrap(),
+                ),
             );
         }
     };
@@ -328,22 +395,40 @@ async fn gate_evaluate(
         let violations = check_denylist(ctx, &s.denylist);
         if !violations.is_empty() {
             let seq = append_witness(&s.witness, "gate_evaluate:denylist_breach", &rid);
-            let body = gov_response(&rid, seq, serde_json::json!({
-                "allow": false,
-                "breach": "GROWTH.SIGNAL.INJECTION",
-                "violations": violations,
-            }), s.daemon.lock().unwrap().state().conservative());
-            return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(body).unwrap()));
+            let body = gov_response(
+                &rid,
+                seq,
+                serde_json::json!({
+                    "allow": false,
+                    "breach": "GROWTH.SIGNAL.INJECTION",
+                    "violations": violations,
+                }),
+                s.daemon.lock().unwrap().state().conservative(),
+            );
+            return (
+                StatusCode::BAD_REQUEST,
+                rid_headers(&rid),
+                Json(serde_json::to_value(body).unwrap()),
+            );
         }
     }
 
     let seq = append_witness(&s.witness, "gate_evaluate", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    let body = gov_response(&rid, seq, serde_json::json!({
-        "allow": !conservative,
-        "mode": if conservative { "conservative" } else { "normal" },
-    }), conservative);
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(body).unwrap()))
+    let body = gov_response(
+        &rid,
+        seq,
+        serde_json::json!({
+            "allow": !conservative,
+            "mode": if conservative { "conservative" } else { "normal" },
+        }),
+        conservative,
+    );
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(serde_json::to_value(body).unwrap()),
+    )
 }
 
 async fn consent_grant(
@@ -352,14 +437,32 @@ async fn consent_grant(
 ) -> impl IntoResponse {
     let rid = request_id();
     if let Err(e) = body {
-        return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(
-            ErrorResponse { request_id: rid, error: e.to_string(), code: 400 }
-        ).unwrap()));
+        return (
+            StatusCode::BAD_REQUEST,
+            rid_headers(&rid),
+            Json(
+                serde_json::to_value(ErrorResponse {
+                    request_id: rid,
+                    error: e.to_string(),
+                    code: 400,
+                })
+                .unwrap(),
+            ),
+        );
     }
     let seq = append_witness(&s.witness, "consent_grant", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    let body = gov_response(&rid, seq, serde_json::json!({"action": "consent_grant"}), conservative);
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(body).unwrap()))
+    let body = gov_response(
+        &rid,
+        seq,
+        serde_json::json!({"action": "consent_grant"}),
+        conservative,
+    );
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(serde_json::to_value(body).unwrap()),
+    )
 }
 
 async fn consent_revoke(
@@ -368,15 +471,34 @@ async fn consent_revoke(
 ) -> impl IntoResponse {
     let rid = request_id();
     if let Err(e) = body {
-        return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(
-            ErrorResponse { request_id: rid, error: e.to_string(), code: 400 }
-        ).unwrap()));
+        return (
+            StatusCode::BAD_REQUEST,
+            rid_headers(&rid),
+            Json(
+                serde_json::to_value(ErrorResponse {
+                    request_id: rid,
+                    error: e.to_string(),
+                    code: 400,
+                })
+                .unwrap(),
+            ),
+        );
     }
     let seq = append_witness(&s.witness, "consent_revoke", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"action": "consent_revoke"}), conservative)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "consent_revoke"}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn delegation_grant(
@@ -385,15 +507,34 @@ async fn delegation_grant(
 ) -> impl IntoResponse {
     let rid = request_id();
     if let Err(e) = body {
-        return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(
-            ErrorResponse { request_id: rid, error: e.to_string(), code: 400 }
-        ).unwrap()));
+        return (
+            StatusCode::BAD_REQUEST,
+            rid_headers(&rid),
+            Json(
+                serde_json::to_value(ErrorResponse {
+                    request_id: rid,
+                    error: e.to_string(),
+                    code: 400,
+                })
+                .unwrap(),
+            ),
+        );
     }
     let seq = append_witness(&s.witness, "delegation_grant", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"action": "delegation_grant"}), conservative)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "delegation_grant"}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn delegation_revoke(
@@ -402,15 +543,34 @@ async fn delegation_revoke(
 ) -> impl IntoResponse {
     let rid = request_id();
     if let Err(e) = body {
-        return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(
-            ErrorResponse { request_id: rid, error: e.to_string(), code: 400 }
-        ).unwrap()));
+        return (
+            StatusCode::BAD_REQUEST,
+            rid_headers(&rid),
+            Json(
+                serde_json::to_value(ErrorResponse {
+                    request_id: rid,
+                    error: e.to_string(),
+                    code: 400,
+                })
+                .unwrap(),
+            ),
+        );
     }
     let seq = append_witness(&s.witness, "delegation_revoke", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"action": "delegation_revoke"}), conservative)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "delegation_revoke"}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn objective_add(
@@ -419,15 +579,34 @@ async fn objective_add(
 ) -> impl IntoResponse {
     let rid = request_id();
     if let Err(e) = body {
-        return (StatusCode::BAD_REQUEST, rid_headers(&rid), Json(serde_json::to_value(
-            ErrorResponse { request_id: rid, error: e.to_string(), code: 400 }
-        ).unwrap()));
+        return (
+            StatusCode::BAD_REQUEST,
+            rid_headers(&rid),
+            Json(
+                serde_json::to_value(ErrorResponse {
+                    request_id: rid,
+                    error: e.to_string(),
+                    code: 400,
+                })
+                .unwrap(),
+            ),
+        );
     }
     let seq = append_witness(&s.witness, "objective_add", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"action": "objective_add"}), conservative)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "objective_add"}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn snapshot(
@@ -438,9 +617,19 @@ async fn snapshot(
     s.daemon.lock().unwrap().snapshot();
     let seq = append_witness(&s.witness, "snapshot", &rid);
     let conservative = s.daemon.lock().unwrap().state().conservative();
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"action": "snapshot"}), conservative)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "snapshot"}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn rollback(
@@ -453,29 +642,50 @@ async fn rollback(
     let conservative = s.daemon.lock().unwrap().state().conservative();
     let ok = result.is_ok();
     (
-        if ok { StatusCode::OK } else { StatusCode::CONFLICT },
+        if ok {
+            StatusCode::OK
+        } else {
+            StatusCode::CONFLICT
+        },
         rid_headers(&rid),
-        Json(serde_json::to_value(gov_response(&rid, seq,
-            serde_json::json!({"action": "rollback", "success": ok}), conservative)
-        ).unwrap()),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"action": "rollback", "success": ok}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
     )
 }
 
 async fn conservative_enter(State(s): State<AppState>) -> impl IntoResponse {
     let rid = request_id();
     s.daemon.lock().unwrap().inference_bypass_attempt(); // enters conservative
-    // Persist
+                                                         // Persist
     {
         let d = s.daemon.lock().unwrap();
-        let _ = s.store.lock().unwrap().save_conservative_mode(
-            d.state().conservative(),
-            d.state().breach_flag(),
-        );
+        let _ = s
+            .store
+            .lock()
+            .unwrap()
+            .save_conservative_mode(d.state().conservative(), d.state().breach_flag());
     }
     let seq = append_witness(&s.witness, "conservative_enter", &rid);
-    (StatusCode::OK, rid_headers(&rid), Json(serde_json::to_value(
-        gov_response(&rid, seq, serde_json::json!({"conservative_mode": true}), true)
-    ).unwrap()))
+    (
+        StatusCode::OK,
+        rid_headers(&rid),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"conservative_mode": true}),
+                true,
+            ))
+            .unwrap(),
+        ),
+    )
 }
 
 async fn conservative_exit(State(s): State<AppState>) -> impl IntoResponse {
@@ -492,12 +702,21 @@ async fn conservative_exit(State(s): State<AppState>) -> impl IntoResponse {
     }
     let seq = append_witness(&s.witness, "conservative_exit", &rid);
     (
-        if result.is_ok() { StatusCode::OK } else { StatusCode::CONFLICT },
+        if result.is_ok() {
+            StatusCode::OK
+        } else {
+            StatusCode::CONFLICT
+        },
         rid_headers(&rid),
-        Json(serde_json::to_value(gov_response(&rid, seq,
-            serde_json::json!({"conservative_mode": conservative, "success": result.is_ok()}),
-            conservative)
-        ).unwrap()),
+        Json(
+            serde_json::to_value(gov_response(
+                &rid,
+                seq,
+                serde_json::json!({"conservative_mode": conservative, "success": result.is_ok()}),
+                conservative,
+            ))
+            .unwrap(),
+        ),
     )
 }
 
@@ -512,7 +731,7 @@ mod tests {
     use tower::ServiceExt;
 
     fn test_app() -> Router {
-        create_router(AppState::new_in_memory())
+        create_router(AppState::new_in_memory_demo())
     }
 
     async fn body_json(resp: axum::http::Response<Body>) -> serde_json::Value {
@@ -565,7 +784,7 @@ mod tests {
     // ── API-T03: Request with denylist key → 400 + breach ──────────
     #[tokio::test]
     async fn api_t03_denylist_key_400() {
-        let state = AppState::new_in_memory();
+        let state = AppState::new_in_memory_demo();
         let app = create_router(state.clone());
         let req_body = serde_json::json!({
             "session_id": "S1",
@@ -591,13 +810,13 @@ mod tests {
 
         // Breach was logged in witness
         let w = state.witness.lock().unwrap();
-        assert!(w.len() > 0, "breach must produce witness entry");
+        assert!(!w.is_empty(), "breach must produce witness entry");
     }
 
     // ── API-T04: Every mutation endpoint produces WitnessLog entry ─
     #[tokio::test]
     async fn api_t04_mutation_produces_witness() {
-        let state = AppState::new_in_memory();
+        let state = AppState::new_in_memory_demo();
         let initial_len = state.witness.lock().unwrap().len();
 
         let mutations = vec![
@@ -644,7 +863,7 @@ mod tests {
     // ── API-T05: Conservative Mode persists across restart ─────────
     #[tokio::test]
     async fn api_t05_conservative_persists() {
-        let state = AppState::new_in_memory();
+        let state = AppState::new_in_memory_demo();
 
         // Enter conservative mode
         let app = create_router(state.clone());
@@ -659,19 +878,29 @@ mod tests {
         assert_eq!(resp.status(), StatusCode::OK);
 
         // Verify it's persisted in storage
-        let (active, breach) = state.store.lock().unwrap().load_conservative_mode().unwrap();
+        let (active, breach) = state
+            .store
+            .lock()
+            .unwrap()
+            .load_conservative_mode()
+            .unwrap();
         assert!(active, "conservative mode must be persisted");
         assert!(breach.is_some(), "breach class must be persisted");
 
         // Simulate "restart": read from storage and verify
-        let (active2, _) = state.store.lock().unwrap().load_conservative_mode().unwrap();
+        let (active2, _) = state
+            .store
+            .lock()
+            .unwrap()
+            .load_conservative_mode()
+            .unwrap();
         assert!(active2, "conservative mode must survive restart");
     }
 
     // ── API-T06: Concurrent requests maintain state consistency ────
     #[tokio::test]
     async fn api_t06_concurrent_consistency() {
-        let state = AppState::new_in_memory();
+        let state = AppState::new_in_memory_demo();
         let n = 20;
         let mut handles = Vec::new();
 
@@ -695,13 +924,20 @@ mod tests {
 
         for h in handles {
             let status = h.await.unwrap();
-            assert!(status.is_success(), "concurrent request failed: {}", status);
+            assert!(status.is_success(), "concurrent request failed: {status}");
         }
 
         // All 20 requests produced witness entries
         let w = state.witness.lock().unwrap();
-        assert_eq!(w.len(), n, "all concurrent requests must produce witness entries");
-        assert!(w.verify().is_ok(), "witness chain must remain valid under concurrency");
+        assert_eq!(
+            w.len(),
+            n,
+            "all concurrent requests must produce witness entries"
+        );
+        assert!(
+            w.verify().is_ok(),
+            "witness chain must remain valid under concurrency"
+        );
     }
 
     // ── API-T07: Unknown endpoint → 404 ────────────────────────────
@@ -709,7 +945,11 @@ mod tests {
     async fn api_t07_unknown_endpoint_404() {
         let app = test_app();
         let resp = app
-            .oneshot(Request::get("/api/v1/nonexistent").body(Body::empty()).unwrap())
+            .oneshot(
+                Request::get("/api/v1/nonexistent")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
             .await
             .unwrap();
         assert_eq!(resp.status(), StatusCode::NOT_FOUND);

@@ -12,6 +12,8 @@ use pai_gate::{GateAction, GateRequest, GateResponse};
 use pai_influence::{InfluenceEvent, InfluenceEventType, InfluenceLog};
 use pai_interface::{validate_context, KernelContextDecisionBasis};
 
+pub mod keyloader;
+
 const CAP_CAPABILITY_REGISTER: &str = "CAP.CAPABILITY.REGISTER";
 const CAP_CONSENT_GRANT: &str = "CAP.CONSENT.GRANT";
 const CAP_CONSENT_REVOKE: &str = "CAP.CONSENT.REVOKE";

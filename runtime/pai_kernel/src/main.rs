@@ -13,7 +13,7 @@ use pai_api::{create_router, AppState};
 use pai_config::KernelConfig;
 use pai_drift::{DriftEngine, DriftThresholds};
 use pai_export::ExportBuilder;
-use pai_governance_daemon::GovernanceDaemon;
+use pai_governance_daemon::{keyloader, GovernanceDaemon};
 use pai_policy::PolicyEngine;
 use pai_storage::{GovernanceStore, SqliteStore};
 use pai_witness::WitnessLog;
@@ -29,6 +29,11 @@ struct Cli {
     /// Path to configuration file
     #[arg(long, default_value = "./pai-kernel.toml")]
     config: String,
+
+    /// Run in demo mode: ephemeral in-memory keys, binds 127.0.0.1 only.
+    /// For local testing only. Prints stderr warnings. Not for production.
+    #[arg(long)]
+    demo: bool,
 
     #[command(subcommand)]
     command: Option<Command>,
@@ -62,7 +67,7 @@ async fn main() {
         Some(Command::Version) => {
             println!("PAI-Kernel Governance Sidecar v{VERSION}");
             println!("PAI-CD: v{PAI_CD_VERSION}");
-            println!("Rust: 1.86.0");
+            println!("Rust: {}", env!("CARGO_PKG_RUST_VERSION"));
         }
         Some(Command::Verify) => {
             let config = load_config(&cli.config);
@@ -98,29 +103,37 @@ async fn main() {
             println!("{json}");
         }
         None => {
-            run_server(cli.config).await;
+            run_server(cli.config, cli.demo).await;
         }
     }
 }
 
 // ── Server ────────────────────────────────────────────────────────────
 
-async fn run_server(config_path: String) {
-    let config = load_config(&config_path);
+async fn run_server(config_path: String, demo: bool) {
+    let mut config = load_config(&config_path);
+    if demo && config.server.bind != "127.0.0.1" {
+        eprintln!(
+            "WARNING: --demo overriding configured bind '{}' to '127.0.0.1'",
+            config.server.bind
+        );
+        config.server.bind = "127.0.0.1".to_string();
+    }
     init_tracing(&config);
 
-    info!(version = VERSION, pai_cd = PAI_CD_VERSION, "Starting PAI-Kernel");
+    info!(
+        version = VERSION,
+        pai_cd = PAI_CD_VERSION,
+        "Starting PAI-Kernel"
+    );
 
     let store = open_store(&config);
 
     // Restore conservative mode from storage
-    let (conservative_active, _breach) = store
-        .load_conservative_mode()
-        .unwrap_or((false, None));
+    let (conservative_active, _breach) = store.load_conservative_mode().unwrap_or((false, None));
 
-    let sk = ed25519_dalek::SigningKey::from_bytes(&[7u8; 32]);
-    let vk = sk.verifying_key();
-    let mut daemon = GovernanceDaemon::new(10).with_author_keys("API_KEY", vk, Some(sk));
+    let (sk, vk, api_key) = load_keys_or_die(demo);
+    let mut daemon = GovernanceDaemon::new(10).with_author_keys(&api_key, vk, Some(sk));
 
     if conservative_active {
         daemon.inference_bypass_attempt();
@@ -187,21 +200,53 @@ fn load_config(path: &str) -> KernelConfig {
 }
 
 fn open_store(config: &KernelConfig) -> SqliteStore {
-    SqliteStore::open(&config.storage.sqlite_path).unwrap_or_else(|_| {
-        SqliteStore::open_in_memory().expect("in-memory SQLite must succeed")
-    })
+    SqliteStore::open(&config.storage.sqlite_path)
+        .unwrap_or_else(|_| SqliteStore::open_in_memory().expect("in-memory SQLite must succeed"))
 }
 
 fn build_daemon(config: &KernelConfig) -> GovernanceDaemon {
-    let sk = ed25519_dalek::SigningKey::from_bytes(&[7u8; 32]);
-    let vk = sk.verifying_key();
-    let mut daemon = GovernanceDaemon::new(10).with_author_keys("API_KEY", vk, Some(sk));
+    // Production path: subcommand context (Export). Always require env vars.
+    let (sk, vk, api_key) = keyloader::build_author_keys().unwrap_or_else(|e| {
+        eprintln!("Error: {e}");
+        eprintln!();
+        eprintln!("PAI-Kernel daemon requires production keys via environment variables:");
+        eprintln!("    PAI_AUTHOR_API_KEY      <api-key-string>");
+        eprintln!("    PAI_AUTHOR_SIGNING_KEY  <32-byte hex from `openssl rand -hex 32`>");
+        eprintln!();
+        eprintln!("See docs/INSTALL.md ENV setup section.");
+        std::process::exit(1);
+    });
+    let mut daemon = GovernanceDaemon::new(10).with_author_keys(&api_key, vk, Some(sk));
     let store = open_store(config);
     let (active, _) = store.load_conservative_mode().unwrap_or((false, None));
     if active {
         daemon.inference_bypass_attempt();
     }
     daemon
+}
+
+/// Load author keys for the long-running server.
+///
+/// In production (non-demo) the env vars `PAI_AUTHOR_API_KEY` and
+/// `PAI_AUTHOR_SIGNING_KEY` must both be present and well-formed; otherwise
+/// the daemon refuses to start with a setup-guide message. In demo mode the
+/// daemon generates ephemeral in-memory keys and prints a stderr warning.
+fn load_keys_or_die(demo: bool) -> (ed25519_dalek::SigningKey, ed25519_dalek::VerifyingKey, String) {
+    if demo {
+        keyloader::build_demo_keys()
+    } else {
+        keyloader::build_author_keys().unwrap_or_else(|e| {
+            eprintln!("Error: {e}");
+            eprintln!();
+            eprintln!("PAI-Kernel daemon requires production keys via environment variables:");
+            eprintln!("    PAI_AUTHOR_API_KEY      <api-key-string>");
+            eprintln!("    PAI_AUTHOR_SIGNING_KEY  <32-byte hex from `openssl rand -hex 32`>");
+            eprintln!();
+            eprintln!("For local testing only, pass --demo (ephemeral keys, binds 127.0.0.1).");
+            eprintln!("See docs/INSTALL.md ENV setup section.");
+            std::process::exit(1);
+        })
+    }
 }
 
 fn default_denylist() -> Vec<String> {
@@ -216,8 +261,8 @@ fn default_denylist() -> Vec<String> {
 
 fn init_tracing(config: &KernelConfig) {
     use tracing_subscriber::EnvFilter;
-    let filter = EnvFilter::try_from_default_env()
-        .unwrap_or_else(|_| EnvFilter::new(&config.logging.level));
+    let filter =
+        EnvFilter::try_from_default_env().unwrap_or_else(|_| EnvFilter::new(&config.logging.level));
     if config.logging.format == "json" {
         tracing_subscriber::fmt()
             .json()
@@ -311,9 +356,8 @@ fn init_scaffold(config_path: &str, force: bool) {
 
     // policies/ skeleton
     if !policies_dir.exists() {
-        fs::create_dir_all(&policies_dir).unwrap_or_else(|e| {
-            panic!("failed to create {}: {}", policies_dir.display(), e)
-        });
+        fs::create_dir_all(&policies_dir)
+            .unwrap_or_else(|e| panic!("failed to create {}: {}", policies_dir.display(), e));
         let placeholder = policies_dir.join("placeholder.rego");
         fs::write(&placeholder, PLACEHOLDER_POLICY)
             .unwrap_or_else(|e| panic!("failed to write {}: {}", placeholder.display(), e));

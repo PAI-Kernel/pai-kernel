@@ -448,12 +448,12 @@ dependencies = [
 
 [[package]]
 name = "deranged"
-version = "0.4.0"
+version = "0.5.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c9e6a11ca8224451684bc0d7d5a7adbf8f2fd6887261a1cfc3c0432f9d4068e"
+checksum = "7cd812cc2bc1d69d4764bd80df88b4317eaef9e773c75226407d9bc0876b211c"
 dependencies = [
  "powerfmt",
- "serde",
+ "serde_core",
 ]
 
 [[package]]
@@ -1306,9 +1306,9 @@ dependencies = [
 
 [[package]]
 name = "num-conv"
-version = "0.1.0"
+version = "0.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "51d515d32fb182ee37cda2ccdcb92950d6a3c2893aa280e540671c2cd0f3b1d9"
+checksum = "c6673768db2d862beb9b39a78fdcb1a69439615d5794a1be50caa9bc92c81967"
 
 [[package]]
 name = "num-integer"
@@ -1414,7 +1414,7 @@ checksum = "1a80800c0488c3a21695ea981a54918fbb37abf04f4d0720c453632255e2ff0e"
 
 [[package]]
 name = "pai_api"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "axum",
  "ed25519-dalek",
@@ -1464,11 +1464,11 @@ dependencies = [
 
 [[package]]
 name = "pai_classify"
-version = "1.3.1"
+version = "1.3.2"
 
 [[package]]
 name = "pai_compliance"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "ed25519-dalek",
  "pai_classify",
@@ -1490,7 +1490,7 @@ dependencies = [
 
 [[package]]
 name = "pai_config"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "serde",
  "tempfile",
@@ -1500,11 +1500,11 @@ dependencies = [
 
 [[package]]
 name = "pai_delegation"
-version = "1.3.1"
+version = "1.3.2"
 
 [[package]]
 name = "pai_drift"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "serde",
  "serde_json",
@@ -1520,7 +1520,7 @@ dependencies = [
 
 [[package]]
 name = "pai_examples"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "pai_attestation",
  "pai_boundary",
@@ -1536,7 +1536,7 @@ dependencies = [
 
 [[package]]
 name = "pai_export"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "ed25519-dalek",
  "hex",
@@ -1550,7 +1550,7 @@ dependencies = [
 
 [[package]]
 name = "pai_gate"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "hex",
  "pai_interface",
@@ -1561,10 +1561,11 @@ dependencies = [
 
 [[package]]
 name = "pai_governance_daemon"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "base64",
  "ed25519-dalek",
+ "getrandom 0.2.17",
  "hex",
  "pai_gate",
  "pai_influence",
@@ -1581,7 +1582,7 @@ dependencies = [
 
 [[package]]
 name = "pai_harness"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "pai_gate",
  "pai_governance_daemon",
@@ -1592,7 +1593,7 @@ dependencies = [
 
 [[package]]
 name = "pai_influence"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "hex",
  "serde",
@@ -1603,7 +1604,7 @@ dependencies = [
 
 [[package]]
 name = "pai_interface"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "regex",
  "serde",
@@ -1613,7 +1614,7 @@ dependencies = [
 
 [[package]]
 name = "pai_kernel"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "axum",
  "clap",
@@ -1635,7 +1636,7 @@ dependencies = [
 
 [[package]]
 name = "pai_mcp"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "pai_governance_daemon",
  "pai_storage",
@@ -1646,7 +1647,7 @@ dependencies = [
 
 [[package]]
 name = "pai_openai_adapter"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "pai_governance_daemon",
  "pai_witness",
@@ -1665,7 +1666,7 @@ dependencies = [
 
 [[package]]
 name = "pai_policy"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "regorus",
  "serde",
@@ -1693,7 +1694,7 @@ dependencies = [
 
 [[package]]
 name = "pai_storage"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "ed25519-dalek",
  "pai_governance_daemon",
@@ -1716,7 +1717,7 @@ dependencies = [
 
 [[package]]
 name = "pai_witness"
-version = "1.3.1"
+version = "1.3.2"
 dependencies = [
  "serde",
  "sha2",
@@ -2168,9 +2169,9 @@ dependencies = [
 
 [[package]]
 name = "rustls-webpki"
-version = "0.103.12"
+version = "0.103.13"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8279bb85272c9f10811ae6a6c547ff594d6a7f3c6c6b02ee9726d1d0dcfcdd06"
+checksum = "61c429a8649f110dddef65e2a5ad240f747e85f7758a6bccc7e5777bd33f756e"
 dependencies = [
  "ring",
  "rustls-pki-types",
@@ -2570,30 +2571,30 @@ dependencies = [
 
 [[package]]
 name = "time"
-version = "0.3.41"
+version = "0.3.47"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8a7619e19bc266e0f9c5e6686659d394bc57973859340060a69221e57dbc0c40"
+checksum = "743bd48c283afc0388f9b8827b976905fb217ad9e647fae3a379a9283c4def2c"
 dependencies = [
  "deranged",
  "itoa",
  "num-conv",
  "powerfmt",
- "serde",
+ "serde_core",
  "time-core",
  "time-macros",
 ]
 
 [[package]]
 name = "time-core"
-version = "0.1.4"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c9e9a38711f559d9e3ce1cdb06dd7c5b8ea546bc90052da6d06bb76da74bb07c"
+checksum = "7694e1cfe791f8d31026952abf09c69ca6f6fa4e1a1229e18988f06a04a12dca"
 
 [[package]]
 name = "time-macros"
-version = "0.2.22"
+version = "0.2.27"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3526739392ec93fd8b359c8e98514cb3e8e021beb4e5f597b00a0221f8ed8a49"
+checksum = "2e70e4c5a0e0a8a4823ad65dfe1a6930e4f4d756dcd9dd7939022b5e8c501215"
 dependencies = [
  "num-conv",
  "time-core",

@@ -16,8 +16,8 @@ use tower::ServiceExt;
 
 use pai_api::{create_router, AppState};
 use pai_config::KernelConfig;
-use pai_export::{ExportBuilder, verify_bundle_integrity};
 use pai_drift::DriftThresholds;
+use pai_export::{verify_bundle_integrity, ExportBuilder};
 use pai_storage::GovernanceStore;
 
 async fn body_json(resp: axum::http::Response<Body>) -> serde_json::Value {
@@ -48,7 +48,7 @@ async fn e2e_t01_normal_flow() {
     assert_eq!(cfg.bind_addr(), "127.0.0.1:9100");
 
     // 2. Gate evaluate — clean context
-    let state = AppState::new_in_memory();
+    let state = AppState::new_in_memory_demo();
     let app = create_router(state.clone());
     let resp = app
         .oneshot(post_json(
@@ -129,7 +129,7 @@ async fn e2e_t01_normal_flow() {
 // 4. Witness chain still valid after breach
 #[tokio::test]
 async fn e2e_t02_breach_flow() {
-    let state = AppState::new_in_memory();
+    let state = AppState::new_in_memory_demo();
 
     // 1. Growth signal injection → 400
     let app = create_router(state.clone());
@@ -152,12 +152,13 @@ async fn e2e_t02_breach_flow() {
     assert_eq!(body["result"]["breach"], "GROWTH.SIGNAL.INJECTION");
 
     // 2. Breach recorded in witness log
-    let w = state.witness.lock().unwrap();
-    assert!(w.len() > 0, "breach must create witness entry");
+    {
+        let w = state.witness.lock().unwrap();
+        assert!(!w.is_empty(), "breach must create witness entry");
 
-    // 3. Verify breach was logged
-    assert!(w.verify().is_ok(), "witness chain valid after breach");
-    drop(w);
+        // 3. Verify breach was logged
+        assert!(w.verify().is_ok(), "witness chain valid after breach");
+    }
 
     // 4. Further clean requests still work
     let app2 = create_router(state.clone());
@@ -185,7 +186,7 @@ async fn e2e_t02_breach_flow() {
 // 7. Full witness chain valid throughout
 #[tokio::test]
 async fn e2e_t03_conservative_mode_flow() {
-    let state = AppState::new_in_memory();
+    let state = AppState::new_in_memory_demo();
 
     // 1. Enter Conservative Mode
     let app = create_router(state.clone());
@@ -251,6 +252,9 @@ async fn e2e_t03_conservative_mode_flow() {
 
     // 7. Full witness chain valid throughout
     let w = state.witness.lock().unwrap();
-    assert!(w.verify().is_ok(), "witness chain must remain valid through entire flow");
+    assert!(
+        w.verify().is_ok(),
+        "witness chain must remain valid through entire flow"
+    );
     assert!(w.len() >= 2, "enter + exit = at least 2 witness entries");
 }

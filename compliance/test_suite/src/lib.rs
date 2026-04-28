@@ -48,8 +48,13 @@ pub struct VerificationSignal {
 /// Result of a single verification.
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub enum VerificationResult {
-    Pass { detail: String },
-    Fail { detail: String, breach_class: Option<String> },
+    Pass {
+        detail: String,
+    },
+    Fail {
+        detail: String,
+        breach_class: Option<String>,
+    },
 }
 
 impl VerificationResult {
@@ -132,12 +137,16 @@ fn delegate_ctx(id: &str) -> AuthorityContext {
 pub fn run() -> Vec<TestResult> {
     let mut results = vec![];
 
-    // Deterministic test keypair
-    let sk_bytes = [7u8; 32];
-    let sk = ed25519_dalek::SigningKey::from_bytes(&sk_bytes);
-    let vk = sk.verifying_key();
+    // Compliance binary uses ephemeral keys (same-session deterministic).
+    // Tests verify daemon behavior within the same process, so per-session
+    // ephemeral keys are sufficient and safer than hardcoded fixtures.
+    // build_demo_keys prints a stderr warning explaining the constraint.
+    let (sk, vk, api_key) = pai_governance_daemon::keyloader::build_demo_keys();
+    // Save raw bytes for sub-tests that build separate daemons from the same
+    // session key (T4c, T6 below).
+    let sk_bytes: [u8; 32] = sk.to_bytes();
 
-    let mut gov = GovernanceDaemon::new(10).with_author_keys("AUTHOR_KEY", vk, Some(sk));
+    let mut gov = GovernanceDaemon::new(10).with_author_keys(&api_key, vk, Some(sk));
 
     // Open gate for registration and consent operations
     gov.open_gate_for_testing();
@@ -551,6 +560,7 @@ pub fn run() -> Vec<TestResult> {
 }
 
 #[cfg(test)]
+#[allow(non_snake_case)] // compliance test ID convention (T3, T3b, ...) intentional
 mod tests {
     use super::*;
 
@@ -658,7 +668,11 @@ mod tests {
     #[test]
     fn mp6_t01_signals_produced_for_all_tests() {
         let (results, signals) = run_with_signals();
-        assert_eq!(results.len(), signals.len(), "every test must produce a signal");
+        assert_eq!(
+            results.len(),
+            signals.len(),
+            "every test must produce a signal"
+        );
         assert!(!signals.is_empty(), "signals must not be empty");
     }
 
@@ -667,10 +681,19 @@ mod tests {
         let (_, signals) = run_with_signals();
         for signal in &signals {
             assert!(!signal.item_id.is_empty(), "item_id must not be empty");
-            assert!(!signal.observable.is_empty(), "observable must not be empty");
-            assert!(!signal.pass_criterion.is_empty(), "pass_criterion must not be empty");
+            assert!(
+                !signal.observable.is_empty(),
+                "observable must not be empty"
+            );
+            assert!(
+                !signal.pass_criterion.is_empty(),
+                "pass_criterion must not be empty"
+            );
             assert!(!signal.timestamp.is_empty(), "timestamp must not be empty");
-            assert!(!signal.invariant_ref.is_empty(), "invariant_ref must not be empty");
+            assert!(
+                !signal.invariant_ref.is_empty(),
+                "invariant_ref must not be empty"
+            );
         }
     }
 

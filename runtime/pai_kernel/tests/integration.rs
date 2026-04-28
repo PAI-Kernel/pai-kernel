@@ -21,15 +21,15 @@ async fn start_server() -> (String, tokio::sync::oneshot::Sender<()>) {
     let mut policy = PolicyEngine::new();
     let _ = policy.add_policy(
         "consent.rego",
-        include_str!("../../../policies/constitutional/consent.rego"),
+        include_str!("../policies/constitutional/consent.rego"),
     );
     let _ = policy.add_policy(
         "conservative.rego",
-        include_str!("../../../policies/constitutional/conservative.rego"),
+        include_str!("../policies/constitutional/conservative.rego"),
     );
     let _ = policy.add_policy(
         "denylist.rego",
-        include_str!("../../../policies/operational/denylist.rego"),
+        include_str!("../policies/operational/denylist.rego"),
     );
 
     let state = AppState {
@@ -63,7 +63,9 @@ async fn start_server() -> (String, tokio::sync::oneshot::Sender<()>) {
 
     tokio::spawn(async move {
         axum::serve(listener, app)
-            .with_graceful_shutdown(async { rx.await.ok(); })
+            .with_graceful_shutdown(async {
+                rx.await.ok();
+            })
             .await
             .ok();
     });
@@ -267,7 +269,7 @@ fn cli_t01_version() {
         .expect("failed to run binary");
     assert!(output.status.success());
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("1.3.1"), "stdout: {stdout}");
+    assert!(stdout.contains("1.3.2"), "stdout: {stdout}");
     assert!(stdout.contains("PAI-CD"), "stdout: {stdout}");
 }
 
@@ -281,19 +283,32 @@ fn cli_t02_verify_empty() {
         .expect("failed to run binary");
     assert!(output.status.success());
     let stdout = String::from_utf8_lossy(&output.stdout);
-    assert!(stdout.contains("OK") || stdout.contains("valid") || stdout.contains("empty"),
-        "stdout: {stdout}");
+    assert!(
+        stdout.contains("OK") || stdout.contains("valid") || stdout.contains("empty"),
+        "stdout: {stdout}"
+    );
 }
 
 // ── CLI-T03: export outputs valid JSON ────────────────────────────────
 
 #[test]
 fn cli_t03_export_json() {
+    // export subcommand requires production env vars (fail-closed since v1.3.2).
+    // Test sets a deterministic 32-byte hex signing key for reproducibility.
     let output = std::process::Command::new(env!("CARGO_BIN_EXE_pai_governance_daemon"))
         .arg("export")
+        .env("PAI_AUTHOR_API_KEY", "integration-test-author")
+        .env(
+            "PAI_AUTHOR_SIGNING_KEY",
+            "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20",
+        )
         .output()
         .expect("failed to run binary");
-    assert!(output.status.success());
+    assert!(
+        output.status.success(),
+        "export exit failed: stderr={}",
+        String::from_utf8_lossy(&output.stderr)
+    );
     let stdout = String::from_utf8_lossy(&output.stdout);
     let parsed: Result<serde_json::Value, _> = serde_json::from_str(&stdout);
     assert!(parsed.is_ok(), "export must produce valid JSON: {stdout}");
