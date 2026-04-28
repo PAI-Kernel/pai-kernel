@@ -1,14 +1,14 @@
 #!/usr/bin/env sh
 # PAI-Kernel install script — detects OS/arch, downloads the appropriate
-# v2.2.2 release binary, verifies the SHA256 checksum, and installs
+# v2.2.3 release binary, verifies the SHA256 checksum, and installs
 # pai_governance_daemon + default config + policies to ~/.local/pai-kernel.
 #
 # Usage:
 #   curl -fsSL https://paikernel.org/install.sh | sh
-#   curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.2/install.sh | sh
+#   curl -fsSL https://raw.githubusercontent.com/PAI-Kernel/pai-kernel/v2.2.3/install.sh | sh
 #
 # Environment overrides:
-#   PAI_KERNEL_VERSION   tag to install (default: v2.2.2)
+#   PAI_KERNEL_VERSION   tag to install (default: v2.2.3)
 #   PAI_KERNEL_INSTALL_DIR   install location (default: $HOME/.local/pai-kernel)
 #   PAI_KERNEL_ADD_TO_PATH   "yes"/"no" — offer PATH append (default: interactive)
 #
@@ -19,11 +19,11 @@
 #   - Aborts cleanly on error, leaves no partial install
 #
 # Windows users: install manually from the release page or via Docker.
-# See https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.2/docs/INSTALL.md
+# See https://github.com/PAI-Kernel/pai-kernel/blob/v2.2.3/docs/INSTALL.md
 
 set -eu
 
-VERSION="${PAI_KERNEL_VERSION:-v2.2.2}"
+VERSION="${PAI_KERNEL_VERSION:-v2.2.3}"
 INSTALL_DIR="${PAI_KERNEL_INSTALL_DIR:-$HOME/.local/pai-kernel}"
 REPO="PAI-Kernel/pai-kernel"
 BASE_URL="https://github.com/${REPO}/releases/download/${VERSION}"
