@@ -118,7 +118,7 @@ export PAI_AUTHOR_SIGNING_KEY="$(openssl rand -hex 32)"
 
 - **v2.2.3.x patches** (post-§5f cleanup window): adopter feedback integration, KNOWN_LIMITATIONS.md remediation backlog, OpenSSF Scorecard remediation.
 - **v2.2.4** (~early-mid May 2026): `docs/EXAMPLES.md` canonical 6-invariant walkthrough grounded in real adopter scenarios.
-- **v2.3** (~late May / early June 2026): Russian translation of the canonical 10 documents, bilingual mdBook documentation portal, subdomain consolidation, and pre-publication audit framework expanded to a 6th pillar (adversarial own-corpus scan).
+- **v2.3** (~late May / early June 2026): multi-language localization of the canonical 10 documents (UN6 + adopter-priority languages), multi-language mdBook documentation portal, subdomain consolidation, and pre-publication audit framework expanded to a 6th pillar (adversarial own-corpus scan).
 
 ---
 

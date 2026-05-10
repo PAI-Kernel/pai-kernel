@@ -239,7 +239,7 @@ This repository publishes three foundational documents:
 The full corpus (10 documents) includes implementation mapping,
 threat modeling, compliance verification, and governance control
 layers. The complete framework is maintained by the author and will be
-extended as the project develops. A consolidated bilingual portal is planned for v2.2.3 (~late June / early July 2026).
+extended as the project develops. A consolidated multi-language documentation portal is planned for v2.3 (~late May / early June 2026).
 
 -----
 
@@ -262,7 +262,7 @@ This principle applies to all documents in this repository and to any compliant 
 |Paper DOI               |[10.2139/ssrn.6512218](https://doi.org/10.2139/ssrn.6512218) |
 |Governance              |Currently maintained by the primary author      |
 
-**Author:** Mikhail Sergeev · independent researcher · Russia.
+**Author:** Mikhail Sergeev · independent researcher.
 **Background:** 12-year journey from a June 2014 manuscript to the present
 constitutional corpus · ORCID [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X).
 

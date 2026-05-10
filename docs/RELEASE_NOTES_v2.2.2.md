@@ -31,7 +31,7 @@ and invariants remain unchanged; this release ships:
 - Constitutional Core unchanged (PAI-CD v2.2 corpus citationally stable)
 
 **NOT in this release** (planned for **v2.2.3** ~late June / early July 2026):
-- Russian translation of canonical 10 documents
+- Multi-language localization of canonical 10 documents
 - Bilingual mdBook documentation portal at `paikernel.org/corpus/{en,ru}/`
 - Subdomain consolidation (`corpus.paikernel.org` continues to host the v2.2 Freeze Edition rendering through the v2.2.2 window; consolidates into the bilingual portal in v2.2.3)
 - EN terminology revisions surfaced by translation (deferred to v2.3 Amendment cycle)
@@ -294,7 +294,7 @@ many transitional inconsistency windows; bundling them creates one
 larger preparation surface but only a single transition.
 
 The v2.2.3 release (~late June / early July 2026) will continue the
-pattern with the bilingual portal launch — Russian corpus delivery,
+pattern with the multi-language documentation portal launch — full corpus localization,
 mdBook deployment activation, subdomain consolidation, and the
 remaining items deferred from v2.2.2 all land in a single coordinated
 moment.
@@ -381,7 +381,7 @@ Particularly valuable:
 
 ## Next
 
-- **v2.2.3** (planned · ~late June / early July 2026): Russian translation of the canonical 10 documents · TMD (Translation Memory Document) · TII (Terminology Issues Inventory) · bilingual mdBook documentation portal · subdomain consolidation (`corpus.paikernel.org` decommission · routing to consolidated portal) · `corpus-docs` legacy repo archive
+- **v2.3** (planned · ~late May / early June 2026): multi-language localization of the canonical 10 documents (UN6 + adopter-priority languages) · TMD (Translation Memory Document) · TII (Terminology Issues Inventory) · multi-language mdBook documentation portal · subdomain consolidation (`corpus.paikernel.org` decommission · routing to consolidated portal) · `corpus-docs` legacy repo archive
 - **v2.3** (planned · ~3 weeks after v2.2.3): EN terminology revisions surfaced by translation · standard Constitutional Amendment Procedure
 - **General availability:** separate future ratification · gated on adopter feedback validating stability
 
