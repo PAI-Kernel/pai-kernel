@@ -56,7 +56,7 @@ Replaced previous «v2.2.3 Early Preview» installation guide with comprehensive
 
 ### docs/quickstart.md (NEW)
 
-Five-minute getting-started path · stripped INSTALL.md essence · covers brew install + `--demo` mode + `curl` API verification. Designed for adopters who want к verify «does it run?» before committing к full installation walkthrough.
+Five-minute getting-started path · stripped INSTALL.md essence · covers brew install + `--demo` mode + `curl` API verification. Designed for adopters who want to verify «does it run?» before committing to full installation walkthrough.
 
 ### CHANGELOG.md (NEW · root)
 
@@ -82,18 +82,18 @@ Explicit upgrade procedure from v2.2.2 → v2.2.3, focused on the breaking chang
 
 ### docs/SUPPORT.md (NEW)
 
-Support tier explanation · invitation-only context clarification · response time expectations · how к ask for help versus how к report security issues (latter routed к SECURITY.md).
+Support tier explanation · invitation-only context clarification · response time expectations · how to ask for help versus how to report security issues (latter routed to SECURITY.md).
 
 ### Further Reading link integrity
 
-`docs/INSTALL.md` Further Reading section now links к existing files only:
+`docs/INSTALL.md` Further Reading section now links to existing files only:
 
 - `corpus/PAI_Constitutional_Document.md` direct (not via redirect placeholder)
 - `examples/README.md` (new)
 - `CHANGELOG.md` (new)
 - `docs/RELEASE_NOTES_v2.2.3.md`
 
-Removed reference к non-existent `formal/VERIFICATION_MATRIX.md`. Future TLA+ verification artifact publication remains under consideration (depends on `formal/` directory public-vs-internal disposition).
+Removed reference to non-existent `formal/VERIFICATION_MATRIX.md`. Future TLA+ verification artifact publication remains under consideration (depends on `formal/` directory public-vs-internal disposition).
 
 ---
 
@@ -148,7 +148,7 @@ Adopters running `brew info pai-kernel` post-update see corrected guidance immed
 | Distribution channel | Action required |
 |---|---|
 | `cargo install pai_kernel --version 1.3.2` | None · binary unchanged · documentation improvements visible via repository web view |
-| `brew install PAI-Kernel/tap/pai-kernel` | `brew untap pai-kernel/tap && brew tap PAI-Kernel/tap` to refresh Caveats (formula change) · OR sustained если Caveats не critical |
+| `brew install PAI-Kernel/tap/pai-kernel` | `brew untap pai-kernel/tap && brew tap PAI-Kernel/tap` to refresh Caveats (formula change) · OR sustained if Caveats not critical |
 | `docker pull ghcr.io/pai-kernel/pai-kernel:v2.2.3` | None · image unchanged |
 | `git clone https://github.com/PAI-Kernel/pai-kernel.git` | `git pull` to receive doc + Cargo.toml updates |
 | `curl https://paikernel.org/install.sh | sh` | None · install script unchanged · binary unchanged |

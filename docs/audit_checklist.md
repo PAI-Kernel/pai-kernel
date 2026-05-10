@@ -18,7 +18,7 @@ pai_cd:
 
 # PAI-Kernel SDK · Audit Checklist
 
-Adopter-runnable verification procedures для PAI-Kernel SDK v2.2.3. Each section is independently executable · all commands assume Rust 1.88+ toolchain installed.
+Adopter-runnable verification procedures for PAI-Kernel SDK v2.2.3. Each section is independently executable · all commands assume Rust 1.88+ toolchain installed.
 
 > **Purpose:** enable independent third-party verification of build reproducibility · test correctness · cryptographic signature integrity · binary identity · constitutional compliance behavior. No internal access OR credentials required.
 
@@ -41,7 +41,7 @@ jq --version
 
 ## 1 · Reproducible build verification
 
-### 1.1 Clone к pinned tag
+### 1.1 Clone to pinned tag
 
 ```sh
 git clone https://github.com/PAI-Kernel/pai-kernel.git
@@ -173,7 +173,7 @@ sha256sum -c "pai_governance_daemon-v2.2.3-${PLATFORM}.tar.gz.sha256"
 # Expected: "OK"
 ```
 
-### 4.3 Compare к built artifact
+### 4.3 Compare to built artifact
 
 ```sh
 # Extract release tarball
@@ -184,7 +184,7 @@ shasum -a 256 /tmp/release-binary/pai_governance_daemon
 shasum -a 256 ./target/release/pai_governance_daemon
 ```
 
-If both hashes match · the released binary corresponds bit-for-bit к your locally-built binary. Note: matching requires identical Rust toolchain · same target triple · `--release --locked` build flags · no `RUSTFLAGS` overrides.
+If both hashes match · the released binary corresponds bit-for-bit to your locally-built binary. Note: matching requires identical Rust toolchain · same target triple · `--release --locked` build flags · no `RUSTFLAGS` overrides.
 
 If hashes differ · this does NOT necessarily indicate tampering. Build determinism in Rust requires matching:
 
@@ -233,7 +233,7 @@ kill %1
 ### 6.1 Daemon health check
 
 ```sh
-# Start daemon в demo mode
+# Start daemon in demo mode
 pai_governance_daemon --demo > /tmp/daemon.log 2>&1 &
 sleep 2
 
@@ -253,7 +253,7 @@ pkill -f pai_governance_daemon
 ```sh
 pai_governance_daemon verify
 # Expected: "Witness chain: empty (no entries). OK." for fresh daemon
-# OR: chain validation summary with entry count for daemon с history
+# OR: chain validation summary with entry count for daemon with history
 ```
 
 This subcommand works without env vars OR running daemon · suitable for CI / batch verification.
@@ -325,11 +325,11 @@ After completing relevant sections, you should have verified:
 - [ ] GPG signature on v2.2.3 tag matches release key
 - [ ] Binary SHA256 checksum matches release artifact (or your built binary)
 - [ ] Container image verifies via Cosign
-- [ ] Daemon responds к API queries in demo mode
+- [ ] Daemon responds to API queries in demo mode
 - [ ] All 18 crates available on crates.io at version 1.3.2
 - [ ] (Optional) Homebrew formula installs cleanly
 
-If all checks pass, you have independently verified PAI-Kernel SDK v2.2.3 corresponds к the published release artifacts · binary signatures match · runtime behavior matches documented surface.
+If all checks pass, you have independently verified PAI-Kernel SDK v2.2.3 corresponds to the published release artifacts · binary signatures match · runtime behavior matches documented surface.
 
 ---
 
@@ -337,7 +337,7 @@ If all checks pass, you have independently verified PAI-Kernel SDK v2.2.3 corres
 
 - **TLA+ formal verification reproduction** — TLA+ model and TLC results currently maintained in internal governance repository. Public TLA+ artifact publication remains a sustained item (depends on `formal/` directory public-vs-internal disposition).
 - **Full audit-grade reproducibility** — bit-for-bit binary reproducibility across heterogeneous build environments requires additional pinning beyond `--locked` flag (toolchain version · build host · environment variables).
-- **Adversarial security audit** — independent code review focused на vulnerability discovery is separate scope · contact maintainer for arrangements.
+- **Adversarial security audit** — independent code review focused on vulnerability discovery is separate scope · contact maintainer for arrangements.
 - **Constitutional document review** — auditing PAI-CD framework itself (six invariants · constitutional principles) is separate scope · see [`corpus/PAI_Constitutional_Document.md`](../corpus/PAI_Constitutional_Document.md).
 
 ---
@@ -348,7 +348,7 @@ If any checklist item fails on your system:
 
 1. Re-verify prerequisites (Rust 1.88+ · cleanup any old toolchain)
 2. Re-run failing step with verbose output (`cargo build --verbose` · `RUST_LOG=debug` for daemon)
-3. Open GitHub issue with: failing step · OS + toolchain · full error output · steps taken к reproduce
+3. Open GitHub issue with: failing step · OS + toolchain · full error output · steps taken to reproduce
 4. Reference [`SUPPORT.md`](SUPPORT.md) for response expectations
 
 ---

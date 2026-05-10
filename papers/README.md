@@ -49,5 +49,5 @@ For academic citation in BibTeX context:
 ## License
 
 Documentation in this directory (including the paper PDF) is licensed under
-[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Attribution к
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Attribution to
 PAI-Kernel Initiative; indicate any changes made.

@@ -318,7 +318,7 @@ echo "export PAI_AUTHOR_API_KEY='$(uuidgen)'" >> ~/.zshrc
 echo "export PAI_AUTHOR_SIGNING_KEY='$(openssl rand -hex 32)'" >> ~/.zshrc
 ```
 
-**SECURITY:** treat both keys as cryptographic secrets. Use a secret manager (1Password CLI, macOS Keychain, AWS Secrets Manager, etc) for production deployments. NEVER commit keys к version control.
+**SECURITY:** treat both keys as cryptographic secrets. Use a secret manager (1Password CLI, macOS Keychain, AWS Secrets Manager, etc) for production deployments. NEVER commit keys to version control.
 
 ### Optional environment variables
 
@@ -360,7 +360,7 @@ format = "json"
 
 Adjust values to match your deployment. Note: signing keys live ONLY in environment variables · NEVER in the TOML file (security).
 
-Reference daemon с config file:
+Reference daemon with config file:
 
 ```sh
 pai_governance_daemon --config ./pai-kernel.toml
@@ -376,7 +376,7 @@ pai_governance_daemon --config /opt/homebrew/opt/pai-kernel/share/pai-kernel/pai
 
 ## Demo mode (no configuration required)
 
-> **Quick start prerequisite:** to test the daemon без environment variable setup, the `--demo` flag is the **minimum** path. Running bare `pai_governance_daemon` without flags AND without env vars will exit immediately (fail-closed default).
+> **Quick start prerequisite:** to test the daemon without environment variable setup, the `--demo` flag is the **minimum** path. Running bare `pai_governance_daemon` without flags AND without env vars will exit immediately (fail-closed default).
 
 For evaluation, testing, or quick exploration:
 
@@ -394,7 +394,7 @@ pai_governance_daemon --demo
   ⚠ DEMO MODE · ephemeral signing key (lost on restart)
   ⚠ DEMO MODE · 127.0.0.1 force-bind (not network-accessible)
   ⚠ DEMO MODE · in-memory storage (state not persisted)
-  ⚠ DEMO MODE · NOT SUITABLE для production deployment
+  ⚠ DEMO MODE · NOT SUITABLE for production deployment
   ```
 
 **When to use:**
@@ -631,7 +631,7 @@ ls -la ./policies/
 (Adjust paths if running from a different working directory than where `pai_governance_daemon init` was invoked.)
 
 **Optimization:**
-- Archive old witness entries (post-90-day retention) к separate storage
+- Archive old witness entries (post-90-day retention) to separate storage
 - Consolidate policy files (combine related `.rego` rules)
 - Increase available memory (recommended: 200 MB RAM minimum)
 

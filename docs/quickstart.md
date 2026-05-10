@@ -3,7 +3,7 @@ title: "Quickstart — PAI-Kernel SDK in 5 minutes"
 slug: quickstart
 position: 0
 hidden: false
-excerpt: "Five-minute path к running PAI-Kernel SDK locally · brew install · --demo mode · browser test · NO env setup required."
+excerpt: "Five-minute path to running PAI-Kernel SDK locally · brew install · --demo mode · browser test · NO env setup required."
 pai_cd:
   version: "2.2.3"
   status: "Canonical"
@@ -18,7 +18,7 @@ pai_cd:
 
 # PAI-Kernel SDK · Quickstart
 
-Five-minute path к running PAI-Kernel SDK locally with **no environment setup required**.
+Five-minute path to running PAI-Kernel SDK locally with **no environment setup required**.
 
 > **Goal:** evaluate fit · run a working daemon · query the API · understand surface. Total time: ~5 minutes wall-clock.
 
@@ -55,7 +55,7 @@ docker pull ghcr.io/pai-kernel/pai-kernel:v2.2.3
 
 ## Step 2 · Run in demo mode (~5 seconds)
 
-Demo mode requires NO environment variables · uses ephemeral keys · binds к 127.0.0.1:9100 only · prints prominent stderr warnings.
+Demo mode requires NO environment variables · uses ephemeral keys · binds to 127.0.0.1:9100 only · prints prominent stderr warnings.
 
 ```sh
 pai_governance_daemon --demo
@@ -140,7 +140,7 @@ In the terminal where `pai_governance_daemon --demo` is running, press `Ctrl-C`.
 
 ## Next steps
 
-You have just verified PAI-Kernel SDK installs · runs · responds к API queries. From here:
+You have just verified PAI-Kernel SDK installs · runs · responds to API queries. From here:
 
 - **Configure for production:** see [`docs/INSTALL.md`](INSTALL.md) § Configuration · set required `PAI_AUTHOR_API_KEY` and `PAI_AUTHOR_SIGNING_KEY` environment variables (32-byte hex via `openssl rand -hex 32`).
 - **Initialize a working directory:** `pai_governance_daemon init` creates `./pai-kernel.toml` + `./policies/` for persistent deployment.
@@ -152,7 +152,7 @@ You have just verified PAI-Kernel SDK installs · runs · responds к API querie
 
 ### `pai_governance_daemon: command not found` after `brew install`
 
-`brew install` should add `/opt/homebrew/bin` к PATH automatically. If not, run:
+`brew install` should add `/opt/homebrew/bin` to PATH automatically. If not, run:
 
 ```sh
 echo 'export PATH="/opt/homebrew/bin:$PATH"' >> ~/.zshrc
@@ -163,7 +163,7 @@ source ~/.zshrc
 
 Expected behavior · fail-closed default. Either use `--demo` for testing OR set `PAI_AUTHOR_API_KEY` + `PAI_AUTHOR_SIGNING_KEY` environment variables. See [`docs/INSTALL.md`](INSTALL.md) § Configuration.
 
-### Browser cannot connect к 127.0.0.1:9100
+### Browser cannot connect to 127.0.0.1:9100
 
 Verify daemon is running:
 

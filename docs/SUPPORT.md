@@ -18,7 +18,7 @@ pai_cd:
 
 # PAI-Kernel SDK · Support
 
-This document describes how к get help with PAI-Kernel SDK · what к expect · and what is out of scope.
+This document describes how to get help with PAI-Kernel SDK · what to expect · and what is out of scope.
 
 > **Security issues:** see [`SECURITY.md`](../SECURITY.md). NOT this document. Security reports route through GitHub Security Advisory (private) OR PGP-encrypted email.
 
@@ -35,7 +35,7 @@ This means:
 - **No on-call rotation** · responses depend on maintainer availability
 - **No paid support tier** at present · changes to support model documented separately when introduced
 
-If your use case requires guaranteed response times OR commercial support, please open a discussion (see Channels below) к explore arrangements.
+If your use case requires guaranteed response times OR commercial support, please open a discussion (see Channels below) to explore arrangements.
 
 ---
 
@@ -53,7 +53,7 @@ Use for:
 - Architecture / design questions
 - Roadmap / future direction questions
 
-Response expectation: best effort · typically days к weeks. Community contributions welcome (responses from non-maintainers also valuable).
+Response expectation: best effort · typically days to weeks. Community contributions welcome (responses from non-maintainers also valuable).
 
 ### 2. GitHub Issues · bug reports + feature requests
 
@@ -61,13 +61,13 @@ Response expectation: best effort · typically days к weeks. Community contribu
 
 Use for:
 
-- Reproducible bugs (include `pai_governance_daemon --version` · OS · steps к reproduce · expected vs actual behavior)
+- Reproducible bugs (include `pai_governance_daemon --version` · OS · steps to reproduce · expected vs actual behavior)
 - Feature requests (include use case rationale · alternative solutions considered)
 - Documentation gaps (include specific page · section · what's missing OR confusing)
 
 Response expectation: triage best-effort. Critical bugs (security · data integrity · daemon crash) prioritized highest. Cosmetic issues OR nice-to-have features may sustain unaddressed for cycles.
 
-Please **search existing issues first** к avoid duplicates.
+Please **search existing issues first** to avoid duplicates.
 
 ### 3. GitHub Security Advisory (private) · security issues
 
@@ -81,7 +81,7 @@ For vulnerability reports · NOT general bugs. See [`SECURITY.md`](../SECURITY.m
 
 Reserved for:
 
-- Adopters who received explicit invitation к the early-preview distribution
+- Adopters who received explicit invitation to the early-preview distribution
 - Standards body engagement coordination
 - Strategic partnership discussions
 - Press / academic citation inquiries
@@ -90,7 +90,7 @@ Reserved for:
 
 ---
 
-## What к include in a support request
+## What to include in a support request
 
 ### For bugs
 
@@ -105,10 +105,10 @@ Reserved for:
 
 ### For configuration questions
 
-- What you're trying к accomplish (use case)
+- What you're trying to accomplish (use case)
 - What you've tried (configuration · commands)
 - What's not working (error message · unexpected behavior)
-- Reference к [`docs/INSTALL.md`](INSTALL.md) section if you've already consulted
+- Reference to [`docs/INSTALL.md`](INSTALL.md) section if you've already consulted
 
 ### For feature requests
 
@@ -152,7 +152,7 @@ Questions outside scope receive «out of scope · see X for related concerns» s
 
 If you encountered an issue and want to contribute a fix:
 
-1. Open an issue first к discuss the problem (avoid wasted effort on unwanted changes)
+1. Open an issue first to discuss the problem (avoid wasted effort on unwanted changes)
 2. Read [`CONTRIBUTING.md`](../CONTRIBUTING.md) for contribution guidelines
 3. Fork · branch · PR · sign commits with GPG (release discipline preserves signed-commit chain)
 4. Be patient with review (single maintainer · may take 14-30+ days)
@@ -163,7 +163,7 @@ If you encountered an issue and want to contribute a fix:
 
 - [`SECURITY.md`](../SECURITY.md) — security vulnerability reporting (REQUIRED for security issues)
 - [`CONTRIBUTING.md`](../CONTRIBUTING.md) — contribution guidelines
-- [`docs/INSTALL.md`](INSTALL.md) — installation guide (read first для install issues)
+- [`docs/INSTALL.md`](INSTALL.md) — installation guide (read first for install issues)
 - [`docs/quickstart.md`](quickstart.md) — 5-minute getting-started
 - [`docs/KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) — known limitations and scope statement
 

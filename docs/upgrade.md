@@ -27,7 +27,7 @@ This guide covers upgrade procedures between PAI-Kernel SDK release tags.
 > # pai-kernel <current-version>
 > ```
 >
-> Compare к [latest release](https://github.com/PAI-Kernel/pai-kernel/releases/latest).
+> Compare to [latest release](https://github.com/PAI-Kernel/pai-kernel/releases/latest).
 
 ---
 
@@ -47,11 +47,11 @@ This guide covers upgrade procedures between PAI-Kernel SDK release tags.
 
 ### Summary of breaking change
 
-In v2.2.3, author key initialization moved from compile-time defaults к **mandatory environment variables** (fail-closed default). The daemon refuses к start without these set.
+In v2.2.3, author key initialization moved from compile-time defaults to **mandatory environment variables** (fail-closed default). The daemon refuses to start without these set.
 
 If you ran v2.2.2 successfully without environment configuration, this is the change that affects you.
 
-### Required environment variables (NEW в v2.2.3)
+### Required environment variables (NEW in v2.2.3)
 
 ```sh
 export PAI_AUTHOR_API_KEY="$(uuidgen)"          # any sufficiently random string
@@ -119,7 +119,7 @@ source ~/.zshrc
 For systemd service:
 
 ```sh
-# Add к /etc/systemd/system/pai-kernel.service [Service] block:
+# Add to /etc/systemd/system/pai-kernel.service [Service] block:
 Environment="PAI_AUTHOR_API_KEY=<your-api-key>"
 Environment="PAI_AUTHOR_SIGNING_KEY=<your-32-byte-hex>"
 
@@ -135,7 +135,7 @@ pai_governance_daemon --config ./pai-kernel.toml
 # Should see structured JSON log "Starting PAI-Kernel" + "listening on 127.0.0.1:9100"
 ```
 
-If daemon fails к start with `Error: missing PAI_AUTHOR_API_KEY environment variable`, env vars are not set in daemon's environment. Check shell vs service configuration.
+If daemon fails to start with `Error: missing PAI_AUTHOR_API_KEY environment variable`, env vars are not set in daemon's environment. Check shell vs service configuration.
 
 #### Step 6 · Verify
 
@@ -175,7 +175,7 @@ pai_governance_daemon
 
 ### Demo mode bypass (for upgrade testing)
 
-If you want к verify v2.2.3 binary works before committing к environment variable setup:
+If you want to verify v2.2.3 binary works before committing to environment variable setup:
 
 ```sh
 pai_governance_daemon --demo
@@ -193,9 +193,9 @@ This works without env vars · helpful for «is the new binary even installed co
 ### Summary
 
 - Workspace SDK version bump 1.3.1 → 1.3.1 (unchanged at workspace level · this is the v2.2.2 ceremonial release)
-- Hero diagram + OpenSSF Scorecard badge added к README
+- Hero diagram + OpenSSF Scorecard badge added to README
 - Compliance binary CI gate introduced
-- MSRV bumped к 1.88 (Rust toolchain · time crate CVE)
+- MSRV bumped to 1.88 (Rust toolchain · time crate CVE)
 
 ### Required action
 
@@ -223,11 +223,11 @@ No environment variable changes · no configuration changes · no breaking API c
 
 ### Summary
 
-- `PAI_Constitutional_Document.md` moved from root к `corpus/`. Root file is now a redirect placeholder for compatibility.
+- `PAI_Constitutional_Document.md` moved from root to `corpus/`. Root file is now a redirect placeholder for compatibility.
 
 ### Required action
 
-If you have external links к `PAI_Constitutional_Document.md`, update them к `corpus/PAI_Constitutional_Document.md`. The redirect placeholder at root preserves working URLs but adds one click.
+If you have external links to `PAI_Constitutional_Document.md`, update them to `corpus/PAI_Constitutional_Document.md`. The redirect placeholder at root preserves working URLs but adds one click.
 
 No binary changes · no environment variable changes · no API changes.
 
