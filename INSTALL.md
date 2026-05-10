@@ -639,11 +639,12 @@ ls -la ./policies/
 
 ## Further reading
 
-- **Quick start tutorial:** `docs/quickstart.md`
+- **Quick start tutorial:** [`docs/quickstart.md`](quickstart.md) · 5-minute getting-started path
 - **HTTP API reference:** https://docs.rs/pai_api (auto-generated from source)
-- **PAI Constitutional Document:** `PAI_Constitutional_Document.md` (foundational)
-- **TLA+ verification:** `formal/VERIFICATION_MATRIX.md`
-- **Release notes v2.2.3:** `docs/RELEASE_NOTES_v2.2.3.md`
+- **PAI Constitutional Document:** [`corpus/PAI_Constitutional_Document.md`](../corpus/PAI_Constitutional_Document.md) · framework foundational text
+- **Release notes v2.2.3:** [`docs/RELEASE_NOTES_v2.2.3.md`](RELEASE_NOTES_v2.2.3.md)
+- **Examples:** [`examples/README.md`](../examples/README.md) · 5 reference example binaries
+- **Changelog:** [`CHANGELOG.md`](../CHANGELOG.md) · release history
 
 ## Support
 
