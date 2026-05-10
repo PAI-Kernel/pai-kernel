@@ -18,6 +18,11 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    # Manual trigger for docker multi-arch :latest tag updates without creating
+    # a new git tag/Release. Use when adopter-facing fix needs deployment between
+    # formal release events (e.g. multi-platform image rebuild for Apple Silicon
+    # without v2.2.x.y patch ceremony).
 
 permissions:
   contents: write  # needed to upload release assets
@@ -243,15 +248,19 @@ jobs:
             type=ref,event=tag
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}
+            type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@e468171a9de216ec08956ac3ada2f0791b6bd435 # v3.11.1
+        with:
+          platforms: linux/amd64,linux/arm64
 
       - name: Build and push
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
           push: true
+          platforms: linux/amd64,linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
@@ -261,6 +270,10 @@ jobs:
     name: Publish GitHub Release
     needs: [build, corpus-bundle]
     runs-on: ubuntu-latest
+    # Only create GitHub Release on tag push (formal release event).
+    # Skip during manual workflow_dispatch (which is for between-release
+    # docker :latest multi-arch updates only · no Release artifact).
+    if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: write
     steps:
