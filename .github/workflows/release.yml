@@ -25,7 +25,7 @@ on:
     # without v2.2.x.y patch ceremony).
 
 permissions:
-  contents: write  # needed to upload release assets
+  contents: read   # topLevel least-privilege · publish job overrides к write (Token-Permissions OpenSSF Scorecard hardening)
 
 jobs:
   # Constitutional compliance gate · runs BEFORE per-target build matrix.
@@ -36,6 +36,8 @@ jobs:
   compliance-gate:
     name: Compliance binary (constitutional gate)
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -53,6 +55,8 @@ jobs:
     name: Build ${{ matrix.target }}
     needs: compliance-gate
     runs-on: ${{ matrix.runner }}
+    permissions:
+      contents: read
     strategy:
       fail-fast: false
       matrix:
