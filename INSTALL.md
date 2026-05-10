@@ -234,7 +234,7 @@ docker run -d --name pai-kernel \
 
 For air-gapped systems · custom paths · or when scripts cannot run.
 
-1. Visit https://github.com/PAI-Kernel/pai-kernel/releases/tag/v2.2.3
+1. Visit <https://github.com/PAI-Kernel/pai-kernel/releases/tag/v2.2.3>
 2. Download the appropriate archive for your platform:
    - `pai_governance_daemon-v2.2.3-x86_64-apple-darwin.tar.gz` (macOS Intel)
    - `pai_governance_daemon-v2.2.3-aarch64-apple-darwin.tar.gz` (macOS Apple Silicon)
@@ -390,7 +390,7 @@ pai_governance_daemon --demo
 - Forces bind to `127.0.0.1:9100` (loopback only · NOT network-accessible)
 - Uses in-memory storage (no SQLite · state lost on restart)
 - Prints 4 prominent stderr WARNING lines:
-  ```
+  ```text
   ⚠ DEMO MODE · ephemeral signing key (lost on restart)
   ⚠ DEMO MODE · 127.0.0.1 force-bind (not network-accessible)
   ⚠ DEMO MODE · in-memory storage (state not persisted)
@@ -639,17 +639,17 @@ ls -la ./policies/
 
 ## Further reading
 
-- **Quick start tutorial:** [`docs/quickstart.md`](quickstart.md) · 5-minute getting-started path
-- **HTTP API reference:** https://docs.rs/pai_api (auto-generated from source)
-- **PAI Constitutional Document:** [`corpus/PAI_Constitutional_Document.md`](../corpus/PAI_Constitutional_Document.md) · framework foundational text
-- **Release notes v2.2.3:** [`docs/RELEASE_NOTES_v2.2.3.md`](RELEASE_NOTES_v2.2.3.md)
-- **Examples:** [`examples/README.md`](../examples/README.md) · 5 reference example binaries
-- **Changelog:** [`CHANGELOG.md`](../CHANGELOG.md) · release history
+- **Quick start tutorial:** [`QUICKSTART.md`](QUICKSTART.md) · 5-minute getting-started path
+- **HTTP API reference:** <https://docs.rs/pai_api> (auto-generated from source)
+- **PAI Constitutional Document:** [`corpus/PAI_Constitutional_Document.md`](corpus/PAI_Constitutional_Document.md) · framework foundational text
+- **Release notes v2.2.3:** [`docs/RELEASE_NOTES_v2.2.3.md`](docs/RELEASE_NOTES_v2.2.3.md)
+- **Examples:** [`examples/README.md`](examples/README.md) · 5 reference example binaries
+- **Changelog:** [`CHANGELOG.md`](CHANGELOG.md) · release history
 
 ## Support
 
-- **Issues / Bug reports:** https://github.com/PAI-Kernel/pai-kernel/issues
-- **Discussions:** https://github.com/PAI-Kernel/pai-kernel/discussions
+- **Issues / Bug reports:** <https://github.com/PAI-Kernel/pai-kernel/issues>
+- **Discussions:** <https://github.com/PAI-Kernel/pai-kernel/discussions>
 - **Security disclosures:** see `SECURITY.md` (responsible disclosure protocol)
 
 ## Constitutional foundation

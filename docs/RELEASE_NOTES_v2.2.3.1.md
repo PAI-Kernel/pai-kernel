@@ -151,7 +151,7 @@ Adopters running `brew info pai-kernel` post-update see corrected guidance immed
 | `brew install PAI-Kernel/tap/pai-kernel` | `brew untap pai-kernel/tap && brew tap PAI-Kernel/tap` to refresh Caveats (formula change) · OR sustained if Caveats not critical |
 | `docker pull ghcr.io/pai-kernel/pai-kernel:v2.2.3` | None · image unchanged |
 | `git clone https://github.com/PAI-Kernel/pai-kernel.git` | `git pull` to receive doc + Cargo.toml updates |
-| `curl https://paikernel.org/install.sh | sh` | None · install script unchanged · binary unchanged |
+| `curl https://paikernel.org/install.sh \| sh` | None · install script unchanged · binary unchanged |
 
 ---
 

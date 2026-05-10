@@ -8,13 +8,17 @@ pai_cd:
   version: "2.2.3"
   status: "Canonical"
   source:
-    file: "quickstart.md"
-    path: "docs/quickstart.md"
+    file: "QUICKSTART.md"
+    path: "QUICKSTART.md"
     commit: "v2.2.3"
     authority_repo: "PAI-Kernel/pai-kernel"
   cite_as: "PAI-Kernel SDK v2.2.3 · Quickstart"
   last_amendment: "2026-05-09"
 ---
+
+> **Note:** this file = mirror of [`docs/quickstart.md`](docs/quickstart.md) · placed at root for discoverability (alongside `README.md` · `INSTALL.md` · `LICENSE`). Both files content-identical · either can be edited but should sync with the other.
+
+
 
 # PAI-Kernel SDK · Quickstart
 
@@ -22,7 +26,7 @@ Five-minute path to running PAI-Kernel SDK locally with **no environment setup r
 
 > **Goal:** evaluate fit · run a working daemon · query the API · understand surface. Total time: ~5 minutes wall-clock.
 
-For comprehensive coverage (production setup · all install methods · troubleshooting · upgrades), see [`docs/INSTALL.md`](INSTALL.md).
+For comprehensive coverage (production setup · all install methods · troubleshooting · upgrades), see [`docs/INSTALL.md`](docs/INSTALL.md).
 
 ---
 
@@ -146,7 +150,7 @@ cargo run -p pai_examples --bin vulnerability_check --release
 cargo run -p pai_examples --bin compliance_identity --release
 ```
 
-See [`examples/README.md`](../examples/README.md) for what each demonstrates.
+See [`examples/README.md`](examples/README.md) for what each demonstrates.
 
 ---
 
@@ -158,11 +162,11 @@ In the terminal where `pai_governance_daemon --demo` is running, press `Ctrl-C`.
 
 You have just verified PAI-Kernel SDK installs · runs · responds to API queries. From here:
 
-- **Configure for production:** see [`docs/INSTALL.md`](INSTALL.md) § Configuration · set required `PAI_AUTHOR_API_KEY` and `PAI_AUTHOR_SIGNING_KEY` environment variables (32-byte hex via `openssl rand -hex 32`).
+- **Configure for production:** see [`docs/INSTALL.md`](docs/INSTALL.md) § Configuration · set required `PAI_AUTHOR_API_KEY` and `PAI_AUTHOR_SIGNING_KEY` environment variables (32-byte hex via `openssl rand -hex 32`).
 - **Initialize a working directory:** `pai_governance_daemon init` creates `./pai-kernel.toml` + `./policies/` for persistent deployment.
-- **Read the constitutional foundation:** [`corpus/PAI_Constitutional_Document.md`](../corpus/PAI_Constitutional_Document.md) describes the framework PAI-Kernel SDK enforces.
-- **Review release notes:** [`docs/RELEASE_NOTES_v2.2.3.md`](RELEASE_NOTES_v2.2.3.md) for v2.2.3 specifics.
-- **Check known limitations:** [`docs/KNOWN_LIMITATIONS.md`](KNOWN_LIMITATIONS.md) describes scope and current constraints.
+- **Read the constitutional foundation:** [`corpus/PAI_Constitutional_Document.md`](corpus/PAI_Constitutional_Document.md) describes the framework PAI-Kernel SDK enforces.
+- **Review release notes:** [`docs/RELEASE_NOTES_v2.2.3.md`](docs/RELEASE_NOTES_v2.2.3.md) for v2.2.3 specifics.
+- **Check known limitations:** [`docs/KNOWN_LIMITATIONS.md`](docs/KNOWN_LIMITATIONS.md) describes scope and current constraints.
 
 ## Troubleshooting
 
@@ -177,7 +181,7 @@ source ~/.zshrc
 
 ### Daemon exits immediately without `--demo`
 
-Expected behavior · fail-closed default. Either use `--demo` for testing OR set `PAI_AUTHOR_API_KEY` + `PAI_AUTHOR_SIGNING_KEY` environment variables. See [`docs/INSTALL.md`](INSTALL.md) § Configuration.
+Expected behavior · fail-closed default. Either use `--demo` for testing OR set `PAI_AUTHOR_API_KEY` + `PAI_AUTHOR_SIGNING_KEY` environment variables. See [`docs/INSTALL.md`](docs/INSTALL.md) § Configuration.
 
 ### Browser cannot connect to 127.0.0.1:9100
 
@@ -187,7 +191,7 @@ Verify daemon is running:
 lsof -iTCP:9100 -sTCP:LISTEN
 ```
 
-Empty output = daemon not started. Start with `--demo` OR with required env vars. See [`docs/INSTALL.md`](INSTALL.md) § Troubleshooting.
+Empty output = daemon not started. Start with `--demo` OR with required env vars. See [`docs/INSTALL.md`](docs/INSTALL.md) § Troubleshooting.
 
 ---
 

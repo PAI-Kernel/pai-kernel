@@ -241,6 +241,27 @@ threat modeling, compliance verification, and governance control
 layers. The complete framework is maintained by the author and will be
 extended as the project develops. A consolidated multi-language documentation portal is planned for v2.3 (~late May / early June 2026).
 
+### Adopter-facing operational documentation
+
+> ⚡ **Start here:** [`QUICKSTART.md`](./QUICKSTART.md) — five-minute path to running daemon · NO setup required.
+
+| Document | Audience | Time |
+|---|---|---|
+| **⚡ [`QUICKSTART.md`](./QUICKSTART.md)** | **New evaluators · «just run it» · root-level mirror of docs/quickstart.md** | **5 min** |
+| [`docs/quickstart.md`](./docs/quickstart.md) | Same content as `QUICKSTART.md` (root) · canonical docs/ location | 5 min |
+| [`docs/INSTALL.md`](./docs/INSTALL.md) | Comprehensive install reference (6 methods) | 30-60 min |
+| [`docs/upgrade.md`](./docs/upgrade.md) | Existing adopters upgrading between releases | 15 min |
+| [`docs/api.md`](./docs/api.md) | API integrators · 5 REST endpoints | 15 min |
+| [`docs/architecture.md`](./docs/architecture.md) | Architects evaluating fit | 30 min |
+| [`docs/audit_checklist.md`](./docs/audit_checklist.md) | Independent auditors verifying release artifacts | 1-2 hours |
+| [`docs/SUPPORT.md`](./docs/SUPPORT.md) | Anyone needing help · channels + expectations | 5 min |
+| [`docs/KNOWN_LIMITATIONS.md`](./docs/KNOWN_LIMITATIONS.md) | Adopters checking scope before commitment | 10 min |
+| [`docs/RELEASE_NOTES_v2.2.3.md`](./docs/RELEASE_NOTES_v2.2.3.md) | What's in v2.2.3 binary release | 5 min |
+| [`docs/RELEASE_NOTES_v2.2.3.1.md`](./docs/RELEASE_NOTES_v2.2.3.1.md) | What's in main HEAD post-tag (doc improvements) | 5 min |
+| [`CHANGELOG.md`](./CHANGELOG.md) | Release history · semantic versioning | 5 min |
+| [`examples/README.md`](./examples/README.md) | 5 reference example binaries explained | 10 min |
+| [`SECURITY.md`](./SECURITY.md) | Vulnerability reporting · PGP key | 5 min |
+
 -----
 
 ## Interpretation Principle

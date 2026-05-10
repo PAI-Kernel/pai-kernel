@@ -1,7 +1,7 @@
-# Known Limitations — PAI-Kernel v2.2.1
+# Known Limitations — PAI-Kernel v2.2.3
 
-**Release:** PAI-CD v2.2.1 · `PAI-Kernel/pai-kernel@v2.2.1`
-**Date:** 2026-04-23
+**Release:** PAI-CD v2.2.3 · `PAI-Kernel/pai-kernel@v2.2.3`
+**Date:** 2026-04-28 (binary release) · 2026-05-10 (current documentation refresh)
 **Status:** Early preview — invitation-only distribution
 **Authority:** Adopter transparency commitment
 
@@ -9,7 +9,7 @@
 
 ## Read this first
 
-v2.2.1 is the **first public release** of PAI-Kernel. It is an **early preview**, not a production-ready framework. This document describes what is intentionally incomplete, what is structurally known to be weak, and where work is actively in progress.
+PAI-Kernel began public release with v2.2.1 (2026-04-23, the first public release tag). The current release is v2.2.3 (2026-04-28). The framework remains an **early preview**, not a production-ready product. This document describes what is intentionally incomplete, what is structurally known to be weak, and where work is actively in progress.
 
 Framework users should read this alongside the [Constitutional Core](https://corpus.paikernel.org/docs/constitutional-core) and [Bill of Authorial Rights](https://corpus.paikernel.org/docs/bill-of-authorial-rights).
 
@@ -19,21 +19,27 @@ Framework users should read this alongside the [Constitutional Core](https://cor
 
 ### 1.1 v2.2 is a citationally-stable freeze
 
-The published framework is **PAI-CD v2.2 Freeze Edition** (March 2026 snapshot). This is the version cited by the SSRN paper (DOI 10.2139/ssrn.6512218).
+The published framework is **PAI-CD v2.2 Freeze Edition** (March 2026 snapshot). This is the corpus baseline cited by the SSRN paper (DOI 10.2139/ssrn.6512218).
 
-**Implication:** external citations should reference v2.2.1. Adopters integrating against this release bind to v2.2 semantics.
+**Implication:** external citations referencing the current release should use v2.2.3 (per `CITATION.cff`). Adopters integrating against this release bind to v2.2 corpus semantics with the v2.2.3 SDK runtime configuration.
 
 ### 1.2 Internal canonical evolves beyond v2.2
 
-The PAI-CD framework continues to develop beyond v2.2. Subsequent public releases (v2.2.x patch · future minor versions) will publish refined and extended content as the development trajectory progresses.
+The PAI-CD framework continues to develop beyond the v2.2 published corpus. Subsequent public releases (further v2.2.x patches · future minor versions) will publish refined and extended content as the development trajectory progresses.
 
-**Implication:** do not expect v2.2.1 published content to auto-update as the framework evolves. Future releases publish via explicit version increments.
+**Implication:** do not expect v2.2.3 published content to auto-update as the framework evolves. Future releases publish via explicit version increments. v2.2.1 · v2.2.2 · v2.2.3 each remain retrievable under their own tags.
 
-### 1.3 SDK v1.3.0 vs corpus v2.2 scope gap
+### 1.3 SDK v1.3.2 vs corpus v2.2 scope gap
 
-The Rust SDK is at **v1.3.0** — reflecting implementation work beyond the v2.2 corpus baseline. The SDK runtime enforces several extended invariants that are NOT in v2.2 normative text.
+The Rust SDK is at **v1.3.2** — reflecting implementation work beyond the v2.2 corpus baseline. The SDK runtime enforces several extended invariants that are NOT in v2.2 published normative text.
 
 **Implication:** SDK behavior may be **stricter than v2.2 corpus requires**. This is deliberate (SDK trajectory leads corpus publication). Adopters treating SDK behavior as normative should note SDK enforces a superset.
+
+### 1.4 Published corpus subset vs full canonical corpus
+
+The published corpus (3 documents in `corpus/` — Constitutional Core, Bill of Authorial Rights, Glossary) is the **Layer 0 subset** of the full canonical corpus. Additional canonical layers (Implementation Mapping, Threat Model, Consent & Capability Model, Constraints & Prohibitions, Decision Log Principles, Compliance Checklist, Governance & Change Control, plus the Assurance / Extended / Meta / Verification layers) exist in canonical internal development.
+
+**Implication:** SDK crates implement enforcement for normative documents that are not yet publicly available. See § 2.2 for specific named cases. Adopters seeking complete normative reference should rely on the published Layer 0 documents plus the SDK source as a behavioral reference, until further layers are released.
 
 ---
 
@@ -41,13 +47,13 @@ The Rust SDK is at **v1.3.0** — reflecting implementation work beyond the v2.2
 
 ### 2.1 Current implementation
 
-SDK v1.3.0 provides a live governance daemon (`pai_governance_daemon` via axum HTTP server). The release publishes **18 crates** with **286 tests** passing on initial audit.
+SDK v1.3.2 provides a live governance daemon (`pai_governance_daemon` via axum HTTP server). The Rust workspace contains **28 members** (22 SDK primitive crates in `crates/pai_*` · 2 runtime binaries in `runtime/` · 2 protocol adapters in `adapters/` · 1 compliance test suite · 1 examples binary set). **18 of the 22 SDK crates are published to crates.io** as the `pai_*` v1.3.x family; the remaining 4 are workspace-internal helpers (`pai_harness` · `pai_interface` · `pai_influence` · `pai_examples`).
 
-The runtime enforces the constitutional core invariants for in-process governance decisions.
+The runtime enforces the constitutional core invariants for in-process governance decisions. Test coverage and clippy status are tracked via the public CI pipeline (see [github.com/PAI-Kernel/pai-kernel/actions](https://github.com/PAI-Kernel/pai-kernel/actions)).
 
 ### 2.2 Areas requiring deploy-time validation
 
-The following normative items are **defined in the PAI-CD corpus but NOT runtime-enforced** in SDK v1.3.0. Compliance requires deploy-time manual validation or external tooling:
+The following normative items are **defined in the PAI-CD corpus but NOT runtime-enforced** in SDK v1.3.2. Compliance requires deploy-time manual validation or external tooling:
 
 - **TCB attestation** — corpus requires hardware attestation; SDK provides scaffolding (`pai_attestation`) but no hardware-attestation backend wired
 - **Supply-chain provenance** — corpus requires cryptographic registry; SDK accepts declared hashes but does not verify upstream chain
@@ -73,13 +79,13 @@ The V4 Lock-Out Resolution procedure exists normatively but requires external Re
 
 ### 3.2 Multi-Principal Governance scope
 
-Current Multi-Principal Governance covers multi-human classification (P1/P2/P3 principal categories). Multi-instance coordination (where multiple PAI instances coordinate on behalf of a single Author) is currently in development and not part of v2.2.1.
+Current Multi-Principal Governance covers multi-human classification (P1/P2/P3 principal categories). Multi-instance coordination (where multiple PAI instances coordinate on behalf of a single Author) is currently in development and not part of the v2.2.x release family.
 
-**Implication:** v2.2.1 governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for future releases.
+**Implication:** v2.2.x governs **dyadic** deployments (one Author, one PAI instance). Multi-instance use cases should wait for future releases.
 
 ### 3.3 Zone Sovereignty and Dual Guarantee
 
-Regulatory zone sovereignty and provider-usage disclosure mechanisms are currently in development, not part of v2.2.1. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
+Regulatory zone sovereignty and provider-usage disclosure mechanisms are currently in development, not part of the v2.2.x release family. Adopters operating across multi-jurisdictional deployment contexts should note this gap.
 
 ---
 
@@ -89,11 +95,11 @@ Regulatory zone sovereignty and provider-usage disclosure mechanisms are current
 
 Current `corpus.paikernel.org` hosts three canonical v2.2 documents (Constitutional Core, Bill of Authorial Rights, Glossary). Additional layers (assurance, extended, meta, verification documents) remain in canonical internal source.
 
-**Implication:** the GitHub repository (`github.com/PAI-Kernel/pai-kernel` v2.2.1 tag) includes all published documents in scope. Browsable public rendering at `corpus.paikernel.org` covers the three-document surface only.
+**Implication:** the GitHub repository (`github.com/PAI-Kernel/pai-kernel` v2.2.3 tag) includes all published documents in scope. Browsable public rendering at `corpus.paikernel.org` covers the three-document surface only. A consolidated multi-language documentation portal is planned for v2.3 (~late May / early June 2026).
 
 ### 4.2 Operating Principles
 
-The framework operating principles ratified for v2.2.1 govern the development process and public-surface rendering. Additional operating principles continue to develop iteratively; future releases publish updates.
+The framework operating principles ratified for the v2.2.x release family govern the development process and public-surface rendering. Additional operating principles continue to develop iteratively; future releases publish updates.
 
 ### 4.3 Amendment procedure
 
@@ -133,24 +139,24 @@ Contributions, funding structure, and organizational evolution are separate futu
 
 ### 6.1 Dual Guarantee framework
 
-The Dual Guarantee (Author sovereignty + provider non-circumvention) is specified in the PAI-CD corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are currently in development, not enforced in v2.2.1.
+The Dual Guarantee (Author sovereignty + provider non-circumvention) is specified in the PAI-CD corpus. Provider-side operational controls (per-LLM-provider disclosure + submission checklist) are currently in development, not enforced in v2.2.3.
 
 ### 6.2 Threat model evolution
 
-The Threat Model document enumerates threat classes covered by v2.2.1. Additional threat classes are added iteratively as the framework matures; adopters should monitor future releases.
+The Threat Model document enumerates threat classes covered by the v2.2.x release family. Additional threat classes are added iteratively as the framework matures; adopters should monitor future releases.
 
 ### 6.3 Security disclosure
 
-Security vulnerabilities in SDK v1.3.0 or corpus normative text: disclose via GitHub private security advisory at [github.com/PAI-Kernel/pai-kernel/security/advisories](https://github.com/PAI-Kernel/pai-kernel/security/advisories) or direct contact per `SECURITY.md`.
+Security vulnerabilities in SDK v1.3.2 or corpus normative text: disclose via GitHub private security advisory at [github.com/PAI-Kernel/pai-kernel/security/advisories](https://github.com/PAI-Kernel/pai-kernel/security/advisories) or direct contact per `SECURITY.md`.
 
 ---
 
-## 7. Stability commitment (v2.2.1 specifically)
+## 7. Stability commitment (v2.2.3 specifically)
 
-- **Corpus text** (3 public documents): **stable** for the duration of the v2.2.1 tag; no silent changes
-- **Release artifacts** (paper PDF, CITATION.cff, LICENSE): **stable** for the duration of the v2.2.1 tag
-- **SDK v1.3.0 crates on crates.io**: **immutable** once published; yanked only on critical security disclosure
-- **Future releases** (v2.2.2 patch / future minor versions): new tag; v2.2.1 remains retrievable
+- **Corpus text** (3 public documents): **stable** for the duration of the v2.2.3 tag; no silent changes
+- **Release artifacts** (paper PDF, CITATION.cff, LICENSE): **stable** for the duration of the v2.2.3 tag
+- **SDK v1.3.2 crates on crates.io**: **immutable** once published; yanked only on critical security disclosure
+- **Future releases** (further v2.2.x patches / future minor versions): new tag; v2.2.3 remains retrievable
 
 ---
 
@@ -182,7 +188,8 @@ Per the invitation-only distribution policy, feedback is welcomed via:
 | Version | Date | Changes |
 |---|---|---|
 | **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, specification-level verification scope, licensing, security, feedback channels. |
+| **v2.0** | **2026-05-10** | Refresh for v2.2.3 release. Updated SDK references (v1.3.0 → v1.3.2). Corrected workspace/crate counts (was «18 crates · 286 tests» → 28 workspace members · 22 SDK primitive crates · 18 published to crates.io · test counts deferred to live CI surface). Added § 1.4 «Published corpus subset vs full canonical corpus» making the asymmetry between published documents and SDK enforcement scope explicit. Selective historical preservation of v2.2.1 references where they describe initial-release facts; current-scope statements aligned to v2.2.x release family or v2.2.3 specifically. |
 
 ---
 
-*PAI-Kernel · Known Limitations · v2.2.1 release · 2026-04-23*
+*PAI-Kernel · Known Limitations · v2.2.3 release · 2026-05-10 documentation refresh*
