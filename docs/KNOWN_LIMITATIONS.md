@@ -61,7 +61,18 @@ The following normative items are **defined in the PAI-CD corpus but NOT runtime
 - **Author vulnerability protection** — corpus specifies escalation paths (V1-V4); SDK provides scaffolding (`pai_vulnerability`); the V4 Lock-Out Resolution procedure remains in development
 - **Graduated Response Framework** — Level 0-5 response ladder; SDK provides scaffolding for lower levels; levels 4-5 require operational controls beyond SDK scope
 
-### 2.3 Specification-level vs runtime-level verification
+### 2.3 Docker image platform support
+
+The `ghcr.io/pai-kernel/pai-kernel:v2.2.3` tag was built `linux/amd64` only (single-platform). Apple Silicon Macs (M1/M2/M3/M4) and `linux/arm64` Linux deployments require one of:
+
+- **Recommended · multi-arch `:latest` tag**: `docker pull ghcr.io/pai-kernel/pai-kernel:latest` (includes both `linux/amd64` and `linux/arm64` native images · no emulation)
+- **Pinned-version workaround · Rosetta emulation**: `docker pull --platform linux/amd64 ghcr.io/pai-kernel/pai-kernel:v2.2.3` (~5-10% slowdown on Apple Silicon · functional)
+
+The `:v2.2.3` tag remains `linux/amd64`-only per release immutability discipline (no retroactive multi-arch republish). Future tag releases (v2.2.4 and beyond) will automatically produce multi-arch images on tag push.
+
+**Implication:** adopters pinning to specific version v2.2.3 on Apple Silicon must use `--platform` flag. Adopters using `:latest` (no version pinning) receive multi-arch image transparently.
+
+### 2.4 Specification-level vs runtime-level verification
 
 The PAI-CD verification program produces **specification-level** verdicts via formal modeling (TLA+ state-space exploration), adversarial review, and narrative / case analysis.
 
@@ -189,6 +200,7 @@ Per the invitation-only distribution policy, feedback is welcomed via:
 |---|---|---|
 | **v1.0** | **2026-04-23** | Initial publication alongside v2.2.1 release. Covers: snapshot nature, SDK vs corpus gap, specification-level verification scope, licensing, security, feedback channels. |
 | **v2.0** | **2026-05-10** | Refresh for v2.2.3 release. Updated SDK references (v1.3.0 → v1.3.2). Corrected workspace/crate counts (was «18 crates · 286 tests» → 28 workspace members · 22 SDK primitive crates · 18 published to crates.io · test counts deferred to live CI surface). Added § 1.4 «Published corpus subset vs full canonical corpus» making the asymmetry between published documents and SDK enforcement scope explicit. Selective historical preservation of v2.2.1 references where they describe initial-release facts; current-scope statements aligned to v2.2.x release family or v2.2.3 specifically. |
+| **v2.1** | **2026-05-10** | Added § 2.3 «Docker image platform support» documenting v2.2.3 image linux/amd64-only state · Apple Silicon adopter guidance (recommended `:latest` multi-arch · OR `--platform linux/amd64` Rosetta workaround for pinned v2.2.3). Future tag releases (v2.2.4+) produce multi-arch images automatically per release.yml workflow fix (pre-public `623a66c` · public `45039e5`). Renumbered subsequent §§ 2.3 → 2.4. |
 
 ---
 
