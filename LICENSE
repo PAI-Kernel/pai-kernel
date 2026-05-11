@@ -1,3 +1,5 @@
+SPDX-License-Identifier: MIT OR Apache-2.0
+
 PAI-Kernel Repository License Overview
 =======================================
 
@@ -6,16 +8,56 @@ licensed differently:
 
   Source code (Rust crates · binaries · scripts · CI workflows):
     Licensed under MIT OR Apache-2.0 (dual license · choose either).
-    See LICENSE-MIT and LICENSE-APACHE.
+    Full texts in LICENSE-MIT and LICENSE-APACHE.
 
   Documentation (PAI-CD framework documents · normative texts · README
   narrative · governance prose):
     Licensed under Creative Commons Attribution 4.0 International (CC BY 4.0).
-    See LICENSE-CC-BY-4.0.
+    Full text in LICENSE-CC-BY-4.0.
 
 Copyright (c) 2026 Mikhail Anatolievich Sergeev / PAI-Kernel Initiative
 
 For attribution requirements and full license terms, see the respective
-LICENSE-* files. For frequently asked questions about licensing, see the
-project documentation site at https://paikernel.org (License FAQ section,
-forthcoming in v2.2.2).
+LICENSE-* files.
+
+-------------------------------------------------------------------------------
+MIT License (source code · choose either MIT OR Apache-2.0)
+-------------------------------------------------------------------------------
+
+Copyright (c) 2026 Mikhail Anatolievich Sergeev / PAI-Kernel Initiative
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-------------------------------------------------------------------------------
+Apache License 2.0 (source code · choose either MIT OR Apache-2.0)
+-------------------------------------------------------------------------------
+
+For full Apache License 2.0 text, see LICENSE-APACHE.
+
+The Apache License 2.0 text is available at:
+http://www.apache.org/licenses/LICENSE-2.0
+
+-------------------------------------------------------------------------------
+Creative Commons Attribution 4.0 International (documentation)
+-------------------------------------------------------------------------------
+
+For full CC BY 4.0 text, see LICENSE-CC-BY-4.0.
+
+The CC BY 4.0 text is available at:
+https://creativecommons.org/licenses/by/4.0/legalcode
