@@ -52,7 +52,12 @@ open canonical corpus.
 [![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
 [![License (docs)](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
+[![Crates.io](https://img.shields.io/crates/v/pai_kernel.svg)](https://crates.io/crates/pai_kernel)
 [![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PAI-Kernel/pai-kernel/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel)
+
+[![CI](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml)
+[![CodeQL](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/codeql.yml)
+[![Fuzz](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/fuzz.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/fuzz.yml)
 
 
 ## Personal Authorial Intelligence — Constitutional Framework
@@ -261,6 +266,7 @@ extended as the project develops. A consolidated multi-language documentation po
 | [`CHANGELOG.md`](./CHANGELOG.md) | Release history · semantic versioning | 5 min |
 | [`examples/README.md`](./examples/README.md) | 5 reference example binaries explained | 10 min |
 | [`SECURITY.md`](./SECURITY.md) | Vulnerability reporting · PGP key | 5 min |
+| [`formal/VERIFICATION_MATRIX.md`](./formal/VERIFICATION_MATRIX.md) | Constitutional invariant traceability across TLA+ · SPARK · Rego · Runtime layers | 30 min |
 
 -----
 
