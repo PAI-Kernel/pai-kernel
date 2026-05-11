@@ -51,8 +51,12 @@ impl Serialize for Hash256 {
 impl<'de> Deserialize<'de> for Hash256 {
     fn deserialize<D: serde::Deserializer<'de>>(deserializer: D) -> Result<Self, D::Error> {
         let hex = String::deserialize(deserializer)?;
-        if hex.len() != 64 {
-            return Err(serde::de::Error::custom("expected 64-char hex string"));
+        // Reject non-ASCII input · `hex.len()` returns byte count, multi-byte
+        // UTF-8 would pass the `== 64` check but panic on byte-index slicing
+        // at non-char boundaries (cargo-fuzz finding · Session #21 ·
+        // witness_entry_parse target crash on `{"hash":"+\xd7\x97onfir..."}`).
+        if !hex.is_ascii() || hex.len() != 64 {
+            return Err(serde::de::Error::custom("expected 64-char ASCII hex string"));
         }
         let mut bytes = [0u8; 32];
         for i in 0..32 {
