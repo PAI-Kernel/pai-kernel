@@ -1,0 +1,12 @@
+homepage: "https://github.com/PAI-Kernel/pai-kernel"
+language: rust
+primary_contact: "Mikhail.Sergeev@PAIkernel.org"
+auto_ccs:
+  - "Mikhail.Sergeev@PAIkernel.org"
+fuzzing_engines:
+  - libfuzzer
+sanitizers:
+  - address
+  - undefined
+main_repo: "https://github.com/PAI-Kernel/pai-kernel"
+file_github_issue: true
