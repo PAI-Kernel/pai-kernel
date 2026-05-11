@@ -45,16 +45,16 @@ open canonical corpus.
 └──────────────────────────────────────────────────────────┘
 ```
 
-[![DOI all versions](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19151899-1682D4.svg)](https://doi.org/10.5281/zenodo.19151899)
-[![ORCID iD](https://img.shields.io/badge/ORCID-0009--0001--6443--855X-A6CE39.svg)](https://orcid.org/0009-0001-6443-855X)
-[0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
 
-[![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
+[![ORCID iD](https://img.shields.io/badge/ORCID-0009--0001--6443--855X-A6CE39.svg)](https://orcid.org/0009-0001-6443-855X)
+[![DOI all versions](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.19151899-1682D4.svg)](https://doi.org/10.5281/zenodo.19151899)
+
 [![License (docs)](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+[![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
 [![GitHub release](https://img.shields.io/github/v/release/PAI-Kernel/pai-kernel)](https://github.com/PAI-Kernel/pai-kernel/releases)
 [![Crates.io](https://img.shields.io/crates/v/pai_kernel.svg)](https://crates.io/crates/pai_kernel)
-[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PAI-Kernel/pai-kernel/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel)
 
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/PAI-Kernel/pai-kernel/badge)](https://securityscorecards.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel)
 [![CI](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/ci.yml)
 [![CodeQL](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/codeql.yml)
 [![Fuzz](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/fuzz.yml/badge.svg?branch=main)](https://github.com/PAI-Kernel/pai-kernel/actions/workflows/fuzz.yml)
