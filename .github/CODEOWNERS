@@ -1,24 +1,31 @@
 # PAI-Kernel Code Owners
 # All changes require review from the maintainer.
-# Expand teams as the project grows.
+# Expand teams as the project grows (co-founder onboarding · auditor handoff · etc.).
+#
+# Format: <path-glob>    @<github-handle> [@<additional-handle>...]
+# Validation: github.com/PAI-Kernel/pai-kernel/settings/access · verify handles
+# resolve к actual users с repo access OR reviews block PRs indefinitely.
 
 # Default owner for everything
-*                    @MikhailSergeev
+*                    @MikhailSergeev369
 
 # Constitutional corpus — highest sensitivity
-/corpus/             @MikhailSergeev
-/corpus/core/        @MikhailSergeev
+/corpus/             @MikhailSergeev369
+/corpus/core/        @MikhailSergeev369
 
 # Formal verification
-/formal/             @MikhailSergeev
-/spark/              @MikhailSergeev
+/formal/             @MikhailSergeev369
+/spark/              @MikhailSergeev369
 
 # Runtime and SDK
-/crates/             @MikhailSergeev
-/runtime/            @MikhailSergeev
+/crates/             @MikhailSergeev369
+/runtime/            @MikhailSergeev369
+
+# Fuzz infrastructure (Session #21 · cargo-fuzz integration)
+/fuzz/               @MikhailSergeev369
 
 # Governance documents
-/governance/         @MikhailSergeev
+/governance/         @MikhailSergeev369
 
 # CI/CD and security
-/.github/            @MikhailSergeev
+/.github/            @MikhailSergeev369
