@@ -16,6 +16,11 @@ pai_pii = { path = "../crates/pai_pii" }
 pai_boundary = { path = "../crates/pai_boundary" }
 pai_compliance_id = { path = "../crates/pai_compliance_id" }
 pai_provenance = { path = "../crates/pai_provenance" }
+# Session #22 additions · 4 new public-API entry points
+pai_classify = { path = "../crates/pai_classify" }
+pai_attestation = { path = "../crates/pai_attestation" }
+pai_delegation = { path = "../crates/pai_delegation" }
+pai_drift = { path = "../crates/pai_drift" }
 
 # Prevent this crate from being treated as а workspace member
 # (cargo-fuzz convention · separate package · won't pollute parent workspace).
@@ -59,6 +64,34 @@ bench = false
 [[bin]]
 name = "provenance_parse"
 path = "fuzz_targets/provenance_parse.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "classify"
+path = "fuzz_targets/classify.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "attestation_manifest"
+path = "fuzz_targets/attestation_manifest.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "delegation_sequence"
+path = "fuzz_targets/delegation_sequence.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "drift_report"
+path = "fuzz_targets/drift_report.rs"
 test = false
 doc = false
 bench = false
