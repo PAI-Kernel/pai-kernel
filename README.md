@@ -65,7 +65,10 @@ open canonical corpus.
 > A normative layer for human-centric AI governance.
 > **Release v2.2.3** · 2026-04-28
 
-### Choose your path
+
+⚡ **Start here:** [`QUICKSTART.md`](./QUICKSTART.md) ⚡ - five-minute path to running daemon · NO setup required.
+
+### ...or choose your path
 
 | If you are... | Start here | Time |
 |---|---|---|
