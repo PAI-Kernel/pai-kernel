@@ -58,17 +58,17 @@ OSS-Fuzz accepts projects meeting:
 
 If OSS-Fuzz application rejected OR slow к review, ClusterFuzzLite provides
 similar continuous-fuzzing capability within own GitHub Actions:
-https://google.github.io/clusterfuzzlite/
+<https://google.github.io/clusterfuzzlite/>
 
 Setup overlaps significantly с OSS-Fuzz (same Dockerfile + build.sh) ·
 files в этой папке can be reused.
 
 ## References
 
-- OSS-Fuzz docs: https://google.github.io/oss-fuzz/
-- New project guide: https://google.github.io/oss-fuzz/getting-started/new-project-guide/
-- Rust language guide: https://google.github.io/oss-fuzz/getting-started/new-project-guide/rust-lang/
-- Sample Rust project (pulldown-cmark): https://github.com/google/oss-fuzz/tree/master/projects/pulldown-cmark
+- OSS-Fuzz docs: <https://google.github.io/oss-fuzz/>
+- New project guide: <https://google.github.io/oss-fuzz/getting-started/new-project-guide/>
+- Rust language guide: <https://google.github.io/oss-fuzz/getting-started/new-project-guide/rust-lang/>
+- Sample Rust project (pulldown-cmark): <https://github.com/google/oss-fuzz/tree/master/projects/pulldown-cmark>
 
 ---
 
