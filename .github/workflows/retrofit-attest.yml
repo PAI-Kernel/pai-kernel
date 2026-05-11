@@ -1,0 +1,103 @@
+name: Retrofit SLSA attestations
+
+# One-time-use workflow для retrofitting SLSA build provenance attestations
+# на existing release binaries that pre-date the attest-build-provenance
+# integration in release.yml.
+#
+# Behavior:
+#   - Downloads existing release binaries (no rebuild · preserves SHA256s)
+#   - Generates SLSA build provenance attestation для каждого binary via
+#     actions/attest-build-provenance (GitHub OIDC · keyless · Sigstore-rooted)
+#   - Uploads .intoto.jsonl sidecar к release
+#
+# Constraint: target release must be `immutable: false` (writable). Existing
+# v2.2/v2.2.2/v2.2.3 releases cannot be retrofitted (immutable one-way ratchet ·
+# DL-403 + GitHub platform enforcement). v2.2.3.1 currently immutable=false ·
+# eligible для retrofit before lock.
+#
+# Trigger: workflow_dispatch only · explicit P0 invocation per OP-15.
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag к retrofit attestations for (e.g. v2.2.3.1)'
+        required: true
+        type: string
+
+permissions:
+  contents: write       # release asset upload
+  id-token: write       # OIDC token для attest-build-provenance
+  attestations: write   # generate SLSA attestations
+
+jobs:
+  retrofit:
+    name: Retrofit ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+      attestations: write
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            ext: tar.gz
+          - target: x86_64-apple-darwin
+            ext: tar.gz
+          - target: aarch64-unknown-linux-gnu
+            ext: tar.gz
+          - target: x86_64-unknown-linux-gnu
+            ext: tar.gz
+          - target: x86_64-pc-windows-msvc
+            ext: zip
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Download binary from release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+          TARGET: ${{ matrix.target }}
+          EXT: ${{ matrix.ext }}
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          cd dist
+          ASSET="pai_governance_daemon-${TAG}-${TARGET}.${EXT}"
+          gh release download "${TAG}" --repo "${GITHUB_REPOSITORY}" --pattern "${ASSET}" || {
+            echo "::error::Failed to download ${ASSET} from release ${TAG}"
+            exit 1
+          }
+          ls -la "${ASSET}"
+          # Capture SHA256 for verification
+          if command -v sha256sum >/dev/null 2>&1; then
+            sha256sum "${ASSET}"
+          else
+            shasum -a 256 "${ASSET}"
+          fi
+
+      - name: Generate SLSA build provenance attestation
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
+        id: attest
+        with:
+          subject-path: dist/pai_governance_daemon-${{ inputs.tag }}-${{ matrix.target }}.${{ matrix.ext }}
+
+      - name: Upload .intoto.jsonl к release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ inputs.tag }}
+          TARGET: ${{ matrix.target }}
+          EXT: ${{ matrix.ext }}
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        run: |
+          set -euo pipefail
+          ASSET="pai_governance_daemon-${TAG}-${TARGET}.${EXT}"
+          ATTESTATION="${ASSET}.intoto.jsonl"
+          cp "${BUNDLE}" "${ATTESTATION}"
+          ls -la "${ATTESTATION}"
+          gh release upload "${TAG}" --repo "${GITHUB_REPOSITORY}" --clobber "${ATTESTATION}"
+          echo "::notice::Retrofit attestation uploaded для ${ASSET}"

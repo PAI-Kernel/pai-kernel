@@ -57,7 +57,8 @@ jobs:
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
-      id-token: write   # required для keyless Sigstore signing (cosign sign-blob OIDC flow)
+      id-token: write       # required для keyless Sigstore signing (cosign sign-blob OIDC flow)
+      attestations: write   # required для actions/attest-build-provenance · SLSA build provenance
     strategy:
       fail-fast: false
       matrix:
@@ -190,6 +191,31 @@ jobs:
             "${NAME}"
           ls -la "${NAME}".sig "${NAME}".cert
 
+      - name: Generate SLSA build provenance attestation
+        # Produces .intoto.jsonl in-toto attestation bundle covering binary
+        # archive · provides SLSA Level 3 provenance via GitHub OIDC + Sigstore.
+        # Adopters verify via:
+        #   gh attestation verify <name> --owner PAI-Kernel
+        # OpenSSF Scorecard Signed-Releases hardening · adds provenance
+        # component (2/10 of check) on top of Sigstore .sig (8/10).
+        uses: actions/attest-build-provenance@a2bbfa25375fe432b6a289bc6b6cd05ecd0c4c32 # v4.1.0
+        id: attest
+        with:
+          subject-path: dist/pai_governance_daemon-${{ github.ref_name }}-${{ matrix.target }}.${{ matrix.archive_ext }}
+
+      - name: Co-locate attestation bundle in dist/
+        env:
+          TAG: ${{ github.ref_name }}
+          TARGET: ${{ matrix.target }}
+          EXT: ${{ matrix.archive_ext }}
+          BUNDLE: ${{ steps.attest.outputs.bundle-path }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          NAME="pai_governance_daemon-${TAG}-${TARGET}.${EXT}"
+          cp "${BUNDLE}" "dist/${NAME}.intoto.jsonl"
+          ls -la "dist/${NAME}.intoto.jsonl"
+
       - name: Upload artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -199,6 +225,7 @@ jobs:
             dist/*.sha256
             dist/*.sig
             dist/*.cert
+            dist/*.intoto.jsonl
 
   corpus-bundle:
     name: Build corpus-only bundle (framework docs without SDK)
