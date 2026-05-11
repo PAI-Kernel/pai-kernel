@@ -57,6 +57,7 @@ jobs:
     runs-on: ${{ matrix.runner }}
     permissions:
       contents: read
+      id-token: write   # required для keyless Sigstore signing (cosign sign-blob OIDC flow)
     strategy:
       fail-fast: false
       matrix:
@@ -166,6 +167,29 @@ jobs:
           fi
           ls -la
 
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@d7d6bc7722e3daa8354c50bcb52f4837da5e9b6a # v3.8.1
+
+      - name: Sign binary archive (keyless Sigstore · OIDC)
+        # Produce detached signature (.sig) + signing certificate (.cert) для
+        # each binary archive · adopters verify via:
+        #   cosign verify-blob --certificate <name>.cert --signature <name>.sig <name>
+        # OpenSSF Scorecard Signed-Releases hardening · PF-057.
+        env:
+          TAG: ${{ github.ref_name }}
+          TARGET: ${{ matrix.target }}
+          EXT: ${{ matrix.archive_ext }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          cd dist
+          NAME="pai_governance_daemon-${TAG}-${TARGET}.${EXT}"
+          cosign sign-blob --yes \
+            --output-signature "${NAME}.sig" \
+            --output-certificate "${NAME}.cert" \
+            "${NAME}"
+          ls -la "${NAME}".sig "${NAME}".cert
+
       - name: Upload artifacts
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -173,6 +197,8 @@ jobs:
           path: |
             dist/*.${{ matrix.archive_ext }}
             dist/*.sha256
+            dist/*.sig
+            dist/*.cert
 
   corpus-bundle:
     name: Build corpus-only bundle (framework docs without SDK)
