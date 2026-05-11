@@ -1,16 +1,21 @@
 name: Fuzz
 
 # OpenSSF Scorecard Fuzzing check · PF-057 hardening.
-# cargo-fuzz с libfuzzer · 4 targets covering adopter-input attack surfaces:
+# cargo-fuzz с libfuzzer · 6 targets covering adopter-input attack surfaces:
 #   - pai_export · ExportBundle deserialize + verify integrity (bundle import)
 #   - pai_witness · WitnessEntry deserialize (witness chain log import)
 #   - pai_pii · scan_text (PII detection regex DoS surface · text input)
 #   - pai_boundary · BoundaryDeclaration deserialize (MP-5 boundary config import)
+#   - pai_compliance_id · CertificationEvidence + assess_certification (compliance tier)
+#   - pai_provenance · ProvenanceMetadata deserialize (Doc 11 · supply-chain artifact)
+#
+# Seed corpus: representative valid inputs в fuzz/corpus/<target>/ bootstrap
+# libFuzzer coverage faster (committed seeds · libFuzzer mutates from these).
 #
 # Triggers:
-#   - On push к main · short fuzz run (60s per target) · regression detection
-#   - On PR к main · same short run
-#   - Weekly scheduled · extended run (10 min per target) · deeper exploration
+#   - On push к main · 180s fuzz run per target · regression detection
+#   - On PR к main · same 180s run
+#   - Weekly scheduled · 1800s (30 min) per target · deeper exploration
 
 on:
   push:
@@ -37,6 +42,8 @@ jobs:
           - witness_entry_parse
           - pii_scan_text
           - boundary_declaration_parse
+          - compliance_assess
+          - provenance_parse
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
@@ -62,7 +69,7 @@ jobs:
 
       - name: Run fuzz target ${{ matrix.target }}
         env:
-          FUZZ_TIME: ${{ github.event_name == 'schedule' && '600' || '60' }}
+          FUZZ_TIME: ${{ github.event_name == 'schedule' && '1800' || '180' }}
         run: |
           cd fuzz
           cargo +nightly fuzz run ${{ matrix.target }} -- -max_total_time=${FUZZ_TIME}

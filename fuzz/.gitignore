@@ -1,4 +1,9 @@
-# cargo-fuzz generated artifacts (NOT committed)
+# cargo-fuzz generated artifacts (NOT committed · grow with each run)
 artifacts/
-corpus/
 target/
+
+# corpus/ tracked для seed inputs · libFuzzer mutates from these к explore.
+# Adopters cloning repo get representative seeds для each target ·
+# bootstrap fuzzer coverage faster.
+# Note: cargo-fuzz adds к corpus/ during CI runs · they may be committed
+# (corpus growth helps regression coverage) OR purged periodically.
