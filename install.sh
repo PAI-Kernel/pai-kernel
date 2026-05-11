@@ -87,12 +87,31 @@ main() {
   if [ -d "${INSTALL_DIR}" ] && [ -x "${INSTALL_DIR}/pai_governance_daemon" ]; then
     existing_version="$("${INSTALL_DIR}/pai_governance_daemon" version 2>&1 | head -1 || echo unknown)"
     warn "Existing install detected at ${INSTALL_DIR} (${existing_version})"
-    printf '       overwrite? [y/N] '
-    read -r reply || reply="n"
-    case "$reply" in
-      y|Y|yes|YES) info "overwriting..." ;;
-      *) info "aborted."; exit 0 ;;
-    esac
+
+    # When script is run via `curl | sh`, stdin is the pipe (not the terminal).
+    # Reading from stdin would consume EOF and silently abort. Three-mode resolution:
+    #   1. PAI_KERNEL_FORCE_INSTALL=1   non-interactive override (CI / automation)
+    #   2. /dev/tty openable for read   interactive prompt via controlling terminal
+    #   3. Neither                      safe abort with explicit guidance
+    #
+    # Note: -r /dev/tty is not sufficient — the file may exist but not be
+    # openable (e.g. detached session). Subshell-open test is authoritative.
+    if [ "${PAI_KERNEL_FORCE_INSTALL:-}" = "1" ] || [ "${PAI_KERNEL_FORCE_INSTALL:-}" = "y" ]; then
+      info "PAI_KERNEL_FORCE_INSTALL set · overwriting..."
+    elif (: < /dev/tty) 2>/dev/null; then
+      printf '       overwrite? [y/N] '
+      read -r reply < /dev/tty || reply="n"
+      case "$reply" in
+        y|Y|yes|YES) info "overwriting..." ;;
+        *) info "aborted."; exit 0 ;;
+      esac
+    else
+      warn "Non-interactive install (no controlling terminal)."
+      warn "Set PAI_KERNEL_FORCE_INSTALL=1 to overwrite, OR download script first:"
+      warn "    curl -fsSL https://paikernel.org/install.sh -o install.sh && sh install.sh"
+      info "aborted."
+      exit 0
+    fi
   fi
 
   # tmp working directory
