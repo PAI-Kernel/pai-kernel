@@ -1,11 +1,16 @@
-# Public-repo CI for PAI-Kernel/pai-kernel (copied to .github/workflows/ci.yml on publish).
+# Pre-public CI for PAI-Kernel/pai-kernel-pre-public · pre-publication staging.
 #
 # Two parallel jobs:
 #   1. Lint & verify — markdownlint, CITATION.cff, internal links
-#   2. Build & test — cargo build + cargo test on full workspace (with cargo cache)
+#   2. Build & test — cargo build + cargo test on full workspace
+#      (relies on self-hosted runner persistent storage · no actions/cache)
 #
 # Both jobs must pass for green CI. Runs on every push/PR to main.
 # Does NOT include TLC / coverage / GPG verify — those live in internal-only CI.
+#
+# Runner: self-hosted macOS arm64 M4 (CI-B2 architecture · per-repo runner)
+# Note: workflow originally written для ubuntu-latest. Switched к self-hosted
+# 2026-05-10 due к GitHub Actions Free quota exhaustion (run #82 · #83 failures).
 
 name: CI
 
@@ -21,7 +26,7 @@ permissions:
 jobs:
   lint:
     name: Lint & verify
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, M4, pai-kernel-pre-public]
     permissions:
       contents: read
     steps:
@@ -35,11 +40,16 @@ jobs:
         run: npx --yes markdownlint-cli2@0.18.1 '**/*.md' '#node_modules'
 
       - name: Validate CITATION.cff
-        # cffconvert v2.0.x · pinned major.minor; readonly schema validator ·
-        # not shipped в release artifacts. PF-049 mitigation · documented acceptable risk.
+        # cffconvert v2.0.0 + transitive deps · hash-pinned via pip-tools
+        # (Pinned-Dependencies OpenSSF Scorecard hardening · PF-057).
+        # Install в isolated venv: avoids PEP 668 «externally-managed-environment»
+        # restriction (macOS Sonoma+) · uses explicit binary path к sidestep PATH
+        # ambiguity · cleanly disposable per CI run. Requirements regenerated
+        # via: pip-compile --generate-hashes --allow-unsafe (when bumping versions).
         run: |
-          pip install --quiet 'cffconvert==2.0.0'
-          cffconvert --validate
+          python3 -m venv /tmp/cff-venv
+          /tmp/cff-venv/bin/pip install --quiet --require-hashes -r .github/workflows/citation-requirements.txt
+          /tmp/cff-venv/bin/cffconvert --validate
 
       - name: Check internal links
         run: |
@@ -61,7 +71,7 @@ jobs:
 
   build-test:
     name: Build & test (Rust workspace)
-    runs-on: ubuntu-latest
+    runs-on: [self-hosted, macOS, ARM64, M4, pai-kernel-pre-public]
     permissions:
       contents: read
     steps:
@@ -74,16 +84,11 @@ jobs:
         with:
           toolchain: 1.88.0
 
-      - name: Cache cargo registry + git + target
-        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
-        with:
-          path: |
-            ~/.cargo/registry
-            ~/.cargo/git
-            target
-          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-cargo-
+      # actions/cache step intentionally OMITTED for self-hosted runner ·
+      # work directory (target/) and ~/.cargo persist between runs natively ·
+      # cache action upload caused multi-hour Post-step hangs at first run
+      # and is redundant when runner has dedicated persistent storage. CI-B2
+      # architecture relies on physical machine persistence для caching.
 
       - name: Build (release, workspace, locked)
         run: cargo build --workspace --release --locked
