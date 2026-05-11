@@ -1,9 +1,18 @@
-# Dependabot config for the public corpus repository (pai-kernel).
-# Copy as .github/dependabot.yml when pushing to PAI-Kernel/pai-kernel.
-# Only monitors GitHub Actions — no Cargo/npm in public repo.
+# Dependabot config для pai-kernel pre-publication staging.
+# Mirrored к public repo on release sync.
+#
+# Monitors 4 package ecosystems:
+#   - github-actions (workflow action updates · weekly)
+#   - cargo (Rust workspace dependencies · weekly)
+#   - docker (Dockerfile base image updates · monthly · sha256 pins per
+#     Pinned-Dependencies discipline · adopter expectation что base image
+#     updates are deliberate, not auto-merged)
+#   - pip (citation-requirements.txt updates · monthly · hash-pinned via
+#     pip-tools when bumped)
 
 version: 2
 updates:
+  # GitHub Actions
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -12,3 +21,39 @@ updates:
     labels:
       - "dependencies"
       - "ci"
+
+  # Rust workspace deps (Cargo.toml + Cargo.lock)
+  - package-ecosystem: "cargo"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 5
+    labels:
+      - "dependencies"
+      - "rust"
+    # Group security-critical updates separately for fast triage
+    groups:
+      security-deps:
+        applies-to: security-updates
+        patterns:
+          - "*"
+
+  # Docker base images (Dockerfile)
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "docker"
+
+  # Python deps (citation-requirements.txt · cffconvert + transitive)
+  - package-ecosystem: "pip"
+    directory: "/.github/workflows"
+    schedule:
+      interval: "monthly"
+    open-pull-requests-limit: 3
+    labels:
+      - "dependencies"
+      - "python"
