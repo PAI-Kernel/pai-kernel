@@ -40,7 +40,7 @@ Micro-patch release · Rust workspace v1.3.2 binary content unchanged · adopter
   - `drift_report` · `pai_drift::DriftReport` `serde_json` deserialize · probes DFT-I1..DFT-I5 · 7-dimension enum tag validation
 - **Seed corpus expansion · 9 → 28 entries** across 10 targets · 17 JSON seeds parse-verified · 6 binary structured seeds layout-verified · libFuzzer mutates valid → invalid · representative seeds dramatically increase coverage hit rate per `feedback_cargo_fuzz_discipline.md`.
 - **Sigstore signed-release coverage** (retroactive starting from this release). `release.yml` workflow signs each binary via `cosign sign-blob --yes` with GitHub Actions OIDC token (keyless · no key material managed in repo). `.sig` + `.cert` sidecars uploaded alongside binaries. Adopters verify via:
-  ```
+  ```sh
   cosign verify-blob \
     --certificate <name>.cert \
     --signature <name>.sig \
