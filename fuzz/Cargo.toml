@@ -1,0 +1,32 @@
+[package]
+name = "pai_kernel_fuzz"
+version = "0.0.0"
+publish = false
+edition = "2021"
+
+[package.metadata]
+cargo-fuzz = true
+
+[dependencies]
+libfuzzer-sys = "0.4"
+serde_json = "1.0"
+pai_export = { path = "../crates/pai_export" }
+pai_witness = { path = "../crates/pai_witness" }
+
+# Prevent this crate from being treated as а workspace member
+# (cargo-fuzz convention · separate package · won't pollute parent workspace).
+[workspace]
+
+[[bin]]
+name = "export_bundle_parse"
+path = "fuzz_targets/export_bundle_parse.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "witness_entry_parse"
+path = "fuzz_targets/witness_entry_parse.rs"
+test = false
+doc = false
+bench = false

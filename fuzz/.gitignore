@@ -1,0 +1,4 @@
+# cargo-fuzz generated artifacts (NOT committed)
+artifacts/
+corpus/
+target/

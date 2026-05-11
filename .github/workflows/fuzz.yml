@@ -1,0 +1,63 @@
+name: Fuzz
+
+# OpenSSF Scorecard Fuzzing check · PF-057 hardening.
+# cargo-fuzz с libfuzzer · 2 targets covering pai_export bundle deserialization
+# AND pai_witness entry parsing.
+#
+# Triggers:
+#   - On push к main · short fuzz run (60s per target) · regression detection
+#   - On PR к main · same short run
+#   - Weekly scheduled · extended run (10 min per target) · deeper exploration
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 5 * * 1"  # Weekly Monday 05:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    name: Fuzz ${{ matrix.target }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        target:
+          - export_bundle_parse
+          - witness_entry_parse
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Install Rust nightly
+        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # action hash-pinned
+        with:
+          toolchain: nightly
+          components: rust-src
+
+      - name: Cache cargo-fuzz binary
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: ~/.cargo/bin/cargo-fuzz
+          key: ${{ runner.os }}-cargo-fuzz-v0.12
+
+      - name: Install cargo-fuzz
+        run: |
+          if ! command -v cargo-fuzz >/dev/null 2>&1; then
+            cargo install cargo-fuzz --locked --version "^0.12"
+          fi
+
+      - name: Run fuzz target ${{ matrix.target }}
+        env:
+          FUZZ_TIME: ${{ github.event_name == 'schedule' && '600' || '60' }}
+        run: |
+          cd fuzz
+          cargo +nightly fuzz run ${{ matrix.target }} -- -max_total_time=${FUZZ_TIME}
