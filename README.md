@@ -46,7 +46,7 @@ open canonical corpus.
 ```
 
 [![DOI all versions](https://zenodo.org/badge/DOI/10.5281/zenodo.19151899.svg)](https://doi.org/10.5281/zenodo.19151899)
-[![ORCID iD](https://info.orcid.org/wp-content/uploads/2019/11/orcid_16x16.png)](https://orcid.org/0009-0001-6443-855X)
+[![ORCID iD](https://img.shields.io/badge/ORCID-0009--0001--6443--855X-A6CE39.svg)](https://orcid.org/0009-0001-6443-855X)
 [0009-0001-6443-855X](https://orcid.org/0009-0001-6443-855X)
 
 [![License (code)](https://img.shields.io/badge/code-MIT%20OR%20Apache--2.0-blue.svg)](./LICENSE-MIT)
@@ -266,7 +266,6 @@ extended as the project develops. A consolidated multi-language documentation po
 | [`CHANGELOG.md`](./CHANGELOG.md) | Release history · semantic versioning | 5 min |
 | [`examples/README.md`](./examples/README.md) | 5 reference example binaries explained | 10 min |
 | [`SECURITY.md`](./SECURITY.md) | Vulnerability reporting · PGP key | 5 min |
-| [`formal/VERIFICATION_MATRIX.md`](./formal/VERIFICATION_MATRIX.md) | Constitutional invariant traceability across TLA+ · SPARK · Rego · Runtime layers | 30 min |
 
 -----
 
