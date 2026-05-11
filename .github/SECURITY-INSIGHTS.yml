@@ -1,0 +1,211 @@
+# OSS Security Insights · PAI-Kernel SDK
+# Spec: https://github.com/ossf/security-insights-spec
+# Companion: SECURITY.md (canonical vulnerability-reporting policy)
+#
+# This file declares structured security metadata consumed by:
+#   - OpenSSF Scorecard (Security-Policy / Vulnerability-Disclosure heuristics)
+#   - Adopter security assessments
+#   - Supply-chain risk scanners
+#
+# Mirrors current empirical state of pai-kernel as of v2.2.3.
+
+header:
+  schema-version: 1.0.0
+  expiration-date: '2027-05-11T00:00:00.000Z'
+  last-updated: '2026-05-11'
+  last-reviewed: '2026-05-11'
+  project-url: https://github.com/PAI-Kernel/pai-kernel
+  project-release: 'v2.2.3'
+  changelog: https://github.com/PAI-Kernel/pai-kernel/blob/main/CHANGELOG.md
+  license: https://github.com/PAI-Kernel/pai-kernel/blob/main/LICENSE
+
+project-lifecycle:
+  status: active
+  bug-fixes-only: false
+  core-maintainers:
+    - https://github.com/MikhailSergeev369
+  release-cycle: https://github.com/PAI-Kernel/pai-kernel/releases
+  release-process: https://github.com/PAI-Kernel/pai-kernel/blob/main/CHANGELOG.md
+  roadmap: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md#forward-roadmap
+
+contribution-policy:
+  accepts-pull-requests: true
+  accepts-automated-pull-requests: true
+  automated-tools-list:
+    - automated-tool:
+        name: dependabot
+        action: allowed
+        path:
+          - /
+        comment: |
+          Monitors 4 ecosystems: github-actions · cargo · docker · pip
+          Security updates grouped for fast triage
+  contributing-policy: https://github.com/PAI-Kernel/pai-kernel/blob/main/CONTRIBUTING.md
+  code-of-conduct: https://github.com/PAI-Kernel/pai-kernel/blob/main/CODE_OF_CONDUCT.md
+
+documentation:
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/README.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/api.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/architecture.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/quickstart.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/QUICKSTART.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/INSTALL.md
+  - https://github.com/PAI-Kernel/pai-kernel/blob/main/docs/KNOWN_LIMITATIONS.md
+  - https://paikernel.org
+
+distribution-points:
+  - https://github.com/PAI-Kernel/pai-kernel/releases
+  - https://crates.io/crates/pai_kernel
+  - https://ghcr.io/pai-kernel/pai-kernel
+  - https://paikernel.org/install.sh
+  - https://github.com/PAI-Kernel/homebrew-tap
+
+security-artifacts:
+  threat-model:
+    threat-model-created: false
+    evidence-url:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md
+    comment: |
+      Threat-model formal artifact not yet published as standalone document.
+      SECURITY.md § 2 (Scope) + § 8 (Breach-Class Shorthand Codes) enumerate
+      in-scope attack surfaces: GOV.BYPASS · OBJ.INJECTION · LOG.TAMPER ·
+      CONS.MODE.VIOLATION · DRIFT.OVERTHRESHOLD.
+  self-assessment:
+    self-assessment-created: false
+    evidence-url:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md
+    comment: |
+      Self-assessment formal artifact pending. SECURITY.md serves as interim
+      summary of security controls + supply-chain posture.
+  other-artifacts: []
+
+security-testing:
+  - tool-type: sast
+    tool-name: CodeQL
+    tool-version: latest
+    tool-url: https://codeql.github.com/
+    integration:
+      ad-hoc: false
+      ci: true
+      before-release: true
+    tool-rulesets:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/.github/workflows/codeql.yml
+    comment: |
+      CodeQL Rust extractor · build-mode none (post-2026-05 extractor model).
+      Workflow runs on push к main + scheduled weekly.
+
+  - tool-type: sca
+    tool-name: Dependabot
+    tool-version: latest
+    tool-url: https://github.com/dependabot
+    integration:
+      ad-hoc: false
+      ci: true
+      before-release: true
+    tool-rulesets:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/.github/dependabot.yml
+    comment: |
+      4-ecosystem coverage · github-actions (weekly) · cargo (weekly · security
+      updates grouped) · docker (monthly · sha256-pinned bases) · pip (monthly ·
+      hash-pinned via pip-tools).
+
+  - tool-type: scorecard
+    tool-name: OpenSSF Scorecard
+    tool-version: latest
+    tool-url: https://github.com/ossf/scorecard
+    integration:
+      ad-hoc: false
+      ci: true
+      before-release: false
+    tool-rulesets:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/.github/workflows/scorecard.yml
+    comment: |
+      Scheduled weekly · public results at
+      https://scorecard.dev/viewer/?uri=github.com/PAI-Kernel/pai-kernel
+      Current cumulative score 6.8/10 · 10 checks at 10/10 baseline.
+
+  - tool-type: fuzz
+    tool-name: cargo-fuzz
+    tool-version: latest
+    tool-url: https://github.com/rust-fuzz/cargo-fuzz
+    integration:
+      ad-hoc: true
+      ci: false
+      before-release: false
+    tool-rulesets:
+      - https://github.com/PAI-Kernel/pai-kernel/blob/main/.github/workflows/fuzz.yml
+    comment: |
+      libfuzzer-sys backend · 6 fuzz targets covering public parse/decode/
+      validate entry points · seed corpora committed · 1 production bug found
+      and fixed via fuzzing (Hash256 multi-byte UTF-8 panic · commit e8cd83e).
+
+  - tool-type: container-scan
+    tool-name: Docker image hardening
+    tool-version: 'rust:1.86-alpine · alpine:3.20'
+    tool-url: https://github.com/PAI-Kernel/pai-kernel/blob/main/Dockerfile
+    integration:
+      ad-hoc: false
+      ci: true
+      before-release: true
+    comment: |
+      Base images sha256-pinned · multi-stage build · runs as non-root user
+      `pai` · multi-arch linux/amd64 + linux/arm64.
+
+security-assessments: []
+
+security-contacts:
+  - type: email
+    value: contact@paikernel.org
+    primary: true
+  - type: url
+    value: https://github.com/PAI-Kernel/pai-kernel/security/advisories/new
+    primary: false
+
+vulnerability-reporting:
+  accepts-vulnerability-reports: true
+  email-contact: contact@paikernel.org
+  security-policy: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md
+  bug-bounty-available: false
+  out-of-scope:
+    - User-level misconfiguration
+    - Non-security bugs
+    - Third-party LLM providers (Ollama · OpenAI · Anthropic · others)
+    - Platform-level OS vulnerabilities
+    - Infrastructure-level DoS unless SDK-specific amplification exists
+    - Internal governance processes
+    - External services themselves (GitHub · Zenodo · SSRN · etc.)
+    - Social engineering against the maintainer
+    - Rate-limit bypass on external services
+    - Typographic / orthographic errors in corpus without enforcement consequences
+    - Theoretical attacks without proof-of-concept
+    - Vulnerabilities in commercial deployments by third parties
+    - Documented known-limitation items (see docs/KNOWN_LIMITATIONS.md § 6)
+  pgp-key: |
+    Fingerprint: 95C4 B50E D565 44DC 033B 130D B84B 6C86 0ABA D0B1
+    Retrieval URL: https://keys.openpgp.org/vks/v1/by-fingerprint/95C4B50ED56544DC033B130DB84B6C860ABAD0B1
+    Keyserver: hkps://keys.openpgp.org (search by Mikhail.Sergeev@paikernel.org)
+  comment: |
+    Coordinated disclosure window: 90 days standard · extendable by mutual
+    agreement. SLA: 72h acknowledgment · 7d triage · 14d remediation plan ·
+    patch by severity tier (Critical 30d · High 60d · Medium 90d · Low
+    best-effort). Safe harbor: disclose.io v0.5 adapted · SECURITY.md § 6.
+    Breach-class shorthand codes (SECURITY.md § 8): GOV.BYPASS · OBJ.INJECTION
+    · LOG.TAMPER · CONS.MODE.VIOLATION · DRIFT.OVERTHRESHOLD.
+
+dependencies:
+  third-party-packages: true
+  dependencies-lists:
+    - https://github.com/PAI-Kernel/pai-kernel/blob/main/Cargo.lock
+  sbom: []
+  dependencies-lifecycle:
+    policy-url: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md#supply-chain
+    comment: |
+      Cargo.lock committed для reproducible builds · Dependabot PRs reviewed
+      before merge · security-update group fast-triaged separately.
+  env-dependencies-policy:
+    policy-url: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md
+    comment: |
+      All crates published к crates.io originate from verified repository
+      commits · Cargo.lock committed · release binaries built by GitHub-hosted
+      runners (not self-hosted) для adopter reproducibility · container base
+      images sha256-pinned · workspace runs as non-root user `pai`.
