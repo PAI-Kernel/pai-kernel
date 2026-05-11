@@ -1,16 +1,15 @@
-# Pre-public CI for PAI-Kernel/pai-kernel-pre-public · pre-publication staging.
+# Public-repo CI for PAI-Kernel/pai-kernel.
 #
 # Two parallel jobs:
-#   1. Lint & verify — markdownlint, CITATION.cff, internal links
-#   2. Build & test — cargo build + cargo test on full workspace
-#      (relies on self-hosted runner persistent storage · no actions/cache)
+#   1. Lint & verify — markdownlint, CITATION.cff (hash-pinned), internal links
+#   2. Build & test — cargo build + cargo test on full workspace (cargo cache)
 #
 # Both jobs must pass for green CI. Runs on every push/PR to main.
 # Does NOT include TLC / coverage / GPG verify — those live in internal-only CI.
 #
-# Runner: self-hosted macOS arm64 M4 (CI-B2 architecture · per-repo runner)
-# Note: workflow originally written для ubuntu-latest. Switched к self-hosted
-# 2026-05-10 due к GitHub Actions Free quota exhaustion (run #82 · #83 failures).
+# Runner: GitHub-hosted ubuntu-latest (public repo · reproducibility · adopter trust ·
+# self-host runner architecture NOT applied к public per CI-B2 discipline · only
+# pai-kernel-internal + pai-kernel-pre-public use self-host).
 
 name: CI
 
@@ -26,7 +25,7 @@ permissions:
 jobs:
   lint:
     name: Lint & verify
-    runs-on: [self-hosted, macOS, ARM64, M4, pai-kernel-pre-public]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -71,7 +70,7 @@ jobs:
 
   build-test:
     name: Build & test (Rust workspace)
-    runs-on: [self-hosted, macOS, ARM64, M4, pai-kernel-pre-public]
+    runs-on: ubuntu-latest
     permissions:
       contents: read
     steps:
@@ -84,11 +83,16 @@ jobs:
         with:
           toolchain: 1.88.0
 
-      # actions/cache step intentionally OMITTED for self-hosted runner ·
-      # work directory (target/) and ~/.cargo persist between runs natively ·
-      # cache action upload caused multi-hour Post-step hangs at first run
-      # and is redundant when runner has dedicated persistent storage. CI-B2
-      # architecture relies on physical machine persistence для caching.
+      - name: Cache cargo registry + git + target
+        uses: actions/cache@5a3ec84eff668545956fd18022155c47e93e2684 # v4.2.3
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            target
+          key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-
 
       - name: Build (release, workspace, locked)
         run: cargo build --workspace --release --locked
