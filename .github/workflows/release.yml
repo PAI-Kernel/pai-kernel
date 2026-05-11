@@ -231,10 +231,14 @@ jobs:
     permissions:
       contents: read
       packages: write
+      id-token: write   # required для keyless Sigstore signing (cosign OIDC flow)
     steps:
       - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           persist-credentials: false
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@d7d6bc7722e3daa8354c50bcb52f4837da5e9b6a # v3.8.1
 
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@184bdaa0721073962dff0199f1fb9940f07167d1 # v3.5.0
@@ -260,6 +264,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
 
       - name: Build and push
+        id: build-and-push
         uses: docker/build-push-action@263435318d21b8e681c14492fe198d362a7d2c83 # v6.18.0
         with:
           context: .
@@ -269,6 +274,16 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Sign published Docker image (keyless Sigstore · OIDC)
+        # Sign each pushed tag using cosign + GitHub OIDC token (no key
+        # material managed by repo · transparency log entry to Rekor).
+        # OpenSSF Scorecard Signed-Releases hardening · PF-057.
+        env:
+          DIGEST: ${{ steps.build-and-push.outputs.digest }}
+          TAGS: ${{ steps.meta.outputs.tags }}
+        run: |
+          echo "${TAGS}" | xargs -I {} cosign sign --yes "{}@${DIGEST}"
 
   publish:
     name: Publish GitHub Release
