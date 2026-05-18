@@ -14,7 +14,7 @@ regex = "1"
 pai_influence = { path = "../../crates/pai_influence", version = "1.3.2" }
 pai_gate = { path = "../../crates/pai_gate", version = "1.3.2" }
 pai_interface = { path = "../../crates/pai_interface", version = "1.3.2" }
-rand_core = "0.6"
+rand_core = "0.10"
 getrandom = "0.2"
 ed25519-dalek = { version = "2", features = ["rand_core"] }
 base64 = "0.22"
