@@ -17,9 +17,20 @@ name: Fuzz
 # libFuzzer coverage faster (committed seeds · libFuzzer mutates from these).
 #
 # Triggers:
-#   - On push к main · 180s fuzz run per target · regression detection
-#   - On PR к main · same 180s run
-#   - Weekly scheduled · 1800s (30 min) per target · deeper exploration
+#   - On push к main · 180s fuzz run per target · regression detection (public only)
+#   - On PR к main · same 180s run (public only)
+#   - Weekly scheduled · 1800s (30 min) per target · deeper exploration (public only)
+#   - workflow_dispatch · manual trigger · works on all surfaces
+#
+# Cross-axis discipline: identical file на all 3 surfaces (pre-public · public ·
+# internal). Job-level `if:` guard skips automatic execution на private repos
+# (pai-kernel-pre-public · pai-kernel-internal) к избежать GitHub Actions Free
+# quota exhaustion (2000 min/мес limit на private repos · ubuntu-latest billed).
+# Public repo unlimited · always runs. Manual workflow_dispatch bypasses guard
+# на any surface для on-demand fuzz validation. CI-B2 architecture precedent:
+# ci.yml уже использует self-hosted runners на private; fuzz.yml deferred к
+# workflow_dispatch-only pending self-host empirical validation для cargo-fuzz +
+# libFuzzer на macOS arm64 self-host hardware.
 
 on:
   push:
@@ -28,6 +39,7 @@ on:
     branches: [main]
   schedule:
     - cron: "0 5 * * 1"  # Weekly Monday 05:00 UTC
+  workflow_dispatch:    # manual trigger · bypasses private-repo guard
 
 permissions:
   contents: read
@@ -35,6 +47,9 @@ permissions:
 jobs:
   fuzz:
     name: Fuzz ${{ matrix.target }}
+    # Skip automatic runs на private repos к conserve GitHub Actions Free
+    # quota. workflow_dispatch overrides this guard на any surface.
+    if: github.event_name == 'workflow_dispatch' || github.repository == 'PAI-Kernel/pai-kernel'
     runs-on: ubuntu-latest
     permissions:
       contents: read
