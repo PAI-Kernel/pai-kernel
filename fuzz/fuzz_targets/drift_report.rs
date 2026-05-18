@@ -2,7 +2,7 @@
 //
 // Adversarial input: arbitrary bytes → serde_json deserialize DriftReport.
 // Exercises drift-engine report parsing (DFT-I1..DFT-I5) · the structured
-// artifact adopters surface к external monitoring (Grafana / Prometheus /
+// artifact adopters surface to external monitoring (Grafana / Prometheus /
 // audit log replay).
 //
 // Adopter scenario: drift reports are deserialized from upstream
@@ -12,7 +12,7 @@
 //
 // Probes:
 //   - DriftDimension enum tag validation (7 variants per PHASE1-TZ-001 §7.2)
-//   - f64 score edge cases (NaN propagation в composite score)
+//   - f64 score edge cases (NaN propagation in composite score)
 //   - Weight × score multiplication overflow paths
 //   - Window-eviction timestamp arithmetic
 

@@ -1,12 +1,12 @@
 // Fuzz target · pai_delegation::DelegationStore operation sequence
 //
-// Adversarial input: arbitrary bytes decoded в sequence of grant/validate/
-// revoke operations against а fresh DelegationStore. Exercises:
+// Adversarial input: arbitrary bytes decoded into sequence of grant/validate/
+// revoke operations against a fresh DelegationStore. Exercises:
 //   - DEL-I1..DEL-I6 invariants under arbitrary call ordering
 //   - Conservative-mode pause (DEL-I6) across all op types
 //   - Empty/large scope vec handling
 //   - Timestamp arithmetic edge cases (issued_at · expires_at · revoked_at)
-//   - next_id overflow surface (sequence-bounded к 1024 ops)
+//   - next_id overflow surface (sequence-bounded to 1024 ops)
 //
 // Adopter scenario: governance daemon receives delegation events from
 // caller (untrusted) · arbitrary sequencing could trigger panics OR

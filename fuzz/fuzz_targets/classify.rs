@@ -1,6 +1,6 @@
 // Fuzz target · pai_classify::RecActionClassifier::classify
 //
-// Adversarial input: arbitrary bytes decoded в typed inputs (domain ·
+// Adversarial input: arbitrary bytes decoded into typed inputs (domain ·
 // bias signals · author/conservative flags) → call classify(). Exercises
 // the pre-execution classification logic (RAB-I1..RAB-I7) which gates
 // every output before delivery.
@@ -23,7 +23,7 @@ use pai_classify::{
 
 // Decode an f64 from 8 little-endian bytes · transmuted bit pattern
 // (lets fuzzer explore NaN · Inf · subnormal naturally · BiasSignals
-// stores raw f64 без validation).
+// stores raw f64 without validation).
 fn f64_from_bytes(bytes: &[u8]) -> f64 {
     let raw = u64::from_le_bytes([
         bytes[0], bytes[1], bytes[2], bytes[3],

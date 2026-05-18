@@ -19,7 +19,7 @@
 # The SQLite DB + any runtime state lives under /data inside the container.
 
 # ---- stage 1: build ----
-# Pin к sha256 для Pinned-Dependencies OpenSSF Scorecard hardening (PF-057)
+# Pin to sha256 for Pinned-Dependencies OpenSSF Scorecard hardening (PF-057)
 FROM rust:1.86-alpine@sha256:661d708cc863ce32007cf46807a72062a80d2944a6fae9e0d83742d2e04d5375 AS builder
 
 # git is required by some transitive build scripts (regorus Rego engine
@@ -36,7 +36,7 @@ RUN cargo build --release --locked -p pai_kernel && \
     strip target/release/pai_governance_daemon
 
 # ---- stage 2: runtime ----
-# Pin к sha256 для Pinned-Dependencies OpenSSF Scorecard hardening (PF-057)
+# Pin to sha256 for Pinned-Dependencies OpenSSF Scorecard hardening (PF-057)
 FROM alpine:3.20@sha256:d9e853e87e55526f6b2917df91a2115c36dd7c696a35be12163d44e6e2a4b6bc
 
 # Install runtime dependencies only

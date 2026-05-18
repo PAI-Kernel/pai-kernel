@@ -8,7 +8,7 @@
 # Does NOT include TLC / coverage / GPG verify — those live in internal-only CI.
 #
 # Runner: GitHub-hosted ubuntu-latest (public repo · reproducibility · adopter trust ·
-# self-host runner architecture NOT applied к public per CI-B2 discipline · only
+# self-host runner architecture NOT applied to public per CI-B2 discipline · only
 # pai-kernel-internal + pai-kernel-pre-public use self-host).
 
 name: CI
@@ -35,14 +35,14 @@ jobs:
 
       - name: Markdown lint
         # markdownlint-cli2 v0.18.x · pinned via @ to prevent silent upgrade;
-        # acceptable lightweight tool · readonly linter · not shipped в release artifacts.
+        # acceptable lightweight tool · readonly linter · not shipped in release artifacts.
         run: npx --yes markdownlint-cli2@0.18.1 '**/*.md' '#node_modules'
 
       - name: Validate CITATION.cff
         # cffconvert v2.0.0 + transitive deps · hash-pinned via pip-tools
         # (Pinned-Dependencies OpenSSF Scorecard hardening · PF-057).
-        # Install в isolated venv: avoids PEP 668 «externally-managed-environment»
-        # restriction (macOS Sonoma+) · uses explicit binary path к sidestep PATH
+        # Install in isolated venv: avoids PEP 668 «externally-managed-environment»
+        # restriction (macOS Sonoma+) · uses explicit binary path to sidestep PATH
         # ambiguity · cleanly disposable per CI run. Requirements regenerated
         # via: pip-compile --generate-hashes --allow-unsafe (when bumping versions).
         run: |
@@ -79,7 +79,7 @@ jobs:
           persist-credentials: false
 
       - name: Install Rust 1.88.0 (per rust-toolchain.toml)
-        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # action pinned · toolchain bumped к 1.88.0 in v2.2.2 (time CVE MSRV requirement)
+        uses: dtolnay/rust-toolchain@3c5f7ea28cd621ae0bf5283f0e981fb97b8a7af9 # action pinned · toolchain bumped to 1.88.0 in v2.2.2 (time CVE MSRV requirement)
         with:
           toolchain: 1.88.0
 
@@ -103,7 +103,7 @@ jobs:
       # Constitutional compliance gate · runs the binary harness (separate
       # from workspace tests · exercises T1..T6 invariant validation through
       # full daemon path). Failure of any compliance test BLOCKS CI ·
-      # symmetric с reference audit и terminology check disciplines · this
+      # symmetric with reference audit and terminology check disciplines · this
       # is the runtime invariant verification leg of the pre-publication
       # audit triumvirate.
       - name: Compliance binary (constitutional gate)

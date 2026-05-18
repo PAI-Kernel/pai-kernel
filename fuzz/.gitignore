@@ -2,8 +2,8 @@
 artifacts/
 target/
 
-# corpus/ tracked для seed inputs · libFuzzer mutates from these к explore.
-# Adopters cloning repo get representative seeds для each target ·
+# corpus/ tracked for seed inputs · libFuzzer mutates from these to explore.
+# Adopters cloning repo get representative seeds for each target ·
 # bootstrap fuzzer coverage faster.
-# Note: cargo-fuzz adds к corpus/ during CI runs · they may be committed
+# Note: cargo-fuzz adds to corpus/ during CI runs · they may be committed
 # (corpus growth helps regression coverage) OR purged periodically.

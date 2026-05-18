@@ -22,4 +22,4 @@ LICENSE-* files.
 
 
 
-*See LICENSE for canonical MIT text. See LICENSE-APACHE, LICENSE-CC-BY-4.0 для other applicable licenses.*
+*See LICENSE for canonical MIT text. See LICENSE-APACHE, LICENSE-CC-BY-4.0 for other applicable licenses.*

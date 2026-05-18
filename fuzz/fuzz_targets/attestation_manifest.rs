@@ -2,10 +2,10 @@
 //
 // Adversarial input: arbitrary bytes → serde_json deserialize TcbManifest.
 // Exercises Trusted Computing Base manifest parsing (Doc 10 §P1) · the
-// attestation entry point that adopters / auditors use к verify framework
+// attestation entry point that adopters / auditors use to verify framework
 // integrity claims cryptographically.
 //
-// Adopter scenario: third party submits TCB attestation evidence как JSON ·
+// Adopter scenario: third party submits TCB attestation evidence as JSON ·
 // pai_attestation parses + verifies. Malformed manifest could crash the
 // verifier (denial-of-service against adopter governance daemon) OR enable
 // confusion attacks (TCB-I4: measured state mismatch detection bypass).

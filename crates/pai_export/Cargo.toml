@@ -21,9 +21,9 @@ hex = "0.4"
 [dev-dependencies]
 ed25519-dalek = { version = "2", features = ["rand_core"] }
 
-# WASM target support · enables `js` feature на getrandom 0.2 для wasm32-unknown-unknown.
-# Required because transitive deps (через ed25519-dalek/pai_governance_daemon) pull getrandom 0.2,
-# which needs explicit WASM feature flag для browser/JS runtime support.
-# Per WASM_VALIDATION_2026-05-08.md § 2.2 mitigation · target-specific scope (NOT enabled на native).
+# WASM target support · enables `js` feature on getrandom 0.2 for wasm32-unknown-unknown.
+# Required because transitive deps (via ed25519-dalek/pai_governance_daemon) pull getrandom 0.2,
+# which needs explicit WASM feature flag for browser/JS runtime support.
+# Per WASM_VALIDATION_2026-05-08.md § 2.2 mitigation · target-specific scope (NOT enabled on native).
 [target.'cfg(target_arch = "wasm32")'.dependencies]
 getrandom = { version = "0.2", features = ["js"] }

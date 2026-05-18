@@ -92,7 +92,7 @@ security-testing:
       - https://github.com/PAI-Kernel/pai-kernel/blob/main/.github/workflows/codeql.yml
     comment: |
       CodeQL Rust extractor · build-mode none (post-2026-05 extractor model).
-      Workflow runs on push к main + scheduled weekly.
+      Workflow runs on push to main + scheduled weekly.
 
   - tool-type: sca
     tool-name: Dependabot
@@ -200,12 +200,12 @@ dependencies:
   dependencies-lifecycle:
     policy-url: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md#supply-chain
     comment: |
-      Cargo.lock committed для reproducible builds · Dependabot PRs reviewed
+      Cargo.lock committed for reproducible builds · Dependabot PRs reviewed
       before merge · security-update group fast-triaged separately.
   env-dependencies-policy:
     policy-url: https://github.com/PAI-Kernel/pai-kernel/blob/main/SECURITY.md
     comment: |
-      All crates published к crates.io originate from verified repository
+      All crates published to crates.io originate from verified repository
       commits · Cargo.lock committed · release binaries built by GitHub-hosted
-      runners (not self-hosted) для adopter reproducibility · container base
+      runners (not self-hosted) for adopter reproducibility · container base
       images sha256-pinned · workspace runs as non-root user `pai`.

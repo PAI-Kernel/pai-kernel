@@ -4,7 +4,7 @@
 #
 # Format: <path-glob>    @<github-handle> [@<additional-handle>...]
 # Validation: github.com/PAI-Kernel/pai-kernel/settings/access · verify handles
-# resolve к actual users с repo access OR reviews block PRs indefinitely.
+# resolve to actual users with repo access OR reviews block PRs indefinitely.
 
 # Default owner for everything
 *                    @MikhailSergeev369

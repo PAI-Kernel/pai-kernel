@@ -1,11 +1,11 @@
-# Dependabot config для pai-kernel pre-publication staging.
-# Mirrored к public repo on release sync.
+# Dependabot config for pai-kernel pre-publication staging.
+# Mirrored to public repo on release sync.
 #
 # Monitors 4 package ecosystems:
 #   - github-actions (workflow action updates · weekly)
 #   - cargo (Rust workspace dependencies · weekly)
 #   - docker (Dockerfile base image updates · monthly · sha256 pins per
-#     Pinned-Dependencies discipline · adopter expectation что base image
+#     Pinned-Dependencies discipline · adopter expectation that base image
 #     updates are deliberate, not auto-merged)
 #   - pip (citation-requirements.txt updates · monthly · hash-pinned via
 #     pip-tools when bumped)

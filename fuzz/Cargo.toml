@@ -22,7 +22,7 @@ pai_attestation = { path = "../crates/pai_attestation" }
 pai_delegation = { path = "../crates/pai_delegation" }
 pai_drift = { path = "../crates/pai_drift" }
 
-# Prevent this crate from being treated as а workspace member
+# Prevent this crate from being treated as a workspace member
 # (cargo-fuzz convention · separate package · won't pollute parent workspace).
 [workspace]
 

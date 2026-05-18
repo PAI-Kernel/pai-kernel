@@ -1,7 +1,7 @@
 name: Fuzz
 
 # OpenSSF Scorecard Fuzzing check · PF-057 hardening.
-# cargo-fuzz с libfuzzer · 10 targets covering adopter-input attack surfaces:
+# cargo-fuzz with libfuzzer · 10 targets covering adopter-input attack surfaces:
 #   - pai_export · ExportBundle deserialize + verify integrity (bundle import)
 #   - pai_witness · WitnessEntry deserialize (witness chain log import)
 #   - pai_pii · scan_text (PII detection regex DoS surface · text input)
@@ -13,24 +13,24 @@ name: Fuzz
 #   - pai_delegation · DelegationStore op sequence (DEL-I1..DEL-I6 · structured fuzz)
 #   - pai_drift · DriftReport deserialize (DFT-I1..DFT-I5 · monitoring artifact)
 #
-# Seed corpus: representative valid inputs в fuzz/corpus/<target>/ bootstrap
+# Seed corpus: representative valid inputs in fuzz/corpus/<target>/ bootstrap
 # libFuzzer coverage faster (committed seeds · libFuzzer mutates from these).
 #
 # Triggers:
-#   - On push к main · 180s fuzz run per target · regression detection (public only)
-#   - On PR к main · same 180s run (public only)
+#   - On push to main · 180s fuzz run per target · regression detection (public only)
+#   - On PR to main · same 180s run (public only)
 #   - Weekly scheduled · 1800s (30 min) per target · deeper exploration (public only)
 #   - workflow_dispatch · manual trigger · works on all surfaces
 #
-# Cross-axis discipline: identical file на all 3 surfaces (pre-public · public ·
-# internal). Job-level `if:` guard skips automatic execution на private repos
-# (pai-kernel-pre-public · pai-kernel-internal) к избежать GitHub Actions Free
-# quota exhaustion (2000 min/мес limit на private repos · ubuntu-latest billed).
+# Cross-axis discipline: identical file on all 3 surfaces (pre-public · public ·
+# internal). Job-level `if:` guard skips automatic execution on private repos
+# (pai-kernel-pre-public · pai-kernel-internal) to avoid GitHub Actions Free
+# quota exhaustion (2000 min/month limit on private repos · ubuntu-latest billed).
 # Public repo unlimited · always runs. Manual workflow_dispatch bypasses guard
-# на any surface для on-demand fuzz validation. CI-B2 architecture precedent:
-# ci.yml уже использует self-hosted runners на private; fuzz.yml deferred к
-# workflow_dispatch-only pending self-host empirical validation для cargo-fuzz +
-# libFuzzer на macOS arm64 self-host hardware.
+# on any surface for on-demand fuzz validation. CI-B2 architecture precedent:
+# ci.yml already uses self-hosted runners on private; fuzz.yml deferred to
+# workflow_dispatch-only pending self-host empirical validation for cargo-fuzz +
+# libFuzzer on macOS arm64 self-host hardware.
 
 on:
   push:
@@ -47,8 +47,8 @@ permissions:
 jobs:
   fuzz:
     name: Fuzz ${{ matrix.target }}
-    # Skip automatic runs на private repos к conserve GitHub Actions Free
-    # quota. workflow_dispatch overrides this guard на any surface.
+    # Skip automatic runs on private repos to conserve GitHub Actions Free
+    # quota. workflow_dispatch overrides this guard on any surface.
     if: github.event_name == 'workflow_dispatch' || github.repository == 'PAI-Kernel/pai-kernel'
     runs-on: ubuntu-latest
     permissions:

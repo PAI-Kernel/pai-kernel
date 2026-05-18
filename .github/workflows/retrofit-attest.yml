@@ -1,33 +1,33 @@
 name: Retrofit SLSA attestations
 
-# One-time-use workflow для retrofitting SLSA build provenance attestations
-# на existing release binaries that pre-date the attest-build-provenance
+# One-time-use workflow for retrofitting SLSA build provenance attestations
+# onto existing release binaries that pre-date the attest-build-provenance
 # integration in release.yml.
 #
 # Behavior:
 #   - Downloads existing release binaries (no rebuild · preserves SHA256s)
-#   - Generates SLSA build provenance attestation для каждого binary via
+#   - Generates SLSA build provenance attestation for each binary via
 #     actions/attest-build-provenance (GitHub OIDC · keyless · Sigstore-rooted)
-#   - Uploads .intoto.jsonl sidecar к release
+#   - Uploads .intoto.jsonl sidecar to release
 #
 # Constraint: target release must be `immutable: false` (writable). Existing
 # v2.2/v2.2.2/v2.2.3 releases cannot be retrofitted (immutable one-way ratchet ·
 # DL-403 + GitHub platform enforcement). v2.2.3.1 currently immutable=false ·
-# eligible для retrofit before lock.
+# eligible for retrofit before lock.
 #
-# Trigger: workflow_dispatch only · explicit P0 invocation per OP-15.
+# Trigger: workflow_dispatch only · explicit maintainer invocation per OP-15.
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Release tag к retrofit attestations for (e.g. v2.2.3.1)'
+        description: 'Release tag to retrofit attestations for (e.g. v2.2.3.1)'
         required: true
         type: string
 
 permissions:
   contents: write       # release asset upload
-  id-token: write       # OIDC token для attest-build-provenance
+  id-token: write       # OIDC token for attest-build-provenance
   attestations: write   # generate SLSA attestations
 
 jobs:
@@ -86,7 +86,7 @@ jobs:
         with:
           subject-path: dist/pai_governance_daemon-${{ inputs.tag }}-${{ matrix.target }}.${{ matrix.ext }}
 
-      - name: Upload .intoto.jsonl к release
+      - name: Upload .intoto.jsonl to release
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           TAG: ${{ inputs.tag }}
@@ -100,4 +100,4 @@ jobs:
           cp "${BUNDLE}" "${ATTESTATION}"
           ls -la "${ATTESTATION}"
           gh release upload "${TAG}" --repo "${GITHUB_REPOSITORY}" --clobber "${ATTESTATION}"
-          echo "::notice::Retrofit attestation uploaded для ${ASSET}"
+          echo "::notice::Retrofit attestation uploaded for ${ASSET}"
