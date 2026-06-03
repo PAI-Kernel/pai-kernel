@@ -20,7 +20,7 @@
 
 # ---- stage 1: build ----
 # Pin to sha256 for Pinned-Dependencies OpenSSF Scorecard hardening (PF-057)
-FROM rust:1.86-alpine@sha256:661d708cc863ce32007cf46807a72062a80d2944a6fae9e0d83742d2e04d5375 AS builder
+FROM rust:1.96-alpine@sha256:66f48b19d6e88519e2e58bebe0d945779a6a4ca41c2db17db78c9569655b50ac AS builder
 
 # git is required by some transitive build scripts (regorus Rego engine
 # invokes `git rev-parse HEAD` during build). ca-certificates for TLS on
